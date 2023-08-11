@@ -7,5 +7,6 @@
 
 void Period10us(void);
 void Period100us(void);
+void Period1ms(void);
 
 #endif

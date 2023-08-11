@@ -13,3 +13,9 @@ void Period100us(void)
 {
 	AverageValueAdcVoltAmper();
 }
+
+//********************************************//
+void Period1ms(void)
+{
+	Period1MsForAkip();
+}

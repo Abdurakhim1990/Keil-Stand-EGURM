@@ -66,9 +66,7 @@ void  EXTI10_15_IRQHandler (void);
 /* this function handles USBD interrupt */
 void  USBD_LP_CAN0_RX0_IRQHandler(void);
 
-#ifdef USBD_LOWPWR_MODE_ENABLE
-/* this function handles USBD wakeup interrupt request */
-void  USBD_WKUP_IRQHandler (void);
-#endif /* USBD_LOWPWR_MODE_ENABLE */
+void AKIP_DMA_Channel_IRQHandler_Tx(void);
+void AKIP_DMA_Channel_IRQHandler_Rx(void);
 
 #endif /* GD32E50X_IT_H */

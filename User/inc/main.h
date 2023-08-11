@@ -7,6 +7,8 @@
 #include "can_egurm.h"
 #include "adc_egurm.h"
 #include "timers_10_and_100_us.h"
+#include "usart_akip_1148a.h"
+#include <stdio.h>
 
 void GeneralInitEgurm(void);
 

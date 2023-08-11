@@ -168,8 +168,8 @@ void PendSV_Handler(void)
 */
 void SysTick_Handler(void)
 {
-//    led_spark();
-    delay_decrement();
+  delay_decrement();
+	Period1ms();
 }
 
 
@@ -253,6 +253,29 @@ void TIMER6_IRQHandler(void)
 	}
 }
 
+//***************---AKIP-1148A RS232_Tx---***********//
+void AKIP_DMA_Channel_IRQHandler_Tx(void)
+{
+    if(RESET != dma_interrupt_flag_get(AKIP_DMA, AKIP_DMA_CH_TX, DMA_INT_FLAG_FTF)){
+				dma_interrupt_flag_clear(AKIP_DMA, AKIP_DMA_CH_TX, DMA_INT_FLAG_G);
+    }
+}
+
+//***************---AKIP-1148A RS232_Rx---***********//
+void AKIP_DMA_Channel_IRQHandler_Rx(void)
+{
+    if(RESET != dma_interrupt_flag_get(AKIP_DMA, AKIP_DMA_CH_RX, DMA_INT_FLAG_FTF)){
+				dma_flag_clear(AKIP_DMA, AKIP_DMA_CH_RX, DMA_FLAG_G);
+				dma_channel_disable(AKIP_DMA, AKIP_DMA_CH_RX);
+				
+				dma_transfer_number_config(AKIP_DMA, AKIP_DMA_CH_RX, AKIP_DMA_RX_SIZE);
+				dma_channel_enable(AKIP_DMA, AKIP_DMA_CH_RX);
+				
+				dma_interrupt_flag_clear(AKIP_DMA, AKIP_DMA_CH_RX, DMA_INT_FLAG_G);
+    }
+}
+
+
 /*!
     \brief      this function handles EXTI0_IRQ Handler.
     \param[in]  none
@@ -275,17 +298,3 @@ void EXTI10_15_IRQHandler (void)
     
 }
 
-#ifdef USBD_LOWPWR_MODE_ENABLE
-
-/*!
-    \brief      this function handles USBD wakeup interrupt request.
-    \param[in]  none
-    \param[out] none
-    \retval     none
-*/
-void USBDWakeUp_IRQHandler (void)
-{
-    exti_int_flag_clear(EXTI_18);
-}
-
-#endif /* USBD_LOWPWR_MODE_ENABLE */

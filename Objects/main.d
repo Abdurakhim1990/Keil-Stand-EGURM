@@ -40,4 +40,7 @@
   Configure_Periph\inc\usbd_hw.h User\inc\can_egurm.h \
   Configure_Periph\inc\can_init_egurm.h User\inc\adc_egurm.h \
   Configure_Periph\inc\adc_init_egurm.h User\inc\timers_10_and_100_us.h \
-  Configure_Periph\inc\timers_10_and_100_us_init.h
+  Configure_Periph\inc\timers_10_and_100_us_init.h \
+  User\inc\usart_akip_1148a.h \
+  Configure_Periph\inc\usart_akip_1148a_init.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdio.h

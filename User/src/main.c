@@ -29,10 +29,14 @@ void GetClockFreq(void)
 	clock_freq.CK_USART = rcu_clock_freq_get(CK_USART);
 }
 
-
 uint8_t speed_can = 0;
 
 int16_t n_m_in = 0, n_m_out = 0, voltage = 0, current = 0;
+int16_t setting_voltage = 0;
+int16_t setting_current = 0;
+
+uint8_t flag_set_volt = 0;
+uint8_t flag_set_curr = 0;
 
 //*******************************************************//
 int main(void)
@@ -50,7 +54,7 @@ int main(void)
 	
 	gpio_bit_reset(GPIOA, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10);
 	
-	uint16_t temp = 0;
+	uint8_t temp = 0;
 	
 	
 	while(1)
@@ -66,6 +70,13 @@ int main(void)
 		}
 		CanTransmit();
 		
+		if(flag_set_volt == 1){
+			SetVoltageEgurm(setting_voltage);
+		}
+		if(flag_set_curr == 1){
+			SetCurrentEgurm(setting_current);
+		}
+		
 		
 		n_m_in = GetMomentIn();
 		n_m_out = GetMomentOut();
@@ -73,7 +84,7 @@ int main(void)
 		current = GetCurrent();
 		
 		temp++;
-		delay_1ms(100);
+		delay_1ms(1000);
 	}
 }
 
@@ -81,7 +92,8 @@ void GeneralInitEgurm(void)
 {
 	InitTimerTo10us();
 	InitTimerTo100us();
-	UsbdEgurmInit();
+	//UsbdEgurmInit();
 	//CanEgurmInit();
 	AdcEgurnInit();
+	UsartAkip1148aInit();
 }

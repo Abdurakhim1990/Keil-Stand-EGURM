@@ -414,6 +414,11 @@
               <FileType>1</FileType>
               <FilePath>.\User\src\timers_10_and_100_us.c</FilePath>
             </File>
+            <File>
+              <FileName>usart_akip_1148a.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\src\usart_akip_1148a.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -443,6 +448,11 @@
               <FileName>timers_10_and_100_us_init.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Configure_Periph\src\timers_10_and_100_us_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart_akip_1148a_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Configure_Periph\src\usart_akip_1148a_init.c</FilePath>
             </File>
           </Files>
         </Group>
