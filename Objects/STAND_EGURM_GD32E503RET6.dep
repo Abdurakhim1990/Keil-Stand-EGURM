@@ -48,7 +48,7 @@ I (USB_Device\class\Include\usb_hid.h)(0x63B43EF2)
 I (Configure_Periph\inc\usbd_hw.h)(0x64AE6492)
 I (User\inc\can_egurm.h)(0x64C8F468)
 I (Configure_Periph\inc\can_init_egurm.h)(0x64C8F468)
-I (User\inc\adc_egurm.h)(0x64CB7EFE)
+I (User\inc\adc_egurm.h)(0x64D71D60)
 I (Configure_Periph\inc\adc_init_egurm.h)(0x64C8EE19)
 I (User\inc\timers_10_and_100_us.h)(0x64D3994E)
 I (Configure_Periph\inc\timers_10_and_100_us_init.h)(0x64CB6C1C)
@@ -57,7 +57,7 @@ I (Configure_Periph\inc\usart_akip_1148a_init.h)(0x64D6181B)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdio.h)(0x63888F58)
 I (USB_Device\usbd\Include\usbd_lld_int.h)(0x63B43EF2)
 I (USB_Device\device\Include\usbd_pwr.h)(0x63B43EF3)
-F (.\User\src\main.c)(0x64D646F1)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ./gd32e50x/cmsis/include -I ./gd32e50x/standard_peripheral/Include -I ./User/inc -I ./USB_Device/class/Include -I ./USB_Device/device/Include -I ./USB_Device/usbd/Include -I ./User/src -I ./CAN/inc -I ./Configure_Periph/inc-I./RTE/_GD32E503RET6-IC:/Users/ABDURAHIM/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/ABDURAHIM/AppData/Local/Arm/Packs/GigaDevice/GD32E50x_DFP/1.3.3/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DGD32E50x_HD -D_RTE_ -DGD32E50X -DGD32E50X_HD-o ./objects/main.o -MD)
+F (.\User\src\main.c)(0x64D71D60)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ./gd32e50x/cmsis/include -I ./gd32e50x/standard_peripheral/Include -I ./User/inc -I ./USB_Device/class/Include -I ./USB_Device/device/Include -I ./USB_Device/usbd/Include -I ./User/src -I ./CAN/inc -I ./Configure_Periph/inc-I./RTE/_GD32E503RET6-IC:/Users/ABDURAHIM/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/ABDURAHIM/AppData/Local/Arm/Packs/GigaDevice/GD32E50x_DFP/1.3.3/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DGD32E50x_HD -D_RTE_ -DGD32E50X -DGD32E50X_HD-o ./objects/main.o -MD)
 I (User\inc\main.h)(0x64D3B552)
 I (gd32e50x\cmsis\include\gd32e50x.h)(0x64BFA28A)
 I (gd32e50x\cmsis\include\core_cm33.h)(0x63B43EF4)
@@ -104,7 +104,7 @@ I (USB_Device\class\Include\usb_hid.h)(0x63B43EF2)
 I (Configure_Periph\inc\usbd_hw.h)(0x64AE6492)
 I (User\inc\can_egurm.h)(0x64C8F468)
 I (Configure_Periph\inc\can_init_egurm.h)(0x64C8F468)
-I (User\inc\adc_egurm.h)(0x64CB7EFE)
+I (User\inc\adc_egurm.h)(0x64D71D60)
 I (Configure_Periph\inc\adc_init_egurm.h)(0x64C8EE19)
 I (User\inc\timers_10_and_100_us.h)(0x64D3994E)
 I (Configure_Periph\inc\timers_10_and_100_us_init.h)(0x64CB6C1C)
@@ -151,7 +151,7 @@ I (gd32e50x\standard_peripheral\Include\gd32e50x_sdio.h)(0x63B43EF2)
 I (gd32e50x\cmsis\include\systick.h)(0x63B43F05)
 I (User\inc\can_egurm.h)(0x64C8F468)
 I (Configure_Periph\inc\can_init_egurm.h)(0x64C8F468)
-I (User\inc\adc_egurm.h)(0x64CB7EFE)
+I (User\inc\adc_egurm.h)(0x64D71D60)
 I (Configure_Periph\inc\adc_init_egurm.h)(0x64C8EE19)
 I (User\inc\timers_10_and_100_us.h)(0x64D3994E)
 I (Configure_Periph\inc\timers_10_and_100_us_init.h)(0x64CB6C1C)
@@ -165,8 +165,8 @@ I (USB_Device\device\Include\usb_ch9_std.h)(0x63B43EF3)
 I (Configure_Periph\inc\usbd_conf.h)(0x6482D05D)
 I (USB_Device\class\Include\usb_hid.h)(0x63B43EF2)
 I (Configure_Periph\inc\usbd_hw.h)(0x64AE6492)
-F (.\User\src\adc_egurm.c)(0x64CB7D76)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ./gd32e50x/cmsis/include -I ./gd32e50x/standard_peripheral/Include -I ./User/inc -I ./USB_Device/class/Include -I ./USB_Device/device/Include -I ./USB_Device/usbd/Include -I ./User/src -I ./CAN/inc -I ./Configure_Periph/inc-I./RTE/_GD32E503RET6-IC:/Users/ABDURAHIM/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/ABDURAHIM/AppData/Local/Arm/Packs/GigaDevice/GD32E50x_DFP/1.3.3/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DGD32E50x_HD -D_RTE_ -DGD32E50X -DGD32E50X_HD-o ./objects/adc_egurm.o -MD)
-I (User\inc\adc_egurm.h)(0x64CB7EFE)
+F (.\User\src\adc_egurm.c)(0x64D724F2)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ./gd32e50x/cmsis/include -I ./gd32e50x/standard_peripheral/Include -I ./User/inc -I ./USB_Device/class/Include -I ./USB_Device/device/Include -I ./USB_Device/usbd/Include -I ./User/src -I ./CAN/inc -I ./Configure_Periph/inc-I./RTE/_GD32E503RET6-IC:/Users/ABDURAHIM/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/ABDURAHIM/AppData/Local/Arm/Packs/GigaDevice/GD32E50x_DFP/1.3.3/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DGD32E50x_HD -D_RTE_ -DGD32E50X -DGD32E50X_HD-o ./objects/adc_egurm.o -MD)
+I (User\inc\adc_egurm.h)(0x64D71D60)
 I (gd32e50x\cmsis\include\gd32e50x.h)(0x64BFA28A)
 I (gd32e50x\cmsis\include\core_cm33.h)(0x63B43EF4)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x63888F58)
@@ -219,6 +219,7 @@ I (User\inc\usart_akip_1148a.h)(0x64D64C6D)
 I (Configure_Periph\inc\usart_akip_1148a_init.h)(0x64D6181B)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdio.h)(0x63888F58)
 I (Configure_Periph\inc\adc_init_egurm.h)(0x64C8EE19)
+I (User\inc\t_sense_table.h)(0x64D71D06)
 F (.\User\src\can_egurm.c)(0x64C8F468)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ./gd32e50x/cmsis/include -I ./gd32e50x/standard_peripheral/Include -I ./User/inc -I ./USB_Device/class/Include -I ./USB_Device/device/Include -I ./USB_Device/usbd/Include -I ./User/src -I ./CAN/inc -I ./Configure_Periph/inc-I./RTE/_GD32E503RET6-IC:/Users/ABDURAHIM/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/ABDURAHIM/AppData/Local/Arm/Packs/GigaDevice/GD32E50x_DFP/1.3.3/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DGD32E50x_HD -D_RTE_ -DGD32E50X -DGD32E50X_HD-o ./objects/can_egurm.o -MD)
 I (User\inc\can_egurm.h)(0x64C8F468)
 I (User\inc\main.h)(0x64D3B552)
@@ -265,7 +266,7 @@ I (USB_Device\device\Include\usb_ch9_std.h)(0x63B43EF3)
 I (Configure_Periph\inc\usbd_conf.h)(0x6482D05D)
 I (USB_Device\class\Include\usb_hid.h)(0x63B43EF2)
 I (Configure_Periph\inc\usbd_hw.h)(0x64AE6492)
-I (User\inc\adc_egurm.h)(0x64CB7EFE)
+I (User\inc\adc_egurm.h)(0x64D71D60)
 I (Configure_Periph\inc\adc_init_egurm.h)(0x64C8EE19)
 I (User\inc\timers_10_and_100_us.h)(0x64D3994E)
 I (Configure_Periph\inc\timers_10_and_100_us_init.h)(0x64CB6C1C)
@@ -321,7 +322,7 @@ I (USB_Device\class\Include\usb_hid.h)(0x63B43EF2)
 I (Configure_Periph\inc\usbd_hw.h)(0x64AE6492)
 I (User\inc\can_egurm.h)(0x64C8F468)
 I (Configure_Periph\inc\can_init_egurm.h)(0x64C8F468)
-I (User\inc\adc_egurm.h)(0x64CB7EFE)
+I (User\inc\adc_egurm.h)(0x64D71D60)
 I (Configure_Periph\inc\adc_init_egurm.h)(0x64C8EE19)
 I (User\inc\usart_akip_1148a.h)(0x64D64C6D)
 I (Configure_Periph\inc\usart_akip_1148a_init.h)(0x64D6181B)
@@ -375,7 +376,7 @@ I (USB_Device\class\Include\usb_hid.h)(0x63B43EF2)
 I (Configure_Periph\inc\usbd_hw.h)(0x64AE6492)
 I (User\inc\can_egurm.h)(0x64C8F468)
 I (Configure_Periph\inc\can_init_egurm.h)(0x64C8F468)
-I (User\inc\adc_egurm.h)(0x64CB7EFE)
+I (User\inc\adc_egurm.h)(0x64D71D60)
 I (Configure_Periph\inc\adc_init_egurm.h)(0x64C8EE19)
 I (User\inc\timers_10_and_100_us.h)(0x64D3994E)
 I (Configure_Periph\inc\timers_10_and_100_us_init.h)(0x64CB6C1C)
@@ -428,16 +429,16 @@ I (USB_Device\device\Include\usb_ch9_std.h)(0x63B43EF3)
 I (Configure_Periph\inc\usbd_conf.h)(0x6482D05D)
 I (USB_Device\class\Include\usb_hid.h)(0x63B43EF2)
 I (Configure_Periph\inc\usbd_hw.h)(0x64AE6492)
-I (User\inc\adc_egurm.h)(0x64CB7EFE)
+I (User\inc\adc_egurm.h)(0x64D71D60)
 I (Configure_Periph\inc\adc_init_egurm.h)(0x64C8EE19)
 I (User\inc\timers_10_and_100_us.h)(0x64D3994E)
 I (Configure_Periph\inc\timers_10_and_100_us_init.h)(0x64CB6C1C)
 I (User\inc\usart_akip_1148a.h)(0x64D64C6D)
 I (Configure_Periph\inc\usart_akip_1148a_init.h)(0x64D6181B)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdio.h)(0x63888F58)
-F (.\Configure_Periph\src\adc_init_egurm.c)(0x64C90E85)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ./gd32e50x/cmsis/include -I ./gd32e50x/standard_peripheral/Include -I ./User/inc -I ./USB_Device/class/Include -I ./USB_Device/device/Include -I ./USB_Device/usbd/Include -I ./User/src -I ./CAN/inc -I ./Configure_Periph/inc-I./RTE/_GD32E503RET6-IC:/Users/ABDURAHIM/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/ABDURAHIM/AppData/Local/Arm/Packs/GigaDevice/GD32E50x_DFP/1.3.3/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DGD32E50x_HD -D_RTE_ -DGD32E50X -DGD32E50X_HD-o ./objects/adc_init_egurm.o -MD)
+F (.\Configure_Periph\src\adc_init_egurm.c)(0x64D71F1A)(-xc -std=c11 --target=arm-arm-none-eabi -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ./gd32e50x/cmsis/include -I ./gd32e50x/standard_peripheral/Include -I ./User/inc -I ./USB_Device/class/Include -I ./USB_Device/device/Include -I ./USB_Device/usbd/Include -I ./User/src -I ./CAN/inc -I ./Configure_Periph/inc-I./RTE/_GD32E503RET6-IC:/Users/ABDURAHIM/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/ABDURAHIM/AppData/Local/Arm/Packs/GigaDevice/GD32E50x_DFP/1.3.3/Device/Include-D__UVISION_VERSION="538" -D_RTE_ -DGD32E50x_HD -D_RTE_ -DGD32E50X -DGD32E50X_HD-o ./objects/adc_init_egurm.o -MD)
 I (Configure_Periph\inc\adc_init_egurm.h)(0x64C8EE19)
-I (User\inc\adc_egurm.h)(0x64CB7EFE)
+I (User\inc\adc_egurm.h)(0x64D71D60)
 I (gd32e50x\cmsis\include\gd32e50x.h)(0x64BFA28A)
 I (gd32e50x\cmsis\include\core_cm33.h)(0x63B43EF4)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x63888F58)
@@ -616,7 +617,7 @@ I (USB_Device\class\Include\usb_hid.h)(0x63B43EF2)
 I (Configure_Periph\inc\usbd_hw.h)(0x64AE6492)
 I (User\inc\can_egurm.h)(0x64C8F468)
 I (Configure_Periph\inc\can_init_egurm.h)(0x64C8F468)
-I (User\inc\adc_egurm.h)(0x64CB7EFE)
+I (User\inc\adc_egurm.h)(0x64D71D60)
 I (Configure_Periph\inc\adc_init_egurm.h)(0x64C8EE19)
 I (User\inc\usart_akip_1148a.h)(0x64D64C6D)
 I (Configure_Periph\inc\usart_akip_1148a_init.h)(0x64D6181B)
@@ -670,7 +671,7 @@ I (USB_Device\class\Include\usb_hid.h)(0x63B43EF2)
 I (Configure_Periph\inc\usbd_hw.h)(0x64AE6492)
 I (User\inc\can_egurm.h)(0x64C8F468)
 I (Configure_Periph\inc\can_init_egurm.h)(0x64C8F468)
-I (User\inc\adc_egurm.h)(0x64CB7EFE)
+I (User\inc\adc_egurm.h)(0x64D71D60)
 I (Configure_Periph\inc\adc_init_egurm.h)(0x64C8EE19)
 I (User\inc\timers_10_and_100_us.h)(0x64D3994E)
 I (Configure_Periph\inc\timers_10_and_100_us_init.h)(0x64CB6C1C)

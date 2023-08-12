@@ -31,7 +31,7 @@ void GetClockFreq(void)
 
 uint8_t speed_can = 0;
 
-int16_t n_m_in = 0, n_m_out = 0, voltage = 0, current = 0;
+int16_t n_m_in = 0, n_m_out = 0, voltage = 0, current = 0, temper = 0;
 int16_t setting_voltage = 0;
 int16_t setting_current = 0;
 
@@ -82,6 +82,7 @@ int main(void)
 		n_m_out = GetMomentOut();
 		voltage = GetVoltage();
 		current = GetCurrent();
+		temper = GetTemperature();
 		
 		temp++;
 		delay_1ms(1000);

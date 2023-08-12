@@ -49,6 +49,7 @@ void AdcGpioConfig(void)
     gpio_init(GPIOC, GPIO_MODE_AIN, GPIO_OSPEED_MAX, GPIO_PIN_1);
     gpio_init(GPIOC, GPIO_MODE_AIN, GPIO_OSPEED_MAX, GPIO_PIN_2);
     gpio_init(GPIOC, GPIO_MODE_AIN, GPIO_OSPEED_MAX, GPIO_PIN_3);
+    gpio_init(GPIOC, GPIO_MODE_AIN, GPIO_OSPEED_MAX, GPIO_PIN_4);
 }
 
 //******************************************************//
@@ -73,7 +74,7 @@ void AdcDmaConfig(void)
     dma_data_parameter.periph_width = DMA_PERIPHERAL_WIDTH_16BIT;
     dma_data_parameter.memory_width = DMA_MEMORY_WIDTH_16BIT;
     dma_data_parameter.direction    = DMA_PERIPHERAL_TO_MEMORY;
-    dma_data_parameter.number       = 4;
+    dma_data_parameter.number       = 5;
     dma_data_parameter.priority     = DMA_PRIORITY_HIGH;
     dma_init(DMA0, DMA_CH0, &dma_data_parameter);
 
@@ -101,13 +102,14 @@ void AdcConfig(void)
     adc_data_alignment_config(ADC0, ADC_DATAALIGN_RIGHT);
 
     /* ADC channel length config */
-    adc_channel_length_config(ADC0, ADC_REGULAR_CHANNEL, 4);
+    adc_channel_length_config(ADC0, ADC_REGULAR_CHANNEL, 5);
 
     /* ADC regular channel config */ 
     adc_regular_channel_config(ADC0, 0, ADC_CHANNEL_12, ADC_SAMPLETIME_7POINT5);
     adc_regular_channel_config(ADC0, 1, ADC_CHANNEL_13, ADC_SAMPLETIME_7POINT5);
     adc_regular_channel_config(ADC0, 2, ADC_CHANNEL_10, ADC_SAMPLETIME_7POINT5);
     adc_regular_channel_config(ADC0, 3, ADC_CHANNEL_11, ADC_SAMPLETIME_7POINT5);
+    adc_regular_channel_config(ADC0, 4, ADC_CHANNEL_14, ADC_SAMPLETIME_7POINT5);
 
     /* ADC trigger config */
     adc_external_trigger_source_config(ADC0, ADC_REGULAR_CHANNEL, ADC0_1_2_EXTTRIG_REGULAR_NONE);

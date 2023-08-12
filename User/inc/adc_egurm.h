@@ -6,6 +6,8 @@
 #include "adc_init_egurm.h"
 
 
+#define RES_R_1											1000
+
 #define DEFAULT_ADC_MOMENT					1970		// ADC at N = 0 N/m
 #define DELTA_ADC_MOMENT						50			// ±0.2V = 40
 #define VALUE_ADC_10V_MOMENT				1850		// for 10V ADC = 1850
@@ -24,7 +26,8 @@ enum adc_buff{
 	MOMENT_IN = 0,
 	MOMENT_OUT,
 	VOLTAGE,
-	CURRENT
+	CURRENT,
+	TEMPERATURE
 };
 
 
@@ -37,5 +40,6 @@ void AverageValueAdcMoment(void);
 int16_t GetVoltage(void);
 int16_t GetCurrent(void);
 void AverageValueAdcVoltAmper(void);
+int16_t GetTemperature(void);
 
 #endif

@@ -1,4 +1,5 @@
 #include "adc_egurm.h"
+#include "t_sense_table.h"
 
 struct valAdcForParam
 {
@@ -6,9 +7,10 @@ struct valAdcForParam
 	uint16_t moment_out;
 	uint16_t voltage;
 	uint16_t current;
+	uint16_t temperature;
 } valAdcParam;
 
-uint16_t adc_buffer[4];
+uint16_t adc_buffer[5];
 
 uint16_t default_adc_moment_in = DEFAULT_ADC_MOMENT;
 uint16_t default_adc_moment_out = DEFAULT_ADC_MOMENT;
@@ -81,20 +83,59 @@ int16_t GetCurrent(void)
 //**************************************************************//
 void AverageValueAdcVoltAmper(void)
 {
-	static uint32_t aver_adc_buff[4] = {0, 0, 0, 0};
+	static uint32_t aver_adc_buff[5] = {0, 0, 0, 0};
 	static uint8_t count = 0;
 	
 	if(count < 100){
-		for(uint8_t i = 2; i < 4; ++i){
+		for(uint8_t i = 2; i < 5; ++i){
 			aver_adc_buff[i] += adc_buffer[i];
 		}
 		++count;
 	} else{
 		valAdcParam.voltage = aver_adc_buff[VOLTAGE]/count;
 		valAdcParam.current = aver_adc_buff[CURRENT]/count;
-		for(uint8_t i = 2; i < 4; ++i){
+		valAdcParam.temperature = aver_adc_buff[TEMPERATURE]/count;
+		for(uint8_t i = 2; i < 5; ++i){
 			aver_adc_buff[i] = 0;
 		}
 		count = 0;
 	}
+}
+//**************************************************************//
+int16_t GetTemperature(void)
+{
+	int32_t res_sens = (valAdcParam.temperature * RES_R_1);
+	res_sens /= (4095 - valAdcParam.temperature);
+	int32_t x_1 = 0, x_2 = 0, y_1 = 0, y_2 = 0;
+	int8_t temper = 0;
+	
+	if(res_sens >= sense_table[0][1]){
+		if(res_sens >= 113500){
+			temper = -99;
+		} else{
+			x_1 = sense_table[0][1];
+			x_2 = sense_table[1][1];
+			y_1 = sense_table[0][0];
+			y_2 = sense_table[1][0];
+			int32_t temp = ((y_2 - y_1)*(res_sens - x_1))/(x_2 - x_1);
+			temp += y_1;
+			temper = (int16_t)temp;
+		}
+	} else if(res_sens <= 97){
+		temper = 99;
+	} else{
+		for(uint8_t i = 0; i < 32; i++){
+			if(res_sens <= sense_table[i][1] && res_sens > sense_table[i + 1][1]){
+				x_1 = sense_table[i][1];
+				x_2 = sense_table[i + 1][1];
+				y_1 = sense_table[i][0];
+				y_2 = sense_table[i + 1][0];
+				break;
+			}
+		}
+		int32_t temp = ((y_2 - y_1)*(res_sens - x_1))/(x_2 - x_1);
+		temp += y_1;
+		temper = (int16_t)temp;
+	}
+	return temper;
 }
