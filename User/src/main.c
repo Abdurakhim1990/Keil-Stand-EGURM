@@ -38,6 +38,19 @@ int16_t setting_current = 0;
 uint8_t flag_set_volt = 0;
 uint8_t flag_set_curr = 0;
 
+uint16_t value_encoder = 0;
+int16_t angle_encoder_in = 0, angle_encoder_out = 0;
+
+uint16_t pwm_mufta = 200;
+
+uint8_t revers_volt = 0;
+
+uint8_t usbd_can_mode = 0;
+
+
+
+
+
 //*******************************************************//
 int main(void)
 {
@@ -60,7 +73,7 @@ int main(void)
 	while(1)
 	{
 		gpio_port_write(GPIOA, (uint8_t)temp << 7);
-		//usbSend();
+		usbSend();
 		if(speed_can == 1){
 			CanConfig(BAUD_RATE_250);
 			speed_can = 0;
@@ -77,12 +90,41 @@ int main(void)
 			SetCurrentEgurm(setting_current);
 		}
 		
+		if(usbd_can_mode == 1){
+			usbd_can_mode = 0;
+			can_deinit(CAN1);
+			rcu_periph_clock_disable(RCU_CAN0);
+			rcu_periph_clock_disable(RCU_CAN1);
+			rcu_periph_clock_enable(RCU_USBD);
+			UsbdActive();
+		} else if(usbd_can_mode == 2){
+			UsbdDisactive();
+			rcu_periph_clock_disable(RCU_USBD);
+			rcu_periph_clock_enable(RCU_CAN0);
+			rcu_periph_clock_enable(RCU_CAN1);
+			CanEgurmInit();
+			usbd_can_mode = 0;
+		}
+		
 		
 		n_m_in = GetMomentIn();
 		n_m_out = GetMomentOut();
 		voltage = GetVoltage();
 		current = GetCurrent();
 		temper = GetTemperature();
+		
+		angle_encoder_in = GetObsalutAngleEncoderIn();
+		SetVoltageEgurm(temp);
+		
+		SetPwmMufta(pwm_mufta);
+		
+		if(revers_volt){
+			IngitionOn();
+//			VoltageReversOn();
+		} else{
+			IngitionOff();
+//			VoltageReversOff();
+		}
 		
 		temp++;
 		delay_1ms(1000);
@@ -93,8 +135,12 @@ void GeneralInitEgurm(void)
 {
 	InitTimerTo10us();
 	InitTimerTo100us();
-	//UsbdEgurmInit();
-	//CanEgurmInit();
 	AdcEgurnInit();
 	UsartAkip1148aInit();
+	EncoderInInit();
+	MuftaEgurmInit();
+	UsbdEgurmInit();
+	//CanEgurmInit();
+	VoltageReversInit();
+	IngitionInit();
 }

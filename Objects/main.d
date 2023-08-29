@@ -43,4 +43,7 @@
   Configure_Periph\inc\timers_10_and_100_us_init.h \
   User\inc\usart_akip_1148a.h \
   Configure_Periph\inc\usart_akip_1148a_init.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdio.h
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdio.h \
+  User\inc\encoder_egurm.h Configure_Periph\inc\encoder_init_egurm.h \
+  User\inc\mufta_egurm.h Configure_Periph\inc\mufta_egurm_init.h \
+  User\inc\voltage_revers.h User\inc\ingition.h

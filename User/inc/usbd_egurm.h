@@ -8,5 +8,7 @@
 
 void UsbdEgurmInit(void);
 void usbSend(void);
+void UsbdActive(void);
+void UsbdDisactive(void);
 
 #endif

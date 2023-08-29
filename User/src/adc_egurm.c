@@ -83,7 +83,7 @@ int16_t GetCurrent(void)
 //**************************************************************//
 void AverageValueAdcVoltAmper(void)
 {
-	static uint32_t aver_adc_buff[5] = {0, 0, 0, 0};
+	static uint32_t aver_adc_buff[5] = {0, 0, 0, 0, 0};
 	static uint8_t count = 0;
 	
 	if(count < 100){

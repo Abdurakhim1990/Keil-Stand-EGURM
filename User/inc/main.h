@@ -9,6 +9,10 @@
 #include "timers_10_and_100_us.h"
 #include "usart_akip_1148a.h"
 #include <stdio.h>
+#include "encoder_egurm.h"
+#include "mufta_egurm.h"
+#include "voltage_revers.h"
+#include "ingition.h"
 
 void GeneralInitEgurm(void);
 

@@ -419,6 +419,26 @@
               <FileType>1</FileType>
               <FilePath>.\User\src\usart_akip_1148a.c</FilePath>
             </File>
+            <File>
+              <FileName>encoder_egurm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\src\encoder_egurm.c</FilePath>
+            </File>
+            <File>
+              <FileName>mufta_egurm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\src\mufta_egurm.c</FilePath>
+            </File>
+            <File>
+              <FileName>voltage_revers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\src\voltage_revers.c</FilePath>
+            </File>
+            <File>
+              <FileName>ingition.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\src\ingition.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -453,6 +473,16 @@
               <FileName>usart_akip_1148a_init.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Configure_Periph\src\usart_akip_1148a_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>encoder_init_egurm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Configure_Periph\src\encoder_init_egurm.c</FilePath>
+            </File>
+            <File>
+              <FileName>mufta_egurm_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Configure_Periph\src\mufta_egurm_init.c</FilePath>
             </File>
           </Files>
         </Group>

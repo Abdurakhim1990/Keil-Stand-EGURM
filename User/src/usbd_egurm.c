@@ -53,3 +53,19 @@ void usbSend(void)
 	}
 }
 
+//*******************************************************//
+void UsbdActive(void)
+{
+	usbd_init(&usbd_custom_hid, &custom_hid_desc, &custom_hid_class);
+	usbd_connect(&usbd_custom_hid);
+	
+	/* wait for standard USB enumeration is finished */
+	while (USBD_CONFIGURED != usbd_custom_hid.cur_status) {
+	}
+}
+
+//*******************************************************//
+void UsbdDisactive(void)
+{
+	usbd_core_deinit(&usbd_custom_hid);
+}
