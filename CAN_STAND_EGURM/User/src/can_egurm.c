@@ -45,7 +45,7 @@ void CanReceive(void)
 void CanTransmit(void)
 {
 		//uint8_t i = 0U;
-    g_transmit_message.tx_efid = CAN_ID_TX_1;
+    g_transmit_message.tx_efid = CAN_ID_EEC1;
 		g_transmit_message.tx_data[0] = 0xA0U;
 		g_transmit_message.tx_data[1] = 0xA1U;
 		g_transmit_message.tx_data[2] = 0xA2U;
