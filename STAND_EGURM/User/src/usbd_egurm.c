@@ -4,12 +4,12 @@ usb_dev usbd_custom_hid;
 
 extern hid_fop_handler fop_handler;
 
-char Send_Buffer[] = " What is this life if, full of care.  ";
+char Send_Buffer[50] = " What is this life if, full of care.  ";
 
 uint8_t length = 38;
 
 
-
+//**-- Инициализация USB --**/
 //*******************************************************//
 void UsbdEgurmInit(void)
 {
@@ -37,7 +37,7 @@ void UsbdEgurmInit(void)
 
 
 //*******************************************************//
-void usbSend(void)
+void usbSendResponse(void)
 {
 	static uint16_t temp = 0;
 	Send_Buffer[0] = 21;
@@ -48,7 +48,18 @@ void usbSend(void)
 	
 	if (USBD_CONFIGURED == usbd_custom_hid.cur_status) {
 			
-		custom_hid_report_send (&usbd_custom_hid, (uint8_t*)Send_Buffer, length);
+		custom_hid_report_send (&usbd_custom_hid, (uint8_t*)Send_Buffer, LEN_REP_RET_PAR);
 			temp++;
 	}
 }
+
+//*********************************************//
+void SendRetStandParameters(uint8_t* send_buff)
+{
+	send_buff[0] = REP_RET_PAR;
+	if (USBD_CONFIGURED == usbd_custom_hid.cur_status) {
+		custom_hid_report_send (&usbd_custom_hid, (uint8_t*)send_buff, LEN_REP_RET_PAR);
+	}
+}
+
+

@@ -39,11 +39,13 @@ OF SUCH DAMAGE.
 
 #include "usbd_enum.h"
 #include "usb_hid.h"
+#include "stand_control.h"
 
-#define DESC_LEN_REPORT             106//96U
+#define DESC_LEN_REPORT             95U
 #define DESC_LEN_CONFIG             41U
 
 #define MAX_PERIPH_NUM              4U
+
 
 typedef struct 
 {

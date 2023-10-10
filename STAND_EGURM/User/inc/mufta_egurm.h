@@ -4,6 +4,7 @@
 #include "main.h"
 #include "mufta_egurm_init.h"
 
-void SetPwmMufta(uint16_t val_pwm);
+void SetPwmMufta(void);
+void SetMomentOut(int16_t val_moment);
 
 #endif

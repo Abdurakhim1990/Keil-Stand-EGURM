@@ -29,6 +29,8 @@ void GetClockFreq(void)
 	clock_freq.CK_USART = rcu_clock_freq_get(CK_USART);
 }
 
+void ServoMotor(void);
+
 uint8_t speed_can = 0;
 
 int16_t n_m_in = 0, n_m_out = 0, voltage = 0, current = 0, temper = 0;
@@ -41,14 +43,11 @@ uint8_t flag_set_curr = 0;
 uint16_t value_encoder = 0;
 int16_t angle_encoder_in = 0, angle_encoder_out = 0;
 
-uint16_t pwm_mufta = 200;
+uint16_t pwm_mufta = 0;
 
 uint8_t revers_volt = 0;
 
 uint8_t usbd_can_mode = 0;
-
-
-
 
 
 //*******************************************************//
@@ -72,48 +71,92 @@ int main(void)
 	
 	while(1)
 	{
-		gpio_port_write(GPIOA, (uint8_t)temp << 7);
-		usbSend();
-		if(flag_set_volt == 1){
-			SetVoltageEgurm(setting_voltage);
-		}
-		if(flag_set_curr == 1){
-			SetCurrentEgurm(setting_current);
-		}
-		
-		n_m_in = GetMomentIn();
-		n_m_out = GetMomentOut();
-		voltage = GetVoltage();
-		current = GetCurrent();
-		temper = GetTemperature();
-		
-		angle_encoder_in = GetObsalutAngleEncoderIn();
-		SetVoltageEgurm(temp);
-		
-		SetPwmMufta(pwm_mufta);
-		
-		if(revers_volt){
-			IngitionOn();
+	gpio_port_write(GPIOA, (uint8_t)temp << 7);
+	//usbSendResponse();
+//	if(flag_set_volt == 1){
+//		SetVoltageEgurm(setting_voltage);
+//	}
+//	if(flag_set_curr == 1){
+//		SetCurrentEgurm(setting_current);
+//	}
+//	
+//	n_m_in = GetMomentIn();
+//	n_m_out = GetMomentOut();
+//	voltage = GetVoltage();
+//	current = GetCurrent();
+//	temper = GetTemperature();
+//	
+//	angle_encoder_in = GetAngleEncoderIn();
+//	SetVoltageEgurm(temp);
+//	
+//	SetPwmMufta(pwm_mufta);
+//	
+//	if(revers_volt){
+//		IngitionOn();
 //			VoltageReversOn();
-		} else{
-			IngitionOff();
+//	} else{
+//		IngitionOff();
 //			VoltageReversOff();
-		}
-		
+//	}
+	ServoMotor();
 		temp++;
 		delay_1ms(1000);
 	}
 }
 
+<<<<<<< Updated upstream
+=======
+int32_t pos_angle = 360;			// угол поворота
+int16_t speed_motor = 50;		// частота вращения
+uint32_t torque = 10;					// крутящий момент
+uint8_t main_servo_mode = 0;	
+
+void ServoMotor(void)
+{
+	switch (main_servo_mode) {
+		/*--------------------------------- SET TORQUE -----------------------------------*/
+		case 1:
+			ServoSetTorque(torque); 											// (1) set torque
+			break;
+		/*------------------------------------ JOG ---------------------------------------*/
+		case 2:
+			SetSpeedServoRotate(speed_motor);					// (2) jog mode - on and direct rotation
+			break;
+		case 3:
+			SetSpeedServoRotate(-speed_motor);				// (3) jog mode - on and reverse rotation
+			break;
+		case 4:
+			ServoJogModeStopRotation();										// (4) jog mode - stop rotation
+			break;
+		/*-------------------------------- POSITIONING -----------------------------------*/
+		case 5:
+			ServoPosModeOnAndRotate(pos_angle);						// (5) pos mode - on and direct rotation
+			break;
+		case 6:
+			ServoPosModeOnAndRotate(-pos_angle);					// (6) pos mode - on and reverse rotation
+			break;
+		case 7:
+			ServoPosModeStopRotation();               		// (7) pos mode - stop rotation
+			break;
+		default:
+			break;
+	}
+	main_servo_mode = 0;
+}
+
+>>>>>>> Stashed changes
 void GeneralInitEgurm(void)
 {
 	InitTimerTo10us();
 	InitTimerTo100us();
 	AdcEgurnInit();
 	UsartAkip1148aInit();
+	ServoInit();
+	ServoInit();
 	EncoderInInit();
-	MuftaEgurmInit();
+	MUFTA_PWMEgurmInit();
 	UsbdEgurmInit();
+	PeriodUsbReturnInit();
 	VoltageReversInit();
 	IngitionInit();
 }

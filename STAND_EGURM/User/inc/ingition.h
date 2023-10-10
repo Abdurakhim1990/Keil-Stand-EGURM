@@ -12,5 +12,6 @@
 void IngitionInit(void);
 void IngitionOn(void);
 void IngitionOff(void);
+void SetIngition(int16_t val);
 
 #endif

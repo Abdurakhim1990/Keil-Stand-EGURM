@@ -164,7 +164,8 @@
 typedef enum {
 	jog,
 	positioning,
-	ready
+	ready,
+	end_rotation
 } servo_state;
 
 typedef enum {
@@ -176,14 +177,12 @@ typedef enum {
 } servo_func_mode;
 
 typedef enum {
-	jog_on,
 	jog_off,
 	jog_direct_rotation,
 	jog_reverse_rotation,
 	jog_stop,
 } servo_jog_functions;
 
-#define JOG_ON							0
 #define JOG_OFF							1
 #define JOG_DIRECT_ROT			2
 #define JOG_REVERSE_ROT			3
@@ -192,16 +191,12 @@ typedef enum {
 typedef enum {
 	pos_on,
 	pos_off,
-	pos_config,
-	pos_path_length,
 	pos_break,
 } servo_pos_functions;
 
 #define POS_ON							0
 #define POS_OFF							1
-#define POS_CONFIG					2
-#define POS_PATH_LENGTH			3
-#define POS_BREAK						4
+#define POS_BREAK						2
 
 uint8_t* GetServoTxBuff(void);
 void ServoUsartDmaRxData(uint16_t response_size);
@@ -218,15 +213,19 @@ void ServoEmgStop(void);
 void ServoSetFreq(uint16_t freq);
 void ServoSetAccelerationTime(uint32_t acceleration_time);
 void ServoSetPathLength(int32_t path);
+<<<<<<< Updated upstream
+=======
+void ServoSetTorque(int16_t torque_in_percents);
+>>>>>>> Stashed changes
 
-void ServoPositioningModeOn(void);
-void ServoPositioningModeOff(void);
-void ServoPositioningModeConfig(void);
-void ServoPositioningModePathLength(void);
-void ServoPositioningModeBreak(void);
+/* ----------- POS MODE ----------- */
+void ServoPosModeOnAndRotate(int16_t path_length); // пользовательская
+void ServoPosModeOn(void);
+void ServoPosModeStopRotation(void);
+void ServoPosModeOff(void);
 
-
-void ServoJogModeOn(void);
+/* ----------- JOG MODE ----------- */
+void SetSpeedServoRotate(int16_t freq);	// пользовательская
 void ServoJogModeOff(void);
 void ServoJogModeDirectRotation(void);
 void ServoJogModeReversRotation(void);

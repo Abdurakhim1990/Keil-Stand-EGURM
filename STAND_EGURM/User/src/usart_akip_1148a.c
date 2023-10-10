@@ -11,7 +11,7 @@ uint8_t number_command = 0;
 uint8_t set_mode_akip = 0;
 
 
-
+//**-- Передача пакета сообщения к АКИП1148 через COM - порт --**//
 //**************************************************//
 void AkipSend(void)
 {
@@ -30,12 +30,14 @@ void AkipSend(void)
 	//while(RESET == dma_flag_get(AKIP_DMA, AKIP_DMA_CH_TX, DMA_FLAG_FTF));
 }
 
+//**-- Взять адрес буффера akip_tx_buffer --**//
 //******************************************************//
 uint8_t* GetAkipTxBuff(void)
 {
 	return (uint8_t*)akip_tx_buffer;
 }
 
+//----------------------------------------------------------------------
 //******************************************************//
 void Period1MsForAkip(void)
 {
@@ -48,6 +50,7 @@ void Period1MsForAkip(void)
 	}
 }
 
+//**-- Определяет длина строки --**//
 //******************************************************//
 uint8_t GetAkipCommandLength(char* str)
 {
@@ -59,6 +62,7 @@ uint8_t GetAkipCommandLength(char* str)
 	return len;
 }
 
+//**-- Пакеты для установки напряжения и тока --**//
 //******************************************************//
 void SetParametr(void)
 {
@@ -96,15 +100,25 @@ void SetParametr(void)
 	}
 }
 
+//**-- Установить напряжение питания --**//
+//**-- voltage = (0 - 500), Uизд. = voltage/10 (0 - 50.0)В
 //******************************************************//
-void SetVoltageEgurm(uint16_t voltage)
+void SetVoltageEgurm(int16_t voltage)
 {
+	SetCurrentEgurm(MAX_CURRENT);
 	set_mode_akip |= (1 << MODE_VOLTAGE_FLAG);
+	if(voltage < 0){
+		VoltageReversOn();
+		voltage = -voltage;
+	} else{
+		VoltageReversOff();
+	}
 	set_voltage = (voltage > MAX_VOLTAGE ? MAX_VOLTAGE : voltage);
 	number_command = 0;
 	SetParametr();
 }
 
+//**-- Формирования пакета для установки напряжения
 //******************************************************//
 void SetVoltageAkip(void)
 {
@@ -122,6 +136,8 @@ void SetVoltageAkip(void)
 	}
 }
 
+//**-- Установить ток потребления --**//
+//**-- current = (0 - 600), Iизд. = current/10 (0 - 60.0)В
 //******************************************************//
 void SetCurrentEgurm(uint16_t current)
 {
@@ -133,6 +149,7 @@ void SetCurrentEgurm(uint16_t current)
 	}
 }
 
+//**-- Формирования пакета для установки тока
 //******************************************************//
 void SetCurrentAkip(void)
 {

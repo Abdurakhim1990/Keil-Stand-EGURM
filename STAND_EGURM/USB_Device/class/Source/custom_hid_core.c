@@ -219,74 +219,66 @@ usb_class custom_hid_class = {
 
 const uint8_t customhid_report_descriptor[DESC_LEN_REPORT] =
 {
-    0x06, 0x00, 0xFF,  /* USAGE_PAGE (Vendor Defined: 0xFF00) */
-    0x09, 0x00,        /* USAGE (Custom Device)               */
-    0xa1, 0x01,        /* COLLECTION (Application)            */
+    0x06, 0x00, 0xFF,		/* USAGE_PAGE (Vendor Defined: 0xFF00) */
+    0x09, 0x00,					/* USAGE (Custom Device)               */
+    0xa1, 0x01,					/* COLLECTION (Application)            */
 
-    /* led 1 */
-    0x85, 0x11,        /* REPORT_ID (0x11)          */
-    0x09, 0x01,        /* USAGE (LED 1)             */
-    0x15, 0x00,        /* LOGICAL_MINIMUM (0)       */
-    0x25, 0x01,        /* LOGICAL_MAXIMUM (1)       */
-    0x75, 0x08,        /* REPORT_SIZE (8)           */
-    0x95, 0x01,        /* REPORT_COUNT (1)          */
-    0x91, 0x82,        /* OUTPUT (Data,Var,Abs,Vol) */
+    /* Set parameters */
+    0x85, REP_SET_PAR,					/* REPORT_ID (0x11)          */
+    0x09, 0x01,									/* USAGE (SET PARAMETERS)    */
+    0x15, 0x00,									/* LOGICAL_MINIMUM (0)       */
+    0x26, 0xff, 0x00,						/* LOGICAL_MAXIMUM (1)       */
+    0x75, 0x08,									/* REPORT_SIZE (8)           */
+    0x95, (LEN_REP_SET_PAR-2),	/* REPORT_COUNT (1)          */
+    0x91, 0x82,									/* OUTPUT (Data,Var,Abs,Vol) */
 
-    /* led 2 */
-    0x85, 0x12,        /* REPORT_ID (0x12)          */
-    0x09, 0x02,        /* USAGE (LED 2)             */
-    0x15, 0x00,        /* LOGICAL_MINIMUM (0)       */
-    0x25, 0x01,        /* LOGICAL_MAXIMUM (1)       */
-    0x75, 0x08,        /* REPORT_SIZE (8)           */
-    0x95, 0x01,        /* REPORT_COUNT (1)          */
-    0x91, 0x82,        /* OUTPUT (Data,Var,Abs,Vol) */
+    /* Request parameters */
+    0x85, REP_REQ_PAR,					/* REPORT_ID (0x12)          */
+    0x09, 0x02,									/* USAGE (REQUEST PARAMETERS)*/
+    0x15, 0x00,									/* LOGICAL_MINIMUM (0)       */
+    0x26, 0xff, 0x00,						/* LOGICAL_MAXIMUM (1)       */
+    0x75, 0x08,									/* REPORT_SIZE (8)           */
+    0x95, (LEN_REP_REQ_PAR-2),	/* REPORT_COUNT (1)          */
+    0x91, 0x82,									/* OUTPUT (Data,Var,Abs,Vol) */
 
-    /* led 3 */
-    0x85, 0x13,        /* REPORT_ID (0x13)          */
-    0x09, 0x03,        /* USAGE (LED 3)             */
-    0x15, 0x00,        /* LOGICAL_MINIMUM (0)       */
-    0x25, 0x01,        /* LOGICAL_MAXIMUM (1)       */
-    0x75, 0x08,        /* REPORT_SIZE (8)           */
-    0x95, 0x0a,        /* REPORT_COUNT (1)          */
-    0x91, 0x82,        /* OUTPUT (Data,Var,Abs,Vol) */
+    /* Write firmware */
+    0x85, REP_WRT_FIRM,					/* REPORT_ID (0x13)          */
+    0x09, 0x03,									/* USAGE (WRITE FIRMWARE)    */
+    0x15, 0x00,									/* LOGICAL_MINIMUM (0)       */
+    0x26, 0xff, 0x00,						/* LOGICAL_MAXIMUM (1)       */
+    0x75, 0x08,									/* REPORT_SIZE (8)           */
+    0x95, (LEN_REP_WRT_FIRM-2), /* REPORT_COUNT (1)          */
+    0x91, 0x82,									/* OUTPUT (Data,Var,Abs,Vol) */
+		
+    /* Return parameters */
+    0x85, REP_RET_PAR,					/* REPORT_ID (0x15)          */
+    0x09, 0x05,									/* USAGE (RETURN PARAMETERS) */
+    0x15, 0x00,									/* LOGICAL_MINIMUM (0)       */
+    0x26, 0xff, 0x00,						/* LOGICAL_MAXIMUM (1)       */
+    0x75, 0x08,									/* REPORT_SIZE (1)           */
+    0x95, LEN_REP_RET_PAR-2,		/* REPORT_COUNT (1)          */
+    0x81, 0x82,									/* INPUT (Data,Var,Abs,Vol)  */
 
-    /* led 4 */
-    0x85, 0x14,        /* REPORT_ID (0x14)          */
-    0x09, 0x04,        /* USAGE (LED 4)             */
-    0x15, 0x00,        /* LOGICAL_MINIMUM (0)       */
-    0x25, 0x01,        /* LOGICAL_MAXIMUM (1)       */
-    0x75, 0x08,        /* REPORT_SIZE (8)           */
-    0x95, 0x01,        /* REPORT_COUNT (1)          */
-    0x91, 0x82,        /* OUTPUT (Data,Var,Abs,Vol) */
+    0x75, 0x08,					/* REPORT_SIZE (7)           */
+    0x95, 0x01,					/* REPORT_COUNT (1)          */
+    0x81, 0x03,					/* INPUT (Cnst,Var,Abs,Vol)  */
 
-    /* wakeup key */
-    0x85, 0x15,        /* REPORT_ID (0x15)          */
-    0x09, 0x05,        /* USAGE (Push Button)       */
-    0x15, 0x00,        /* LOGICAL_MINIMUM (0)       */
-    0x26, 0xff, 0x7f,       /* LOGICAL_MAXIMUM (1)       */
-    0x75, 16,        /* REPORT_SIZE (1)           */
-    0x95, 18,        /* REPORT_COUNT (1)          */
-    0x81, 0x02,        /* INPUT (Data,Var,Abs,Vol)  */
+    /* Read firmware */
+    0x85, REP_RD_FIRM,					/* REPORT_ID (0x16)          */
+    0x09, 0x06,									/* USAGE (READ FIRMWARE)     */
+    0x15, 0x00,									/* LOGICAL_MINIMUM (0)       */
+    0x26, 0xff, 0x00,						/* LOGICAL_MAXIMUM (1)       */
+    0x75, 0x08,									/* REPORT_SIZE (1)           */
+    0x95, LEN_REP_RD_FIRM-2,		/* REPORT_COUNT (1)          */
+    0x81, 0x02,									/* INPUT (Data,Var,Abs,Vol)  */
 
-    0x75, 8,        /* REPORT_SIZE (7)           */
-    0x95, 0x01,        /* REPORT_COUNT (1)          */
-    0x81, 0x03,        /* INPUT (Cnst,Var,Abs,Vol)  */
+    0x75, 0x08,					/* REPORT_SIZE (7)           */
+    0x95, 0x01,					/* REPORT_COUNT (1)          */
+    0x81, 0x03,					/* INPUT (Cnst,Var,Abs,Vol)  */
 
-    /* tamper key */
-    0x85, 0x16,        /* REPORT_ID (0x16)          */
-    0x09, 0x06,        /* USAGE (Push Button)       */
-    0x15, 0x00,        /* LOGICAL_MINIMUM (0)       */
-    0x26, 0xff, 0x00,        /* LOGICAL_MAXIMUM (1)       */
-    0x75, 0x08,        /* REPORT_SIZE (1)           */
-    0x95, 0x02,        /* REPORT_COUNT (1)          */
-    0x81, 0x02,        /* INPUT (Data,Var,Abs,Vol)  */
-
-    0x75, 0x08,        /* REPORT_SIZE (7)           */
-    0x95, 0x01,        /* REPORT_COUNT (1)          */
-    0x81, 0x03,        /* INPUT (Cnst,Var,Abs,Vol)  */
-
-    0xc0               /* END_COLLECTION            */
+    0xc0								/* END_COLLECTION            */
 };
+
 
 /*!
     \brief      register HID interface operation functions
@@ -338,7 +330,7 @@ static uint8_t custom_hid_init (usb_dev *udev, uint8_t config_index)
     usbd_ep_init(udev, EP_BUF_SNG, HID_TX_ADDR, &(custom_hid_config_desc.hid_epin));
     usbd_ep_init(udev, EP_BUF_SNG, HID_RX_ADDR, &(custom_hid_config_desc.hid_epout));
 
-    usbd_ep_recev (udev, CUSTOMHID_OUT_EP, hid_handler.data, 2U);
+    usbd_ep_recev (udev, CUSTOMHID_OUT_EP, hid_handler.data, 10/*2U*/);
 
     udev->ep_transc[EP_ID(CUSTOMHID_IN_EP)][TRANSC_IN] = custom_hid_class.data_in;
     udev->ep_transc[EP_ID(CUSTOMHID_OUT_EP)][TRANSC_OUT] = custom_hid_class.data_out;
@@ -461,7 +453,10 @@ static void custom_hid_data_in (usb_dev *udev, uint8_t ep_num)
     return;
 }
 
-uint8_t Receive_Buffer[15];
+uint8_t Receive_Buffer[36];
+uint8_t Receive_Buffer1[36];
+uint8_t Receive_Buffer2[16];
+uint8_t* reciv_buffer;
 /*!
     \brief      handle custom HID data out transaction
     \param[in]  udev: pointer to USB device instance
@@ -471,49 +466,61 @@ uint8_t Receive_Buffer[15];
 */
 static void custom_hid_data_out (usb_dev *udev, uint8_t ep_num)
 {
-    custom_hid_handler *hid = (custom_hid_handler *)udev->class_data[CUSTOM_HID_INTERFACE];
+	custom_hid_handler *hid = (custom_hid_handler *)udev->class_data[CUSTOM_HID_INTERFACE];
 
-    if (CUSTOMHID_OUT_EP == ep_num){
-
-        switch (hid->data[0]){
-        case 0x11:
-            if (RESET != hid->data[1]) {
-                /* turn on led1  */
-                //gd_eval_led_on(LED1);
-            } else {
-                //gd_eval_led_off(LED1);
-            }
-            break;
-        case 0x12:
-            if (RESET != hid->data[1]) {
-                //gd_eval_led_on(LED2);
-            } else {
-                //gd_eval_led_off(LED2);
-            }
-            break;
-        case 0x13:
-            if (RESET != hid->data[1]) {
-                //gd_eval_led_on(LED3);
-            } else {
-                //gd_eval_led_off(LED3);
-            }
-            break;
-        case 0x14:
-            if (RESET != hid->data[1]) {
-                //gd_eval_led_on(LED4);
-            } else {
-                //gd_eval_led_off(LED4);
-            }
-            break;
-        default:
-            /* turn off all LEDs */
-            /*gd_eval_led_off(LED1);
-            gd_eval_led_off(LED2);
-            gd_eval_led_off(LED3);
-            gd_eval_led_off(LED4);*/
-            break;
-        }
-
-        usbd_ep_recev(udev, CUSTOMHID_OUT_EP, Receive_Buffer/*hid->data*/, 10U);
-    }
+	static uint8_t count_usb_rx_data = 0;
+	static uint8_t len_usb_rx_data = 0;
+	static uint8_t id_report = 0;
+	static uint8_t len_package = 10;
+	
+	if (CUSTOMHID_OUT_EP == ep_num){
+		if(count_usb_rx_data == 0){
+			switch (hid->data[0]){
+			case REP_SET_PAR:
+				id_report = REP_SET_PAR;
+				len_usb_rx_data = LEN_REP_SET_PAR;
+			  reciv_buffer = ReadBuffUsbSetParam();
+				 break;
+			case REP_REQ_PAR:
+				id_report = REP_REQ_PAR;
+				len_usb_rx_data = LEN_REP_REQ_PAR;
+				reciv_buffer = ReadBuffUsbReqParam();
+				break;
+			case REP_WRT_FIRM:
+				id_report = REP_WRT_FIRM;
+				len_usb_rx_data = LEN_REP_WRT_FIRM;
+				reciv_buffer = ReadBuffUsbWriteFirmware();
+				break;
+			default:
+				len_usb_rx_data = 0;
+				reciv_buffer = Receive_Buffer;
+				break;
+			}
+		}
+		
+		for(uint8_t i = 0; i < len_package; ++i, ++count_usb_rx_data){
+			*(reciv_buffer + count_usb_rx_data) = *(hid->data + i);
+		}
+		
+		if(count_usb_rx_data == len_usb_rx_data){
+			count_usb_rx_data = 0;
+			
+			switch (id_report){
+			case REP_SET_PAR:
+				SetStandParameters();
+				break;
+			case REP_REQ_PAR:
+				
+				break;
+			case REP_WRT_FIRM:
+				
+				break;
+			}
+			
+			
+		}
+		
+		usbd_ep_recev(udev, CUSTOMHID_OUT_EP, hid->data, len_package);
+		
+	}
 }

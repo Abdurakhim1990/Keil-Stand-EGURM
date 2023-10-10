@@ -36,4 +36,20 @@ void UartcanDmaRxData(uint16_t response_size)
     dma_channel_enable(UARTCAN_DMA, UARTCAN_DMA_CH_RX);
 }
 
+//*******************************************************************//
+void SetEngineSpeed(int16_t speed)
+{
+	
+}
 
+//*******************************************************************//
+void SetCarSpeed(int16_t speed)
+{
+	
+}
+
+//*******************************************************************//
+int16_t GetAngleEgurm(void)
+{
+	return 0;
+}

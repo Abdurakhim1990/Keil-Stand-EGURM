@@ -14,6 +14,7 @@
 #include "ingition.h"
 #include "servo_mr_j2s_a.h"
 #include "uartcan.h"
+#include "stand_control.h"
 
 void GeneralInitEgurm(void);
 

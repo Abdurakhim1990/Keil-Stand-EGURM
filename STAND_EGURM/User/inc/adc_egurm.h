@@ -27,7 +27,12 @@ enum adc_buff{
 	MOMENT_OUT,
 	VOLTAGE,
 	CURRENT,
-	TEMPERATURE
+	TEMPERATURE,
+	CUR_INJ,
+	DPR_1,
+	DPR_2,
+	DPR_3,
+	DPR_4,
 };
 
 

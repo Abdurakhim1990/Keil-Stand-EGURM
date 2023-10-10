@@ -8,20 +8,23 @@ struct valAdcForParam
 	uint16_t voltage;
 	uint16_t current;
 	uint16_t temperature;
+	uint16_t cur_inj;
+	uint16_t dpr[4];
 } valAdcParam;
 
-uint16_t adc_buffer[5];
+uint16_t adc_buffer[10];
 
 uint16_t default_adc_moment_in = DEFAULT_ADC_MOMENT;
 uint16_t default_adc_moment_out = DEFAULT_ADC_MOMENT;
 
-
+//**-- Взять адрес буффера ADC --**//
 //**************************************************************//
 uint16_t* pGetAdcValue(void)
 {
 	return (uint16_t*) adc_buffer;
 }
 
+//**-- Установка значения ADC при моментах М = 0 --**//
 //**************************************************************//
 void SetDefaultSenseMoment(void)
 {
@@ -35,18 +38,25 @@ void SetDefaultSenseMoment(void)
 	}
 }
 
+//**-- Получить входной момент --**//
 //**************************************************************//
 int16_t GetMomentIn(void)
 {
-	return((default_adc_moment_in - valAdcParam.moment_in)*TORQUE_N_M_IN)/VALUE_ADC_10V_MOMENT;
+	int16_t delta_moment = (default_adc_moment_in > valAdcParam.moment_in ? 
+		(default_adc_moment_in - valAdcParam.moment_in) : (valAdcParam.moment_in - default_adc_moment_in));
+	return((delta_moment)*TORQUE_N_M_IN)/VALUE_ADC_10V_MOMENT;
 }
 
+//**-- Получить выходной момент --**//
 //**************************************************************//
 int16_t GetMomentOut(void)
 {
-	return((default_adc_moment_out - valAdcParam.moment_out)*TORQUE_N_M_OUT)/VALUE_ADC_10V_MOMENT;
+	int16_t delta_moment = (default_adc_moment_out > valAdcParam.moment_out ? 
+		(default_adc_moment_out - valAdcParam.moment_out) : (valAdcParam.moment_out - default_adc_moment_out));
+	return((delta_moment)*TORQUE_N_M_OUT)/VALUE_ADC_10V_MOMENT;
 }
 
+//**-- Усреднение значений входного и выходного моментов --**//
 //**************************************************************//
 void AverageValueAdcMoment(void)
 {
@@ -68,26 +78,29 @@ void AverageValueAdcMoment(void)
 	}
 }
 
+//**-- Получить напряжение питания ЭГУРМ --**//
 //**************************************************************//
 int16_t GetVoltage(void)
 {
 	return (valAdcParam.voltage * VOLT_50_VOLTAGE)/VALUE_ADC_50V_VOLTAGE;
 }
 
+//**-- Получить ток потребления ЭГУРМ --**//
 //**************************************************************//
 int16_t GetCurrent(void)
 {
 	return((valAdcParam.current - ADC_CURRENT_0A)*CURRENT_1000_AMPER)/DELTA_ADC_1000A_CURRENT;
 }
 
+//**-- Усреднение значений напряжения, тока и температуры --**//
 //**************************************************************//
 void AverageValueAdcVoltAmper(void)
 {
-	static uint32_t aver_adc_buff[5] = {0, 0, 0, 0, 0};
+	static uint32_t aver_adc_buff[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 	static uint8_t count = 0;
 	
 	if(count < 100){
-		for(uint8_t i = 2; i < 5; ++i){
+		for(uint8_t i = 2; i < 10; ++i){
 			aver_adc_buff[i] += adc_buffer[i];
 		}
 		++count;
@@ -95,12 +108,19 @@ void AverageValueAdcVoltAmper(void)
 		valAdcParam.voltage = aver_adc_buff[VOLTAGE]/count;
 		valAdcParam.current = aver_adc_buff[CURRENT]/count;
 		valAdcParam.temperature = aver_adc_buff[TEMPERATURE]/count;
-		for(uint8_t i = 2; i < 5; ++i){
+		valAdcParam.cur_inj = aver_adc_buff[CUR_INJ]/count;
+		for(size_t i = 0; i < 4; ++i){
+			valAdcParam.dpr[i] = aver_adc_buff[DPR_1 + i]/count;
+		}
+		
+		for(uint8_t i = 2; i < 10; ++i){
 			aver_adc_buff[i] = 0;
 		}
 		count = 0;
 	}
 }
+
+//**-- Получить температуру окружающей среды --**//
 //**************************************************************//
 int16_t GetTemperature(void)
 {

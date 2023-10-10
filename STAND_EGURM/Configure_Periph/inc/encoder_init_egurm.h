@@ -21,28 +21,25 @@
 
 
 #define ENCODER_OUT_A_B_RCU_GPIO							RCU_GPIOB
-#define ENCODER_OUT_R_RCU_GPIO								RCU_GPIOB
 #define ENCODER_OUT_A_B_RCU_TIMER							RCU_TIMER3
-#define ENCODER_OUT_R_RCU_TIMER								RCU_TIMER10
 
 #define ENCODER_OUT_A_B_GPIO									GPIOB
-#define ENCODER_OUT_R_GPIO										GPIOB
 #define ENCODER_OUT_A_GPIO_PIN								GPIO_PIN_6
 #define ENCODER_OUT_B_GPIO_PIN								GPIO_PIN_7
-#define ENCODER_OUT_R_GPIO_PIN								GPIO_PIN_9
 #define ENCODER_OUT_A_B_TIMER									TIMER3
-#define ENCODER_OUT_R_TIMER										TIMER10
 #define ENCODER_OUT_A_B_TIMER_IRQHandler			TIMER3_IRQHandler
 #define ENCODER_OUT_A_B_TIMER_IRQn						TIMER3_IRQn
 
 
+#define PERIOD_FOR_SPEED_RCU_TIMER						RCU_TIMER10
+#define PERIOD_FOR_SPEED_TIMER								TIMER10
 
 
 void EncoderInGpioInit(void);
 void EncoderIn_A_B_Init(void);
 void EncoderIn_R_Init(void);
 void EncoderOut_A_B_Init(void);
-void EncoderOut_R_Init(void);
+void PeriodForSpeedInit(void);
 void EncoderInInit(void);
 
 #endif

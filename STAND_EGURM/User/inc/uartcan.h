@@ -9,5 +9,8 @@
 
 
 uint8_t* GetUartcanTxBuff(void);
+void SetEngineSpeed(int16_t speed);
+void SetCarSpeed(int16_t speed);
+int16_t GetAngleEgurm(void);
 
 #endif

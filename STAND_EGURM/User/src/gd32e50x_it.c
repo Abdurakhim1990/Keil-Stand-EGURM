@@ -58,7 +58,7 @@ void NMI_Handler(void)
 void HardFault_Handler(void)
 {
     /* if Hard Fault exception occurs, go to infinite loop */
-	
+	__NOP();
 	struct 
   {
     uint32_t r0;
@@ -77,8 +77,7 @@ void HardFault_Handler(void)
       "ITE EQ \n"   //Значение указателя стека имеет бит 3?
       "MRSEQ %[ptr], MSP  \n"  //Да, сохраняем основной указатель стека
       "MRSNE %[ptr], PSP  \n"  //Нет, сохраняем указатель стека процесса
-      : [ptr] "=r" (stack_ptr)
-      );
+      : [ptr] "=r" (stack_ptr));
 	
     while (1){
     }

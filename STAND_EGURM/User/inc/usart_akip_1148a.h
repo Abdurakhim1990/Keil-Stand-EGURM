@@ -22,7 +22,7 @@ uint8_t* GetAkipTxBuff(void);
 void Period1MsForAkip(void);
 uint8_t GetAkipCommandLength(char* str);
 void SetParametr(void);
-void SetVoltageEgurm(uint16_t voltage);
+void SetVoltageEgurm(int16_t voltage);
 void SetVoltageAkip(void);
 void SetCurrentEgurm(uint16_t current);
 void SetCurrentAkip(void);

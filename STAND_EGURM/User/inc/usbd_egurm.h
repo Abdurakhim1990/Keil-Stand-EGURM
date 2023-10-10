@@ -7,6 +7,7 @@
 
 
 void UsbdEgurmInit(void);
-void usbSend(void);
+void usbSendResponse(void);
+void SendRetStandParameters(uint8_t* send_buff);
 
 #endif

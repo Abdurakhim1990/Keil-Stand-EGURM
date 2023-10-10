@@ -23,3 +23,15 @@ void IngitionOff(void)
 {
 	gpio_bit_reset(INGITION_GPIO, INGITION_GPIO_PIN);
 }
+
+uint8_t my_ingition = 0;
+//**********************************************************//
+void SetIngition(int16_t val)
+{
+	my_ingition++;
+	if(val){
+		IngitionOn();
+	} else{
+		IngitionOn();
+	}
+}

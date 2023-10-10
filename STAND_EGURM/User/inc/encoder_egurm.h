@@ -4,6 +4,8 @@
 #include "main.h"
 #include "encoder_init_egurm.h"
 
-int16_t GetObsalutAngleEncoderIn(void);
+int16_t GetAngleEncoderIn(void);
+int16_t GetAngleEncoderOut(void);
+int16_t GetSteeringSpeed(void);
 
 #endif

@@ -26,34 +26,24 @@ void Period200ms(void)
 	//Period1MsForAkip();
 }
 
-/*!
-    \brief      this function handles TIMER5 interrupt request.
-    \param[in]  none
-    \param[out] none
-    \retval     none
-*/
+//**-- Таймер 5 настроен на период 10 мкс --**//
 void TIMER5_DAC_IRQHandler(void)
 {
 	if(SET == timer_interrupt_flag_get(TIMER5, TIMER_INT_UP)){
-			/* clear channel 0 interrupt bit */
-			timer_interrupt_flag_clear(TIMER5, TIMER_INT_UP);
-			
-			Period10us();
+		/* clear channel 0 interrupt bit */
+		timer_interrupt_flag_clear(TIMER5, TIMER_INT_UP);
+		
+		Period10us();
 	}
 }
 
-/*!
-    \brief      this function handles TIMER5 interrupt request.
-    \param[in]  none
-    \param[out] none
-    \retval     none
-*/
+//**-- Таймер 6 настроен на период 100 мкс --**//
 void TIMER6_IRQHandler(void)
 {
 	if(SET == timer_interrupt_flag_get(TIMER6, TIMER_INT_UP)){
-			/* clear channel 0 interrupt bit */
-			timer_interrupt_flag_clear(TIMER6, TIMER_INT_UP);
-			
-			Period100us();
+		/* clear channel 0 interrupt bit */
+		timer_interrupt_flag_clear(TIMER6, TIMER_INT_UP);
+		
+		Period100us();
 	}
 }
