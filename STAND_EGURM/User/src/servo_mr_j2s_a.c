@@ -18,7 +18,6 @@ servo_state servo_status = ready;
 uint16_t servo_freq = 100;
 uint32_t servo_acceleration_time = 1000;
 int32_t pos_mode_path_length = 1000;
-uint32_t servo_torque = 0;
 
 uint8_t servo_is_ready_cnt = 0;
 uint8_t servo_rd_on = 0;
@@ -175,20 +174,6 @@ void ServoSetPathLength(int32_t path)
 	pos_mode_path_length = path;
 }
 
-//*********************** *********************************//
-/*!
-\brief      Ограничение крутящего момента в процентах
-		\param[in]  
-		\param[in]
-\arg					0 - (0 - 100)percents
-    \param[out] none
-		\retval     none
-*/
-void ServoSetTorque(uint32_t torque_in_percents)
-{
-	servo_torque = torque_in_percents;
-}
-
 //***************************************************************//
 /*!
 \brief      Включает режим позиционирования
@@ -216,8 +201,7 @@ void ServoPositioningModeOn(void)
 			ServoSendWriteCommand4(WRITE_TEST_OPERATING_MODE, SET_TEST_MODE, TEST_MODE_POSITIONING, 0);
 		case 3:
 			servo_pos_functions_cnt[POS_ON] = 0;
-			servo_mode = timer_mode;
-			ServoTimerEnable();
+			servo_mode = nothing_mode;
 			break;
 		default:
 			break;
@@ -271,7 +255,6 @@ void ServoPositioningModeOff(void)
 void ServoPositioningModeConfig(void)
 {
 	switch (servo_pos_functions_cnt[POS_CONFIG]) {
-		///////////////////////////////////////////////
 		case 0:
 			servo_mode = pos_mode;
 			pos_func = pos_config;
@@ -283,13 +266,9 @@ void ServoPositioningModeConfig(void)
 			ServoSendWriteCommand8(TEST_MODE, POS_MODE_ACCELERATION_TIME, servo_acceleration_time, 0);
 			break;
 		case 2:
-			servo_pos_functions_cnt[POS_CONFIG] = 3;
-			ServoSendWriteCommand8(WRITE_PARAMS, 0x1C, servo_torque, 0);
-			break;
-		case 3:
 			servo_pos_functions_cnt[POS_CONFIG] = 0;
 			ServoSendWriteCommand8(TEST_MODE_INPUT_SIGNAL, POS_MODE_SON_LSP_LSN_ON, POS_MODE_SON_LSP_LSN_ON_DATA, 0);
-			servo_mode = timer_mode;
+			servo_mode = nothing_mode;
 			break;
 		default:
 			break;
@@ -313,7 +292,7 @@ void ServoPositioningModePathLength(void)
 		ServoSendWriteCommand8(TEST_MODE, POS_MODE_SET_PATH_LENGTH, pos_mode_path_length, 0);
 	} else if (servo_pos_functions_cnt[POS_PATH_LENGTH] == 1) {
 		servo_pos_functions_cnt[POS_PATH_LENGTH] = 0;
-		servo_mode = timer_mode;
+		servo_mode = nothing_mode;
 	}
 }
 
@@ -422,7 +401,6 @@ void ServoJogModeOff(void)
 void ServoJogModeDirectRotation(void) 
 {
 	switch (servo_jog_functions_cnt[JOG_DIRECT_ROT]) {
-		///////////////////////////////////////////////
 		case 0:
 			servo_mode = jog_mode;
 			jog_func = jog_direct_rotation;
@@ -434,10 +412,6 @@ void ServoJogModeDirectRotation(void)
 			ServoSendWriteCommand8(TEST_MODE, POS_MODE_ACCELERATION_TIME, servo_acceleration_time, 0);
 			break;
 		case 2:
-			servo_jog_functions_cnt[JOG_DIRECT_ROT] = 3;
-			ServoSendWriteCommand8(WRITE_PARAMS, 0x1C, servo_torque, 0);
-			break;
-		case 3:
 			servo_jog_functions_cnt[JOG_DIRECT_ROT] = 0;
 			ServoSendWriteCommand8(TEST_MODE_INPUT_SIGNAL, POS_MODE_SON_LSP_LSN_ON, JOG_MODE_DIRECT_ROTATION, 0);
 			servo_mode = timer_mode;
@@ -458,7 +432,6 @@ void ServoJogModeDirectRotation(void)
 void ServoJogModeReversRotation(void)
 {
 	switch (servo_jog_functions_cnt[JOG_REVERSE_ROT]) {
-		///////////////////////////////////////////////
 		case 0:
 			servo_mode = jog_mode;
 			jog_func = jog_reverse_rotation;
@@ -470,10 +443,6 @@ void ServoJogModeReversRotation(void)
 			ServoSendWriteCommand8(TEST_MODE, POS_MODE_ACCELERATION_TIME, servo_acceleration_time, 0);
 			break;
 		case 2:
-			servo_jog_functions_cnt[JOG_DIRECT_ROT] = 3;
-			ServoSendWriteCommand8(WRITE_PARAMS, 0x1C, servo_torque, 0);
-			break;
-		case 3:
 			servo_jog_functions_cnt[JOG_REVERSE_ROT] = 0;
 			ServoSendWriteCommand8(TEST_MODE_INPUT_SIGNAL, POS_MODE_SON_LSP_LSN_ON, JOG_MODE_REVERSE_ROTATION, 0);
 			servo_mode = timer_mode;
@@ -568,36 +537,22 @@ void ServoCheckRdOn(void)
     \param[out] none
     \retval     none
 */
-void SERVO_TIMER_IRQHandler(void)
+void TIMER0_BRK_TIMER8_IRQHandler(void)
 {
 	if(SET == timer_interrupt_flag_get(TIMER8, TIMER_INT_UP)){
 			/* clear channel 0 interrupt bit */
 			timer_interrupt_flag_clear(TIMER8, TIMER_INT_UP);
 			
 			if (servo_mode == timer_mode) {
-			gpio_bit_set(GPIOA, GPIO_PIN_8);
-				if (servo_status == jog)
-					ServoSendReadCommand(READ_STATE, DATA_FEEDBACK_IMPULSES, RESPONSE_SIZE_STATE, 0);
-				else if (servo_status == positioning)
-					ServoSendReadCommand(READ_STATE, DATA_FEEDBACK_IMPULSES, RESPONSE_SIZE_STATE, 0);
+			//gpio_bit_set(GPIOA, GPIO_PIN_8);
+			if (servo_status == jog)
+				ServoSendReadCommand(READ_STATE, DATA_FEEDBACK_IMPULSES, RESPONSE_SIZE_STATE, 0);
+			else if (servo_status == positioning)
+				ServoSendReadCommand(READ_STATE, DATA_FEEDBACK_IMPULSES, RESPONSE_SIZE_STATE, 0);
 		}
 	}
 }
 	
-/*!
-    \brief      this function handles DMA_Channel5_IRQHandler interrupt
-    \param[in]  none
-    \param[out] none
-    \retval     none
-*/
-void SERVO_DMA_Channel_IRQHandler_Tx(void)
-{
-	if(RESET != dma_interrupt_flag_get(SERVO_DMA, SERVO_DMA_CH_TX, DMA_INT_FLAG_FTF)) {
-        dma_interrupt_flag_clear(SERVO_DMA, SERVO_DMA_CH_TX, DMA_INT_FLAG_G);
-		gpio_bit_set(GPIOA, GPIO_PIN_7);
-    }
-}
-
 /*!
     \brief      this function handles DMA_Channel5_IRQHandler interrupt
     \param[in]  none
@@ -612,7 +567,7 @@ void SERVO_DMA_Channel_IRQHandler_Rx(void)
 		dma_transfer_number_config(SERVO_DMA, SERVO_DMA_CH_RX, servo_rx_size);
 		dma_channel_enable(SERVO_DMA, SERVO_DMA_CH_RX);
 		dma_interrupt_flag_clear(SERVO_DMA, SERVO_DMA_CH_RX, DMA_INT_FLAG_G); 
-		gpio_bit_reset(GPIOA, GPIO_PIN_7);
+		
 		ServoHandleError();
 		
 		switch (servo_mode) {
@@ -675,7 +630,7 @@ void SERVO_DMA_Channel_IRQHandler_Rx(void)
 				}
 				break;
 			case timer_mode:
-				gpio_bit_reset(GPIOA, GPIO_PIN_8);
+				//gpio_bit_reset(GPIOA, GPIO_PIN_8);
 				break;
 			case nothing_mode:
 				break;

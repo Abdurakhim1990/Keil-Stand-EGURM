@@ -21,7 +21,6 @@ void ServoInit(void/*servo_baudrate _baudrate*/)
 //************************************************//
 void ServoUsartInit(void)
 {
-	rcu_periph_clock_enable(RCU_AF);
   /* enable COM GPIO clock */
   rcu_periph_clock_enable(SERVO_RCU_GPIO);
   
@@ -36,7 +35,7 @@ void ServoUsartInit(void)
 
   /* USART configure */
   usart_deinit(SERVO_USART);
-  usart_baudrate_set(SERVO_USART, SERVO_BAUD_RATE);
+  usart_baudrate_set(SERVO_USART, BAUDRATE_57600);
   usart_receive_config(SERVO_USART, USART_RECEIVE_ENABLE);
   usart_transmit_config(SERVO_USART, USART_TRANSMIT_ENABLE);
 	usart_parity_config(SERVO_USART, USART_PM_EVEN);

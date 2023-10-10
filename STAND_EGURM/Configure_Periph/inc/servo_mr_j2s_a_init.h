@@ -3,13 +3,6 @@
 
 #include "servo_mr_j2s_a.h"
 
-typedef enum {
-	BAUDRATE_9600 = 9600,
-	BAUDRATE_19200 = 19200,
-	BAUDRATE_38400 = 38400,
-	BAUDRATE_57600 = 57600
-} servo_baudrate;
-
 #define	SERVO_RCU_USART							RCU_USART1
 #define	SERVO_RCU_GPIO							RCU_GPIOA
 #define	SERVO_RCU_DMA								RCU_DMA0
@@ -20,7 +13,7 @@ typedef enum {
 #define	SERVO_GPIO_PIN_TX						GPIO_PIN_2
 #define	SERVO_GPIO_PIN_RX						GPIO_PIN_3
 			
-#define	SERVO_BAUD_RATE							BAUDRATE_57600
+#define	SERVO_BAUD_RATE							19200U
 #define	SERVO_DMA										DMA0
 #define	SERVO_DMA_CH_TX							DMA_CH6
 #define	SERVO_DMA_CH_RX							DMA_CH5
@@ -36,9 +29,13 @@ typedef enum {
 
 #define	SERVO_RCU_TIMER							RCU_TIMER8
 #define SERVO_TIMER									TIMER8
-#define SERVO_TIMER_IRQHandler		TIMER0_BRK_TIMER8_IRQHandler
 
-
+typedef enum {
+	BAUDRATE_9600 = 9600,
+	BAUDRATE_19200 = 19200,
+	BAUDRATE_38400 = 38400,
+	BAUDRATE_57600 = 57600
+} servo_baudrate;
 
 //__IO FlagStatus g_transfer_complete = SET;
 

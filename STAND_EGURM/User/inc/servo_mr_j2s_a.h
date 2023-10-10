@@ -218,7 +218,6 @@ void ServoEmgStop(void);
 void ServoSetFreq(uint16_t freq);
 void ServoSetAccelerationTime(uint32_t acceleration_time);
 void ServoSetPathLength(int32_t path);
-void ServoSetTorque(uint32_t torque_in_percent);
 
 void ServoPositioningModeOn(void);
 void ServoPositioningModeOff(void);
