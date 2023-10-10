@@ -444,6 +444,11 @@
               <FileType>1</FileType>
               <FilePath>.\User\src\uartcan.c</FilePath>
             </File>
+            <File>
+              <FileName>stand_control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\src\stand_control.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -493,6 +498,11 @@
               <FileName>uartcan_init.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Configure_Periph\src\uartcan_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>stand_control_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Configure_Periph\src\stand_control_init.c</FilePath>
             </File>
           </Files>
         </Group>
