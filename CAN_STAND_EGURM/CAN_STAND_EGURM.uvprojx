@@ -10,6 +10,7 @@
       <TargetName>GD32E503RET6</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <pArmCC>6190000::V6.19::ARMCLANG</pArmCC>
       <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
@@ -395,11 +396,6 @@
               <FilePath>.\User\src\main.c</FilePath>
             </File>
             <File>
-              <FileName>can_egurm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\User\src\can_egurm.c</FilePath>
-            </File>
-            <File>
               <FileName>timers_10_and_100_us.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\User\src\timers_10_and_100_us.c</FilePath>
@@ -408,6 +404,31 @@
               <FileName>uartcan.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\User\src\uartcan.c</FilePath>
+            </File>
+            <File>
+              <FileName>can_egurm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\src\can_egurm.c</FilePath>
+            </File>
+            <File>
+              <FileName>can_dm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\src\can_dm.c</FilePath>
+            </File>
+            <File>
+              <FileName>can_sas_message.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\src\can_sas_message.c</FilePath>
+            </File>
+            <File>
+              <FileName>can_uds.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\src\can_uds.c</FilePath>
+            </File>
+            <File>
+              <FileName>test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\src\test.c</FilePath>
             </File>
           </Files>
         </Group>

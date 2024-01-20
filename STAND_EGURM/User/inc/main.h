@@ -15,6 +15,7 @@
 #include "servo_mr_j2s_a.h"
 #include "uartcan.h"
 #include "stand_control.h"
+#include "stand_error.h"
 
 void GeneralInitEgurm(void);
 

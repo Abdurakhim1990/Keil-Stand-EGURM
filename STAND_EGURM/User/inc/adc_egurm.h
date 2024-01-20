@@ -18,9 +18,11 @@
 #define VOLT_50_VOLTAGE							500			// for V = 10V V = 10*10
 			
 #define ADC_CURRENT_0A							2044		// ADC at I = 0 A
-#define DELTA_ADC_1000A_CURRENT			25			// ADC = 25 at I = 1 A
-#define CURRENT_1000_AMPER					10			// 1 A * 100
+#define DELTA_ADC_1A_CURRENT				25			// ADC = 25 at I = 1 A
+#define CURRENT_1_AMPER							10			// 1 A * 100
 
+#define ADC_DM_5_V									3050//3102
+#define DM_5_VOLTAGE								50
 
 enum adc_buff{
 	MOMENT_IN = 0,
@@ -29,10 +31,10 @@ enum adc_buff{
 	CURRENT,
 	TEMPERATURE,
 	CUR_INJ,
-	DPR_1,
-	DPR_2,
-	DPR_3,
-	DPR_4,
+	DM_1,
+	DM_2,
+	DM_3,
+	DM_4,
 };
 
 
@@ -46,5 +48,10 @@ int16_t GetVoltage(void);
 int16_t GetCurrent(void);
 void AverageValueAdcVoltAmper(void);
 int16_t GetTemperature(void);
+int16_t GetVoltageDM_1(void);
+int16_t GetVoltageDM_2(void);
+int16_t GetVoltageDM_3(void);
+int16_t GetVoltageDM_4(void);
+int16_t GetCurrentInjition(void);
 
 #endif

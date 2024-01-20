@@ -49,6 +49,7 @@ uint8_t revers_volt = 0;
 
 uint8_t usbd_can_mode = 0;
 
+int16_t dpr_voltage[4] = {0, 0, 0, 0};
 
 //*******************************************************//
 int main(void)
@@ -72,6 +73,10 @@ int main(void)
 	while(1)
 	{
 	gpio_port_write(GPIOA, (uint8_t)temp << 7);
+		dpr_voltage[0] = GetVoltageDM_1();
+		dpr_voltage[1] = GetVoltageDM_2();
+		dpr_voltage[2] = GetVoltageDM_3();
+		dpr_voltage[3] = GetVoltageDM_4();
 	//usbSendResponse();
 //	if(flag_set_volt == 1){
 //		SetVoltageEgurm(setting_voltage);
@@ -104,8 +109,6 @@ int main(void)
 	}
 }
 
-<<<<<<< Updated upstream
-=======
 int32_t pos_angle = 360;			// угол поворота
 int16_t speed_motor = 50;		// частота вращения
 uint32_t torque = 10;					// крутящий момент
@@ -144,7 +147,6 @@ void ServoMotor(void)
 	main_servo_mode = 0;
 }
 
->>>>>>> Stashed changes
 void GeneralInitEgurm(void)
 {
 	InitTimerTo10us();

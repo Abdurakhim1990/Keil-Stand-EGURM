@@ -6,6 +6,10 @@
 #include "can_egurm.h"
 #include "timers_10_and_100_us.h"
 #include "uartcan.h"
+#include <stdio.h>
+#include "can_dm.h"
+#include "can_uds.h"
+#include "test.h"
 
 void GeneralInitEgurm(void);
 

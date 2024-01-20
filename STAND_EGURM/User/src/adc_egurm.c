@@ -9,7 +9,7 @@ struct valAdcForParam
 	uint16_t current;
 	uint16_t temperature;
 	uint16_t cur_inj;
-	uint16_t dpr[4];
+	uint16_t dm[4];
 } valAdcParam;
 
 uint16_t adc_buffer[10];
@@ -89,7 +89,7 @@ int16_t GetVoltage(void)
 //**************************************************************//
 int16_t GetCurrent(void)
 {
-	return((valAdcParam.current - ADC_CURRENT_0A)*CURRENT_1000_AMPER)/DELTA_ADC_1000A_CURRENT;
+	return((valAdcParam.current - ADC_CURRENT_0A)*CURRENT_1_AMPER)/DELTA_ADC_1A_CURRENT;
 }
 
 //**-- Усреднение значений напряжения, тока и температуры --**//
@@ -110,7 +110,7 @@ void AverageValueAdcVoltAmper(void)
 		valAdcParam.temperature = aver_adc_buff[TEMPERATURE]/count;
 		valAdcParam.cur_inj = aver_adc_buff[CUR_INJ]/count;
 		for(size_t i = 0; i < 4; ++i){
-			valAdcParam.dpr[i] = aver_adc_buff[DPR_1 + i]/count;
+			valAdcParam.dm[i] = aver_adc_buff[DM_1 + i]/count;
 		}
 		
 		for(uint8_t i = 2; i < 10; ++i){
@@ -158,4 +158,43 @@ int16_t GetTemperature(void)
 		temper = (int16_t)temp;
 	}
 	return temper;
+}
+
+//**-- Получить напряжение датчика момента ДПР 1 --**//
+//**************************************************************//
+int16_t GetVoltageDM_1(void)
+{
+	int32_t volt = (valAdcParam.dm[0] * DM_5_VOLTAGE) / ADC_DM_5_V;
+	return (int16_t)volt;
+}
+
+//**-- Получить напряжение датчика момента ДПР 2 --**//
+//**************************************************************//
+int16_t GetVoltageDM_2(void)
+{
+	int32_t volt = (valAdcParam.dm[1] * DM_5_VOLTAGE) / ADC_DM_5_V;
+	return (int16_t)volt;
+}
+
+//**-- Получить напряжение датчика момента ДПР 3 --**//
+//**************************************************************//
+int16_t GetVoltageDM_3(void)
+{
+	int32_t volt = (valAdcParam.dm[2] * DM_5_VOLTAGE) / ADC_DM_5_V;
+	return (int16_t)volt;
+}
+
+//**-- Получить напряжение датчика момента ДПР 4 --**//
+//**************************************************************//
+int16_t GetVoltageDM_4(void)
+{
+	int32_t volt = (valAdcParam.dm[3] * DM_5_VOLTAGE) / ADC_DM_5_V;
+	return (int16_t)volt;
+}
+
+//**-- Получить ток потребления по цепи зажигания ЭГУРМ --**//
+//**************************************************************//
+int16_t GetCurrentInjition(void)
+{
+	return((valAdcParam.cur_inj - ADC_CURRENT_0A)*CURRENT_1_AMPER)/DELTA_ADC_1A_CURRENT;
 }

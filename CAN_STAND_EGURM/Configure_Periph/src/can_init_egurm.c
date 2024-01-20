@@ -33,9 +33,11 @@ void CanConfig(uint16_t baud_rate)
 
     /* configure CAN1 NVIC */
     nvic_irq_enable(CAN1_RX0_IRQn, 0U, 0U);
+    nvic_irq_enable(CAN1_TX_IRQn, 0U, 0U);
 
     /* enable can receive FIFO0 not empty interrupt */
     can_interrupt_enable(CAN1, CAN_INTEN_RFNEIE0);
+    can_interrupt_enable(CAN1, CAN_INTEN_TMEIE);
 }
 
 //*******************************************************//
@@ -74,27 +76,55 @@ void ConfigBaudRateCan(can_parameter_struct *can_parameter, uint16_t baud_rate)
 */
 void FilterInit(void)
 {
-		//rcu_periph_clock_enable(RCU_CAN0);
-	
-    can_filter_parameter_struct can_filter;
+		can_filter_parameter_struct can_filter;
 	
 		/* initialize filter */
     /* configure filter mode */
     can_filter.filter_mode = CAN_FILTERMODE_LIST;
     can_filter.filter_bits = CAN_FILTERBITS_32BIT;
-    /* configure filter ID */
-    can_filter.filter_list_high = (uint16_t)(CAN_ID_RX_1 >> 13);
-    can_filter.filter_list_low = (uint16_t)(CAN_ID_RX_1 << 3)|CAN_IDE_32;
-    /* configure filter mask */
-    can_filter.filter_mask_high = (uint16_t)(CAN_ID_RX_2 >> 13);
-    can_filter.filter_mask_low = (uint16_t)(CAN_ID_RX_2 << 3)|CAN_IDE_32;
-    /* select receiver fifo */
-    can_filter.filter_fifo_number = CAN_FIFO0;
-    can_filter.filter_number = 15U;
+		can_filter.filter_fifo_number = CAN_FIFO0;
     can_filter.filter_enable = ENABLE;
+    
+    /* configure filter ID */
+    //*******************************************************************************//
+		can_filter.filter_list_high = (uint16_t)(CAN_ID_SAS_CS >> 13);
+    can_filter.filter_list_low = (uint16_t)(CAN_ID_SAS_CS << 3)|CAN_IDE_32;
+    /* configure filter mask */
+    can_filter.filter_mask_high = (uint16_t)(CAN_ID_DM1SINGLE >> 13);
+    can_filter.filter_mask_low = (uint16_t)(CAN_ID_DM1SINGLE << 3)|CAN_IDE_32;
+    /* select receiver fifo */
+    can_filter.filter_number = 15U;
     can_filter_init(CAN1, &can_filter);
 		
-		//rcu_periph_clock_disable(RCU_CAN0);
+		//*******************************************************************************//
+		can_filter.filter_list_high = (uint16_t)(CAN_ID_DM1BAM >> 13);
+    can_filter.filter_list_low = (uint16_t)(CAN_ID_DM1BAM << 3)|CAN_IDE_32;
+    /* configure filter mask */
+    can_filter.filter_mask_high = (uint16_t)(CAN_ID_DM1PACK >> 13);
+    can_filter.filter_mask_low = (uint16_t)(CAN_ID_DM1PACK << 3)|CAN_IDE_32;
+    /* select receiver fifo */
+    can_filter.filter_number = 16U;
+    can_filter_init(CAN1, &can_filter);
+		
+		//*******************************************************************************//
+		can_filter.filter_list_high = (uint16_t)(CAN_ID_DM2SINGLE >> 13);
+    can_filter.filter_list_low = (uint16_t)(CAN_ID_DM2SINGLE << 3)|CAN_IDE_32;
+    /* configure filter mask */
+    can_filter.filter_mask_high = (uint16_t)(CAN_ID_DM2BAM >> 13);
+    can_filter.filter_mask_low = (uint16_t)(CAN_ID_DM2BAM << 3)|CAN_IDE_32;
+    /* select receiver fifo */
+    can_filter.filter_number = 17U;
+    can_filter_init(CAN1, &can_filter);
+		
+		//*******************************************************************************//
+		can_filter.filter_list_high = (uint16_t)(CAN_ID_DM2PACK >> 13);
+    can_filter.filter_list_low = (uint16_t)(CAN_ID_DM2PACK << 3)|CAN_IDE_32;
+    /* configure filter mask */
+    can_filter.filter_mask_high = (uint16_t)(CAN_ID_UDS_RESPONSE >> 13);
+    can_filter.filter_mask_low = (uint16_t)(CAN_ID_UDS_RESPONSE << 3)|CAN_IDE_32;
+    /* select receiver fifo */
+    can_filter.filter_number = 18U;
+    can_filter_init(CAN1, &can_filter);
 }
 
 //*******************************************************//

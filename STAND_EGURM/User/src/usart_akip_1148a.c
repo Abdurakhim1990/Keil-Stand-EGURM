@@ -9,6 +9,7 @@ int16_t set_current = 0;
 uint8_t set_delta_volt = 0;
 uint8_t number_command = 0;
 uint8_t set_mode_akip = 0;
+int16_t get_current_ms = 0;
 
 
 //**-- Передача пакета сообщения к АКИП1148 через COM - порт --**//
@@ -70,32 +71,34 @@ void SetParametr(void)
 	
 	switch(number_command){
 		case 0:
-						sprintf(akip_tx_buffer, "SYSTem:ERRor?\n");
-						number_command = 1;
-						set_delta_volt = 0;
-						AkipSend();
+			sprintf(akip_tx_buffer, "SYSTem:ERRor?\n");
+			number_command = 1;
+			set_delta_volt = 0;
+			AkipSend();
 		break;
 		case 1:
-						if(akip_code_error == 0){
-							number_command = 2;
-						} else{
-							sprintf(akip_tx_buffer, "SYSTem:ERRor?\n");
-							AkipSend();
-							break;
-						}
+			if(akip_code_error == 0){
+				number_command = 2;
+			} else{
+				sprintf(akip_tx_buffer, "SYSTem:ERRor?\n");
+				AkipSend();
+				break;
+			}
 		case 2:
-						if(set_mode_akip & (1 << MODE_CURRENT_FLAG)){
-							SetCurrentAkip();
-						} else if(set_mode_akip == (1 << MODE_VOLTAGE_FLAG)){
-							SetVoltageAkip();
-						}
+			if(set_mode_akip & (1 << MODE_CURRENT_FLAG)){
+				SetCurrentAkip();
+			} else if((set_mode_akip & (1 << MODE_CURR_MS_FLAG)) && set_voltage <= (GetVoltage() + 5) && set_voltage >= (GetVoltage() - 5)){
+				SetCurrentAkip();
+			} else if(set_mode_akip & (1 << MODE_VOLTAGE_FLAG)){
+				SetVoltageAkip();
+			}
 		break;
 		case 3:
-						if(set_mode_akip & (1 << MODE_CURRENT_FLAG)){
-							number_command = 0;
-						} else if(set_mode_akip == (1 << MODE_VOLTAGE_FLAG)){
-							number_command = 2;
-						}
+			if(set_mode_akip & (1 << MODE_CURRENT_FLAG)){
+				number_command = 0;
+			} else if(set_mode_akip == (1 << MODE_VOLTAGE_FLAG)){
+				number_command = 2;
+			}
 		break;
 	}
 }
@@ -123,11 +126,17 @@ void SetVoltageEgurm(int16_t voltage)
 void SetVoltageAkip(void)
 {
 	if(set_voltage == 0){
+		set_mode_akip &= ~(1 << MODE_CURR_MS_FLAG);
 		set_mode_akip &= ~(1 << MODE_VOLTAGE_FLAG);
 		number_command = 0;
 		sprintf(akip_tx_buffer, "SYST:REM\nOUTP 0\nVOLT 0\n");
 		AkipSend();
 	} else{
+		if(set_voltage < GetVoltage()){
+			--set_delta_volt;
+		} else if(set_voltage > GetVoltage()){
+			++set_delta_volt;
+		}
 		uint8_t int_volt = (set_voltage + set_delta_volt)/10;
 		uint8_t mantis_volt = (set_voltage + set_delta_volt)%10;
 		number_command = 3;
@@ -161,6 +170,13 @@ void SetCurrentAkip(void)
 	set_mode_akip &= ~(1 << MODE_CURRENT_FLAG);
 }
 
+//*********************************************//
+int16_t GetCurrentMs(void)
+{
+	set_mode_akip |= (1 << MODE_CURR_MS_FLAG);
+	return get_current_ms;
+}
+
 //*******************************************************//
 void AKIP_USART_IRQHandler_Rx(void)
 {
@@ -184,27 +200,26 @@ void AKIP_USART_IRQHandler_Rx(void)
 	}
 }
 
-
 //***************---AKIP-1148A RS232_Tx---***********//
 void AKIP_DMA_Channel_IRQHandler_Tx(void)
 {
-    if(RESET != dma_interrupt_flag_get(AKIP_DMA, AKIP_DMA_CH_TX, DMA_INT_FLAG_FTF)){
-				dma_interrupt_flag_clear(AKIP_DMA, AKIP_DMA_CH_TX, DMA_INT_FLAG_G);
-    }
+	if(RESET != dma_interrupt_flag_get(AKIP_DMA, AKIP_DMA_CH_TX, DMA_INT_FLAG_FTF)){
+		dma_interrupt_flag_clear(AKIP_DMA, AKIP_DMA_CH_TX, DMA_INT_FLAG_G);
+		
+	}
 }
 
 //***************---AKIP-1148A RS232_Rx---***********//
 void AKIP_DMA_Channel_IRQHandler_Rx(void)
 {
-    if(RESET != dma_interrupt_flag_get(AKIP_DMA, AKIP_DMA_CH_RX, DMA_INT_FLAG_FTF)){
-				dma_flag_clear(AKIP_DMA, AKIP_DMA_CH_RX, DMA_FLAG_G);
-				dma_channel_disable(AKIP_DMA, AKIP_DMA_CH_RX);
-				
-				dma_transfer_number_config(AKIP_DMA, AKIP_DMA_CH_RX, AKIP_DMA_RX_SIZE);
-				dma_channel_enable(AKIP_DMA, AKIP_DMA_CH_RX);
-				
-				dma_interrupt_flag_clear(AKIP_DMA, AKIP_DMA_CH_RX, DMA_INT_FLAG_G);
-    }
+	if(RESET != dma_interrupt_flag_get(AKIP_DMA, AKIP_DMA_CH_RX, DMA_INT_FLAG_FTF)){
+		dma_flag_clear(AKIP_DMA, AKIP_DMA_CH_RX, DMA_FLAG_G);
+		dma_channel_disable(AKIP_DMA, AKIP_DMA_CH_RX);
+		
+		dma_transfer_number_config(AKIP_DMA, AKIP_DMA_CH_RX, AKIP_DMA_RX_SIZE);
+		dma_channel_enable(AKIP_DMA, AKIP_DMA_CH_RX);
+		
+		dma_interrupt_flag_clear(AKIP_DMA, AKIP_DMA_CH_RX, DMA_INT_FLAG_G);
+	}
 }
-
 

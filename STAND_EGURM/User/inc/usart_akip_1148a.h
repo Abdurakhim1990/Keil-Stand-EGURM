@@ -15,6 +15,7 @@ enum MAX_PARARAMETRS{
 enum MODE_AKIP{
 	MODE_CURRENT_FLAG	= 0,
 	MODE_VOLTAGE_FLAG	= 1,
+	MODE_CURR_MS_FLAG	= 2,
 };
 
 void AkipSend(void);
