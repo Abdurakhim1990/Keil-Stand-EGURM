@@ -8,8 +8,10 @@
 #include "uartcan.h"
 #include <stdio.h>
 #include "can_dm.h"
+#include "can_uds_service.h"
 #include "can_uds.h"
 #include "test.h"
+
 
 void GeneralInitEgurm(void);
 

@@ -90,7 +90,8 @@ void DtcMessages(DiagnosticMess* Dm, uint8_t data)
 	} else if(Dm->byte_num_dtc == 3){
 		Dm->DTCsActive[Dm->num_dtc].occur_count = (data & 0x7F);
 		Dm->DTCsActive[Dm->num_dtc].spn_method = ((data & 0x80) >> 7);
-		
+	} else {
+		__ASM("NOP");
 	}
 	++Dm->byte_num_dtc;
 	Dm->num_dtc += Dm->byte_num_dtc/4;

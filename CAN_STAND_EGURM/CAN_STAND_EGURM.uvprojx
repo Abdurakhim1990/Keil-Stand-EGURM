@@ -331,7 +331,7 @@
             <uGnu>1</uGnu>
             <useXO>0</useXO>
             <v6Lang>5</v6Lang>
-            <v6LangP>3</v6LangP>
+            <v6LangP>8</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
             <v6Lto>0</v6Lto>
@@ -429,6 +429,21 @@
               <FileName>test.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\User\src\test.c</FilePath>
+            </File>
+            <File>
+              <FileName>can_uds_service.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\src\can_uds_service.c</FilePath>
+            </File>
+            <File>
+              <FileName>can_uds_response.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\src\can_uds_response.c</FilePath>
+            </File>
+            <File>
+              <FileName>can_uds_request.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\src\can_uds_request.c</FilePath>
             </File>
           </Files>
         </Group>

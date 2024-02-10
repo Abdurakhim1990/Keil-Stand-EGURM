@@ -72,19 +72,28 @@ void CanTransmitTachographSpeed(uint16_t tachograph_speed)
 }
 
 //*******************************************************//
-void CanTransmitDM3(void)
+void CanTransmitDM2andDM3(mode_dm2_dm3 mode)
 {
-	//tachograph_speed = (tachograph_speed % 251) * 256;
-	//
-	//can_transmit_message.tx_efid = CAN_ID_DM3;
-	//for(size_t i = 0; i < 8; ++i){
-	//	can_transmit_message.tx_data[i] = 0xFF;
-	//}
-	//
-	//can_transmit_message.tx_data[6] = (uint8_t)(0x00FF & tachograph_speed);
-	//can_transmit_message.tx_data[7] = (uint8_t)(0x00FF & (tachograph_speed >> 8));
-	///* transmit message */
-	//can_message_transmit(CAN1, &can_transmit_message);
+	can_trasnmit_message_struct transmit_message;
+	
+	transmit_message.tx_efid = CAN_ID_DM3;
+	transmit_message.tx_sfid = 0x00;
+	transmit_message.tx_ft = CAN_FT_DATA;
+	transmit_message.tx_ff = CAN_FF_EXTENDED;
+	transmit_message.tx_dlen = 8;
+	if(mode == DM_RESET_ERROR){
+		transmit_message.tx_data[0] = 0xCB;
+		transmit_message.tx_data[1] = 0xFE;
+		transmit_message.tx_data[2] = 0x00;
+	} else if(mode == DM_READ_ERROR){
+		transmit_message.tx_data[0] = 0xCC;
+		transmit_message.tx_data[1] = 0xFE;
+		transmit_message.tx_data[2] = 0x00;
+	}
+	for(size_t i = 3; i < 8; ++i){
+		transmit_message.tx_data[i] = 0xFF;
+	}
+	QueueCanTransmitStand(&transmit_message);
 }
 
 //*******************************************************//
@@ -117,40 +126,15 @@ void TransmitMailboxEmpty(void)
 }
 
 //*******************************************************//
-void CAN1_TX_IRQHandler(void)
+void CanClearResetPreviouslyActiveDTCs(void)
 {
-	if(can_interrupt_flag_get(CAN1, CAN_INT_FLAG_MTF0) == SET){
-		can_interrupt_flag_clear(CAN1, CAN_INT_FLAG_MTF0);
-		TransmitMailboxEmpty();
-		__ASM("NOP");
-	}
-	if(can_interrupt_flag_get(CAN1, CAN_INT_FLAG_MTF1) == SET){
-		can_interrupt_flag_clear(CAN1, CAN_INT_FLAG_MTF1);
-		TransmitMailboxEmpty();
-		__ASM("NOP");
-	}
-	if(can_interrupt_flag_get(CAN1, CAN_INT_FLAG_MTF2) == SET){
-		can_interrupt_flag_clear(CAN1, CAN_INT_FLAG_MTF2);
-		TransmitMailboxEmpty();
-		__ASM("NOP");
-	}
-
+	CanTransmitDM2andDM3(DM_RESET_ERROR);
 }
 
 //*******************************************************//
-void CAN1_RX0_IRQHandler(void)
+void CanPreviouslyActiveDTCsCodes(void)
 {
-	/* check the receive message */
-	can_message_receive(CAN1, CAN_FIFO0, &can_receive_message);
-	CanEgurmReceive();
-}
-
-//*******************************************************//
-void CAN1_RX1_IRQHandler(void)
-{
-  /* check the receive message */
-  can_message_receive(CAN1, CAN_FIFO1, &can_receive_message);
-	CanEgurmReceive();
+	CanTransmitDM2andDM3(DM_READ_ERROR);
 }
 
 //********************************************//
@@ -228,6 +212,43 @@ void QueueCanTransmitSend(void)
 		--QueueCanTx.num_active_queue;
 		QueueCanTx.data_tx_lock = CAN_TX_LOCK;
 	}
+}
+
+//*******************************************************//
+void CAN1_TX_IRQHandler(void)
+{
+	if(can_interrupt_flag_get(CAN1, CAN_INT_FLAG_MTF0) == SET){
+		can_interrupt_flag_clear(CAN1, CAN_INT_FLAG_MTF0);
+		TransmitMailboxEmpty();
+		__ASM("NOP");
+	}
+	if(can_interrupt_flag_get(CAN1, CAN_INT_FLAG_MTF1) == SET){
+		can_interrupt_flag_clear(CAN1, CAN_INT_FLAG_MTF1);
+		TransmitMailboxEmpty();
+		__ASM("NOP");
+	}
+	if(can_interrupt_flag_get(CAN1, CAN_INT_FLAG_MTF2) == SET){
+		can_interrupt_flag_clear(CAN1, CAN_INT_FLAG_MTF2);
+		TransmitMailboxEmpty();
+		__ASM("NOP");
+	}
+
+}
+
+//*******************************************************//
+void CAN1_RX0_IRQHandler(void)
+{
+	/* check the receive message */
+	can_message_receive(CAN1, CAN_FIFO0, &can_receive_message);
+	CanEgurmReceive();
+}
+
+//*******************************************************//
+void CAN1_RX1_IRQHandler(void)
+{
+  /* check the receive message */
+  can_message_receive(CAN1, CAN_FIFO1, &can_receive_message);
+	CanEgurmReceive();
 }
 
 

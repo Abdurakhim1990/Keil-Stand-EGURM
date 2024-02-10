@@ -215,21 +215,141 @@ void CanRecieveTest(void)
 	}
 	//count_can_test = 0;
 }
-uint8_t uds_test_len = 20;
-uint8_t uds_test[39];
-uint8_t select_uds_did = 1;
-uds_did did_test = SYSTEM_SUPPLIER_ECU_SOFTWARE_VERSION_NUMBER_DATA_IDENTIFIER;
+const char uds_serial_number_test[] = "EGURM N17635 AO \"Koncern KEMZ\" KB-E 2024 Y";
+const char uds_version_po_test[] = "Version 1.0.1 2024";
+char key_test[4];
+//uint8_t uds_test_len = 20;
+uint8_t select_uds_did = 0;
+uds_subfunct_did did_test = SYSTEM_SUPPLIER_ECU_SOFTWARE_VERSION_NUMBER;
 void UdsReqTest(void)
 {
-	for(uint8_t i = 0; i < sizeof(uds_test); ++i){
-		uds_test[i] = i + 1;
-	}
 	if(select_uds_did == 1){
-		did_test = SYSTEM_SUPPLIER_ECU_SOFTWARE_VERSION_NUMBER_DATA_IDENTIFIER;
+		did_test = SYSTEM_SUPPLIER_ECU_SOFTWARE_VERSION_NUMBER;
 		select_uds_did = 0;
+		WriteDataToStructure((uint8_t*)uds_serial_number_test, sizeof(uds_serial_number_test), did_test);
 	} else if(select_uds_did == 2){
-		did_test = ECU_SERIAL_NUMBER_DATA_IDENTIFIER;
+		did_test = ECU_SERIAL_NUMBER;
 		select_uds_did = 0;
+//		WriteDataToStructure((uint8_t*)uds_serial_number_test, 2, did_test);
+		WriteDataToStructure((uint8_t*)uds_serial_number_test, sizeof(uds_serial_number_test), did_test);
+	} else if(select_uds_did == 3){
+		did_test = ECU_SERIAL_NUMBER;
+		select_uds_did = 0;
+		ReadDataByIdentifier((uint8_t*)uds_serial_number_test, 0, did_test);
+	} else if(select_uds_did == 4){
+		did_test = SYSTEM_SUPPLIER_ECU_SOFTWARE_VERSION_NUMBER;
+		select_uds_did = 0;
+		ReadDataByIdentifier((uint8_t*)uds_serial_number_test, 0, did_test);
+	} else if(select_uds_did == 5){
+		//did_test = EXTENDED_DIAGNOSTIC_SESSION;
+		select_uds_did = 0;
+		//UdsRequest((uint8_t*)uds_version_po_test, 0, DIAGNOSTIC_SESSION_CONTROL, did_test);
+	} else if(select_uds_did == 6){
+		uds_subfunct_security_access security_access = SEED_3;
+		select_uds_did = 0;
+		SecurityAccess(security_access);
+	} else if(select_uds_did == 7){
+		//did_test = SEED_3 + 1;
+		select_uds_did = 0;
+		//UdsRequest((uint8_t*)key_test, sizeof(key_test), SECURITY_ACCESS, did_test);
 	}
-	UdsRequest(uds_test, uds_test_len, did_test);
+}
+
+UdsMessage UdsMessageFlowResp;
+uint8_t uds_resp_test[8];
+uint8_t select_uds_resp = 0;
+
+void UdsRespTest(void)
+{
+	if(select_uds_resp == 1){
+		uds_resp_test[0] = 0x30;
+		uds_resp_test[1] = 0x00;
+		uds_resp_test[2] = 0x00;
+		UdsResponse(&UdsMessageFlowResp, uds_resp_test);
+		select_uds_resp = 0;
+	} else if(select_uds_resp == 2){
+		uds_resp_test[0] = 0x30;
+		uds_resp_test[1] = 0x02;
+		uds_resp_test[2] = 0x32;
+		UdsResponse(&UdsMessageFlowResp, uds_resp_test);
+		select_uds_resp = 0;
+	} else if(select_uds_resp == 3){
+		uds_resp_test[0] = 0x30;
+		uds_resp_test[1] = 0x05;
+		uds_resp_test[2] = 0x64;
+		UdsResponse(&UdsMessageFlowResp, uds_resp_test);
+		select_uds_resp = 0;
+		
+		
+	} else if(select_uds_resp == 4){
+		volatile static uint8_t count_frame = 0;
+		static uint8_t count_byte = 0;
+		static uint8_t length;
+		
+		if(count_frame == 0){
+			length = sizeof(uds_serial_number_test);
+			uds_resp_test[0] = FIRST_FRAME << SHIFT_TYPE_FRAME;
+			uds_resp_test[1] = length + 3;
+			uds_resp_test[2] = READ_DATA_BY_IDENTIFIER + DIF_SID_RESP;
+			uds_resp_test[3] = (uint8_t)ECU_SERIAL_NUMBER >> 8;
+			uds_resp_test[4] += (uint8_t)ECU_SERIAL_NUMBER;
+			for(uint8_t i = 5; i < 8; ++i){
+				if(count_byte < length){
+					uds_resp_test[i] = uds_serial_number_test[count_byte];
+				} else {
+					uds_resp_test[i] = 0;
+				}
+				++count_byte;
+			}
+			++count_frame;
+		} else {
+			uds_resp_test[0] = (CONSECUTIVE_FRAME << SHIFT_TYPE_FRAME) + (count_frame & MASK_SERIAL_NUMBER);
+			for(uint8_t i = 1; i < 8; ++i){
+				if(count_byte < length){
+					uds_resp_test[i] = uds_serial_number_test[count_byte];
+				} else {
+					uds_resp_test[i] = 0;
+				}
+				++count_byte;
+			}
+			++count_frame;
+			__ASM("NOP");
+		}
+		UdsResponse(&UdsMessageFlowResp, uds_resp_test);
+		if(count_byte >= length){
+			count_frame = 0;
+			select_uds_resp = 0;
+			count_byte = 0;
+		}
+	} else if(select_uds_resp == 5){
+		uds_resp_test[0] = 0x06;
+		uds_resp_test[1] = 0x67;
+		uds_resp_test[2] = 0x05;
+		uds_resp_test[3] = 0x60;
+		uds_resp_test[4] = 0x49;
+		uds_resp_test[5] = 0xe0;
+		uds_resp_test[6] = 0x43;
+		uds_resp_test[7] = 0x00;
+		UdsResponse(&UdsMessageFlowResp, uds_resp_test);
+		select_uds_resp = 0;
+		
+		
+	} else if(select_uds_resp == 6){
+		uds_resp_test[0] = 0x03;
+		uds_resp_test[1] = 0x7f;
+		uds_resp_test[2] = 0x2e;
+		uds_resp_test[3] = 0x31;
+		uds_resp_test[4] = 0x00;
+		uds_resp_test[5] = 0x00;
+		uds_resp_test[6] = 0x00;
+		uds_resp_test[7] = 0x00;
+		UdsResponse(&UdsMessageFlowResp, uds_resp_test);
+		select_uds_resp = 0;
+	} else if(select_uds_resp == 7){
+		CanClearResetPreviouslyActiveDTCs();
+		select_uds_resp = 0;
+	} else if(select_uds_resp == 8){
+		CanPreviouslyActiveDTCsCodes();
+		select_uds_resp = 0;
+	}
 }

@@ -17,6 +17,7 @@ int main(void)
 	uint8_t temp = 0;
 	while(1)
 	{
+		UdsRespTest();
 		if(uds_send_ensble){
 			UdsReqTest();
 		}
@@ -32,7 +33,7 @@ int main(void)
 		}
 		
 		temp++;
-		delay_1ms(1000);
+		delay_1ms(10);
 	}
 }
 

@@ -20,12 +20,16 @@ typedef enum {
 typedef enum {
 	CAN_ID_EEC1							= 0x0CF00400,
 	CAN_ID_TCO1							= 0x0CFE6CEE,
-	CAN_ID_DM3							= 0x18FECC13,
+	CAN_ID_DM3							= 0x18EA13F1,			//0x18FECC13,
 	CAN_ID_UDS_REQEST				= 0x18DA13F1
 } can_rx_id;
 
+typedef enum {
+	DM_RESET_ERROR		= 0,
+	DM_READ_ERROR			= 1,
+} mode_dm2_dm3;
 
-#define LEN_QUEUE_CAN_TX			15
+#define LEN_QUEUE_CAN_TX			20
 typedef enum {
 	CAN_TX_LOCK			= 1,
 	CAN_TX_UNLOCK		= 0
@@ -45,11 +49,11 @@ can_receive_message_struct* pGetReceiveMessage(void);
 void CanReceive(void);
 void CanTransmitEngineSpeed(uint16_t engine_speed);
 void CanTransmitTachographSpeed(uint16_t tachograph_speed);
-void CanTransmitDM3(void);
+void CanTransmitDM2andDM3(mode_dm2_dm3 mode);
 void CanTransmitUdsRequest(uint8_t* frame);
-
+void CanClearResetPreviouslyActiveDTCs(void);
+void CanPreviouslyActiveDTCsCodes(void);
 void CanEgurmReceive(void);
-
 void QueueCanTransmitStand(can_trasnmit_message_struct* transmit_message);
 void QueueCanTransmitSend(void);
 
