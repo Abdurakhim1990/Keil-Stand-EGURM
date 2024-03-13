@@ -13,7 +13,7 @@
 #define	UARTCAN_GPIO_PIN_TX						GPIO_PIN_10
 #define	UARTCAN_GPIO_PIN_RX						GPIO_PIN_11
 			
-#define	UARTCAN_BAUD_RATE							19200U
+#define	UARTCAN_BAUD_RATE							115200U
 #define	UARTCAN_DMA										DMA1
 #define	UARTCAN_DMA_CH_TX							DMA_CH4
 #define	UARTCAN_DMA_CH_RX							DMA_CH2

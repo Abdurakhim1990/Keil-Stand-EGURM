@@ -47,17 +47,8 @@ void NMI_Handler(void)
 {
 }
 
-/*!
-    \brief      this function handles HardFault exception
-    \param[in]  none
-    \param[out] none
-    \retval     none
-*/
-void HardFault_Handler(void)
-{
-    /* if Hard Fault exception occurs, go to infinite loop */
-	
-	struct 
+
+struct 
   {
     uint32_t r0;
     uint32_t r1;
@@ -68,17 +59,27 @@ void HardFault_Handler(void)
     uint32_t pc;
     uint32_t psr;
   }*stack_ptr; //Указатель на текущее значение стека(SP)
+/*!
+    \brief      this function handles HardFault exception
+    \param[in]  none
+    \param[out] none
+    \retval     none
+*/
+void HardFault_Handler(void)
 
- 
+{
+    /* if Hard Fault exception occurs, go to infinite loop */
   __asm(
-      "TST lr, #4 \n" //Тестируем 3ий бит указателя стека(побитовое И)
+      "TST lr, #4 \n" //Тестируем 3-ий бит указателя стека(побитовое И)
       "ITE EQ \n"   //Значение указателя стека имеет бит 3?
       "MRSEQ %[ptr], MSP  \n"  //Да, сохраняем основной указатель стека
       "MRSNE %[ptr], PSP  \n"  //Нет, сохраняем указатель стека процесса
       : [ptr] "=r" (stack_ptr)
       );
+		__ASM("NOP");
 	
     while (1){
+		__ASM("NOP");
     }
 }
 

@@ -1,4 +1,4 @@
-#include "can_uds.h"
+#include "can_uds_response_request.h"
 
 
 //***************************************************************//
@@ -111,5 +111,14 @@ void UdsDelayMs(void)
 			UdsRequestConsecutiveFrameSend();
 		}
 	}
+}
+
+//***************************************************************//
+void UdsRequestResetFrameUds(UdsMessage* UdsReq)
+{
+	UdsReq->counter_data = 0;
+	UdsReq->serial_number = 0;
+	UdsReq->counter_block_size = 0;
+	UdsReq->counter_min_separ = 0;
 }
 

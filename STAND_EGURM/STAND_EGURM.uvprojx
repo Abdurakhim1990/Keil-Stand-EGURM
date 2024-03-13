@@ -454,6 +454,11 @@
               <FileType>1</FileType>
               <FilePath>.\User\src\stand_error.c</FilePath>
             </File>
+            <File>
+              <FileName>test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\src\test.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

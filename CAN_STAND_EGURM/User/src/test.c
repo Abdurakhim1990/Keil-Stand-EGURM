@@ -218,40 +218,41 @@ void CanRecieveTest(void)
 const char uds_serial_number_test[] = "EGURM N17635 AO \"Koncern KEMZ\" KB-E 2024 Y";
 const char uds_version_po_test[] = "Version 1.0.1 2024";
 char key_test[4];
+uint8_t test_routine_control[10] = {0};
+		
 //uint8_t uds_test_len = 20;
 uint8_t select_uds_did = 0;
-uds_subfunct_did did_test = SYSTEM_SUPPLIER_ECU_SOFTWARE_VERSION_NUMBER;
+uds_did did_test = SYSTEM_SUPPLIER_ECU_SOFTWARE_VERSION_NUMBER;
 void UdsReqTest(void)
 {
 	if(select_uds_did == 1){
 		did_test = SYSTEM_SUPPLIER_ECU_SOFTWARE_VERSION_NUMBER;
 		select_uds_did = 0;
-		WriteDataToStructure((uint8_t*)uds_serial_number_test, sizeof(uds_serial_number_test), did_test);
+		SendWriteDataByIdentifier(did_test, (uint8_t*)uds_serial_number_test, sizeof(uds_serial_number_test));
 	} else if(select_uds_did == 2){
 		did_test = ECU_SERIAL_NUMBER;
 		select_uds_did = 0;
-//		WriteDataToStructure((uint8_t*)uds_serial_number_test, 2, did_test);
-		WriteDataToStructure((uint8_t*)uds_serial_number_test, sizeof(uds_serial_number_test), did_test);
+		SendWriteDataByIdentifier(did_test, (uint8_t*)uds_serial_number_test, sizeof(uds_serial_number_test));
 	} else if(select_uds_did == 3){
 		did_test = ECU_SERIAL_NUMBER;
 		select_uds_did = 0;
-		ReadDataByIdentifier((uint8_t*)uds_serial_number_test, 0, did_test);
+		SendReadDataByIdentifier(did_test);
 	} else if(select_uds_did == 4){
 		did_test = SYSTEM_SUPPLIER_ECU_SOFTWARE_VERSION_NUMBER;
 		select_uds_did = 0;
-		ReadDataByIdentifier((uint8_t*)uds_serial_number_test, 0, did_test);
+		SendReadDataByIdentifier(did_test);
 	} else if(select_uds_did == 5){
-		//did_test = EXTENDED_DIAGNOSTIC_SESSION;
 		select_uds_did = 0;
-		//UdsRequest((uint8_t*)uds_version_po_test, 0, DIAGNOSTIC_SESSION_CONTROL, did_test);
+		SendRoutineControl(START_ROUTINE, STEERING_WHEEL_CALIBRATION, test_routine_control, 0);
 	} else if(select_uds_did == 6){
-		uds_subfunct_security_access security_access = SEED_3;
 		select_uds_did = 0;
-		SecurityAccess(security_access);
+		SendRoutineControl(START_ROUTINE, SET_STEERING_WHEEL_ZERO, test_routine_control, 0);
 	} else if(select_uds_did == 7){
-		//did_test = SEED_3 + 1;
 		select_uds_did = 0;
-		//UdsRequest((uint8_t*)key_test, sizeof(key_test), SECURITY_ACCESS, did_test);
+		SendRoutineControl(START_ROUTINE, SET_STEERING_WHEEL_MOST_LEFT, test_routine_control, 0);
+	} else if(select_uds_did == 8){
+		select_uds_did = 0;
+		SendRoutineControl(STOP_ROUTINE, SET_STEERING_WHEEL_ZERO, test_routine_control, 0);
 	}
 }
 
@@ -332,8 +333,6 @@ void UdsRespTest(void)
 		uds_resp_test[7] = 0x00;
 		UdsResponse(&UdsMessageFlowResp, uds_resp_test);
 		select_uds_resp = 0;
-		
-		
 	} else if(select_uds_resp == 6){
 		uds_resp_test[0] = 0x03;
 		uds_resp_test[1] = 0x7f;

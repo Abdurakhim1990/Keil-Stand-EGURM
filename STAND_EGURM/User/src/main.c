@@ -72,7 +72,8 @@ int main(void)
 	
 	while(1)
 	{
-	gpio_port_write(GPIOA, (uint8_t)temp << 7);
+		Test();
+		gpio_port_write(GPIOA, (uint8_t)temp << 7);
 		dpr_voltage[0] = GetVoltageDM_1();
 		dpr_voltage[1] = GetVoltageDM_2();
 		dpr_voltage[2] = GetVoltageDM_3();
@@ -157,7 +158,7 @@ void GeneralInitEgurm(void)
 	ServoInit();
 	EncoderInInit();
 	MUFTA_PWMEgurmInit();
-	UsbdEgurmInit();
+	//UsbdEgurmInit();
 	PeriodUsbReturnInit();
 	VoltageReversInit();
 	IngitionInit();

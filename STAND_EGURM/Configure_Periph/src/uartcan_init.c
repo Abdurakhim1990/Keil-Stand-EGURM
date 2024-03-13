@@ -70,7 +70,7 @@ void DmaUartcanRxInit(void)
 	dma_init_struct.memory_addr = (uint32_t)uartcan_rx_buffer;
 	dma_init_struct.memory_inc = DMA_MEMORY_INCREASE_ENABLE;
 	dma_init_struct.memory_width = DMA_MEMORY_WIDTH_8BIT;
-	dma_init_struct.number = UARTCAN_DMA_RX_SIZE;
+	dma_init_struct.number = UARTCAN_HEARDER_SIZE;
 	dma_init_struct.periph_addr = (uint32_t)&USART_DATA(UARTCAN_USART);
 	dma_init_struct.periph_inc = DMA_PERIPH_INCREASE_DISABLE;
 	dma_init_struct.periph_width = DMA_PERIPHERAL_WIDTH_8BIT;

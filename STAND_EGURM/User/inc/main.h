@@ -17,6 +17,8 @@
 #include "stand_control.h"
 #include "stand_error.h"
 
+#include "test.h"
+
 void GeneralInitEgurm(void);
 
 #endif
