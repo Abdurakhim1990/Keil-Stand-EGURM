@@ -11,8 +11,8 @@
 #define MUFTA_PWM_TIMER_CH				TIMER_CH_1
 #define MUFTA_PWM_PERIOD			1000
 
-#define	MUFTA_RCU_TIMER							RCU_TIMER8
-#define MUFTA_TIMER									TIMER8
+#define	MUFTA_RCU_TIMER							RCU_TIMER11
+#define MUFTA_TIMER									TIMER11
 #define MUFTA_TIMER_IRQHandler			TIMER7_BRK_TIMER11_IRQHandler
 
 

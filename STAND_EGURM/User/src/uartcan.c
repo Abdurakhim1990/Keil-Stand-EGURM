@@ -16,10 +16,10 @@ uint8_t* GetUartcanTxBuff(void)
 void UartcanSend(uint8_t* buff, uint8_t len, type_to_can type)
 {
 	uartcan_tx_buffer[SER_NUM_HEADER] = type;
-	uartcan_tx_buffer[SER_NUM_LEN] = ++len;
+	uartcan_tx_buffer[SER_NUM_LEN] = len;
 	uartcan_tx_buffer[SER_NUM_HEADER_OTHER] = type + TYPE_ADD_OTHER;
 	for(uint8_t i = 0; i < len; ++i){
-		uartcan_tx_buffer[i + SER_NUM_HEADER_OTHER] = buff[i];
+		uartcan_tx_buffer[i + SER_NUM_HEADER_OTHER + 1] = buff[i];
 	}
 	UartcanSendPacket();
 }
@@ -27,7 +27,7 @@ void UartcanSend(uint8_t* buff, uint8_t len, type_to_can type)
 //**************************************************//
 static void UartcanSendPacket(void)
 {
-	uint8_t length = uartcan_tx_buffer[SER_NUM_LEN] + UARTCAN_HEARDER_SIZE;
+	uint8_t length = uartcan_tx_buffer[SER_NUM_LEN] + UARTCAN_HEARDER_SIZE + 1;
 	
 	dma_channel_disable(UARTCAN_DMA, UARTCAN_DMA_CH_TX);
 	dma_memory_address_config(UARTCAN_DMA, UARTCAN_DMA_CH_TX, (uint32_t)uartcan_tx_buffer);

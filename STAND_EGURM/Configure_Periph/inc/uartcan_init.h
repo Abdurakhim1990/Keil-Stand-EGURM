@@ -5,7 +5,7 @@
 
 #define	UARTCAN_RCU_USART							RCU_UART3
 #define	UARTCAN_RCU_GPIO							RCU_GPIOC
-#define	UARTCAN_RCU_DMA								RCU_DMA0
+#define	UARTCAN_RCU_DMA								RCU_DMA1
 			
 #define	UARTCAN_USART									UART3
 			
@@ -27,6 +27,7 @@
 #define	UARTCAN_DMA_Channel_IRQHandler_Rx		DMA1_Channel2_IRQHandler
 #define	UARTCAN_USART_IRQHandler_Rx					UART3_IRQHandler
 
+void UsartcanInit(void);
 void DmaUartcanTxInit(void);
 void DmaUartcanRxInit(void);
 void UartcanNvicConfig(void);

@@ -192,7 +192,7 @@ void AKIP_USART_IRQHandler_Rx(void)
 		dma_memory_address_config(AKIP_DMA, AKIP_DMA_CH_RX, (uint32_t)akip_rx_buffer);
 		dma_channel_enable(AKIP_DMA, AKIP_DMA_CH_RX);
 		
-		for(uint8_t i = 0; akip_rx_buffer[i] != ','; ++i){
+		for(uint8_t i = 0; akip_rx_buffer[i] != ',' && i < 100; ++i){
 			code_error *= 10;
 			code_error += akip_rx_buffer[i] - '0';
 		}

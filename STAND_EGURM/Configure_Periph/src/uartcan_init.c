@@ -26,7 +26,7 @@ void UsartcanInit(void)
 	DmaUartcanRxInit();
 	UartcanNvicConfig();
 	
-	usart_interrupt_enable(UARTCAN_USART, USART_INT_IDLE);
+	//usart_interrupt_enable(UARTCAN_USART, USART_INT_IDLE);
 }
 
 //********************************************************//

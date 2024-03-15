@@ -162,4 +162,5 @@ void GeneralInitEgurm(void)
 	PeriodUsbReturnInit();
 	VoltageReversInit();
 	IngitionInit();
+	UsartcanInit();
 }
