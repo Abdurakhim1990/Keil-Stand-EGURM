@@ -5,7 +5,7 @@
 
 #define	UARTCAN_RCU_USART							RCU_UART3
 #define	UARTCAN_RCU_GPIO							RCU_GPIOC
-#define	UARTCAN_RCU_DMA								RCU_DMA0
+#define	UARTCAN_RCU_DMA								RCU_DMA1
 			
 #define	UARTCAN_USART									UART3
 			

@@ -51,4 +51,5 @@ void GeneralInitEgurm(void)
 	InitTimerTo10us();
 	InitTimerTo100us();
 	CanEgurmInit();
+	UsartcanInit();
 }
