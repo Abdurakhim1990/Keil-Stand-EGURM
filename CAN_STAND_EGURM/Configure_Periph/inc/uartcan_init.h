@@ -30,5 +30,6 @@
 void DmaUartcanTxInit(void);
 void DmaUartcanRxInit(void);
 void UartcanNvicConfig(void);
+void UsartcanInit(void);
 
 #endif

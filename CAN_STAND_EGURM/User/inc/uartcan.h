@@ -35,5 +35,6 @@ typedef enum{
 
 uint8_t* GetUartcanTxBuff(void);
 uint8_t GetCommandLength(char* str);
+void UartcanSend(uint8_t* buff, uint8_t len, type_to_can type);
 
 #endif

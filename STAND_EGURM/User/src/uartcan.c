@@ -17,9 +17,8 @@ void UartcanSend(uint8_t* buff, uint8_t len, type_to_can type)
 {
 	uartcan_tx_buffer[SER_NUM_HEADER] = type;
 	uartcan_tx_buffer[SER_NUM_LEN] = len;
-	uartcan_tx_buffer[SER_NUM_HEADER_OTHER] = type + TYPE_ADD_OTHER;
 	for(uint8_t i = 0; i < len; ++i){
-		uartcan_tx_buffer[i + SER_NUM_HEADER_OTHER + 1] = buff[i];
+		uartcan_tx_buffer[i + SER_NUM_LEN + 1] = buff[i];
 	}
 	UartcanSendPacket();
 }
@@ -70,17 +69,17 @@ int16_t GetAngleEgurm(void)
 //*******************************************************************//
 void UARTCAN_USART_IRQHandler_Rx(void)
 {
-	volatile uint8_t code_error = 0;
+	//volatile uint8_t code_error = 0;
 	volatile char rx_data;
 	
 	if(RESET != usart_interrupt_flag_get(UARTCAN_USART, USART_INT_FLAG_IDLE)){
 		/* clear IDLE flag */
 		rx_data = usart_data_receive(UARTCAN_USART);
 		
-		//dma_channel_disable(UARTCAN_DMA, UARTCAN_DMA_CH_RX);
-		////dma_transfer_number_config(AKIP_DMA, AKIP_DMA_CH_RX, UARTCAN_SIZE_PACKET);
-		//dma_memory_address_config(UARTCAN_DMA, UARTCAN_DMA_CH_RX, (uint32_t)uartcan_tx_buffer);
-		//dma_channel_enable(UARTCAN_DMA, UARTCAN_DMA_CH_RX);
+		dma_channel_disable(UARTCAN_DMA, UARTCAN_DMA_CH_RX);
+		//dma_transfer_number_config(UARTCAN_DMA, AKIP_DMA_CH_RX, UARTCAN_SIZE_PACKET);
+		dma_memory_address_config(UARTCAN_DMA, UARTCAN_DMA_CH_RX, (uint32_t)uartcan_rx_buffer);
+		dma_channel_enable(UARTCAN_DMA, UARTCAN_DMA_CH_RX);
 	}
 }
 
@@ -90,6 +89,7 @@ void UARTCAN_DMA_Channel_IRQHandler_Tx(void)
 	if(RESET != dma_interrupt_flag_get(UARTCAN_DMA, UARTCAN_DMA_CH_TX, DMA_INT_FLAG_FTF)){
 		dma_interrupt_flag_clear(UARTCAN_DMA, UARTCAN_DMA_CH_TX, DMA_INT_FLAG_G);
 		
+		TestSendUartCan();
 	}
 }
 

@@ -6,13 +6,13 @@
 #define	UARTCAN_RCU_USART							RCU_UART3
 #define	UARTCAN_RCU_GPIO							RCU_GPIOC
 #define	UARTCAN_RCU_DMA								RCU_DMA1
-			
+
 #define	UARTCAN_USART									UART3
-			
+
 #define	UARTCAN_GPIO									GPIOC
 #define	UARTCAN_GPIO_PIN_TX						GPIO_PIN_10
 #define	UARTCAN_GPIO_PIN_RX						GPIO_PIN_11
-			
+
 #define	UARTCAN_BAUD_RATE							115200U
 #define	UARTCAN_DMA										DMA1
 #define	UARTCAN_DMA_CH_TX							DMA_CH4

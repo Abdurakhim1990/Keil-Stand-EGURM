@@ -13,7 +13,6 @@ typedef enum {
 typedef enum {
 	SER_NUM_HEADER					= 0,
 	SER_NUM_LEN							= 1,
-	SER_NUM_HEADER_OTHER		= 2,
 } serial_number;
 
 typedef enum{
