@@ -401,11 +401,6 @@
               <FilePath>.\User\src\timers_10_and_100_us.c</FilePath>
             </File>
             <File>
-              <FileName>uartcan.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\User\src\uartcan.c</FilePath>
-            </File>
-            <File>
               <FileName>can_egurm.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\User\src\can_egurm.c</FilePath>
@@ -454,6 +449,16 @@
               <FileName>can_uds_negative_response.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\User\src\can_uds_negative_response.c</FilePath>
+            </File>
+            <File>
+              <FileName>uartcan_rx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\src\uartcan_rx.c</FilePath>
+            </File>
+            <File>
+              <FileName>uartcan_tx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\src\uartcan_tx.c</FilePath>
             </File>
           </Files>
         </Group>
