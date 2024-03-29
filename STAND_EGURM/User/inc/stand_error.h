@@ -30,5 +30,8 @@ enum _stand_error{
 
 uint8_t StatusErrorStand(void);
 int16_t GetErrorStand(void);
+void SetCanError(uint8_t error);
+void SetServoMotorError(uint8_t error);
+void SetAkipError(uint8_t error);
 
 #endif

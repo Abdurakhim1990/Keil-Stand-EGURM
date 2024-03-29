@@ -82,6 +82,7 @@ void SetParametr(void)
 			} else{
 				sprintf(akip_tx_buffer, "SYSTem:ERRor?\n");
 				AkipSend();
+				SetAkipError(1);
 				break;
 			}
 		case 2:

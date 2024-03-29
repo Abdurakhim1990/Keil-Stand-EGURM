@@ -228,6 +228,13 @@ void ResponseRoutineControl(uint16_t length, uint8_t *data, uint8_t error)
 			AddQueueNegativeSession(ROUTINE_CONTROL);
 			StandInQueueRequest(GetNegativeSession());
 		} else {
+			switch(resp_routine_control.id_routine){
+				case SET_STEERING_WHEEL_ZERO:				SendZeroWheel(1);		break;
+				case SET_STEERING_WHEEL_MOST_LEFT:	SendLeftWheel(1);		break;
+				case SET_STEERING_WHEEL_MOST_RIGHT:	SendRightWheel(1);	break;
+				case ERASE_PROGRAM_FLASH:						break;
+				default: break;
+			}
 			//StandInQueueRequest(GetNegativeSession());
 		}
 	}

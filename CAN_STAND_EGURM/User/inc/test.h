@@ -4,7 +4,10 @@
 #include "main.h"
 
 void GetClockFreq(void);
-void CanRecieveTest();
-void UdsReqTest(void);
-void UdsRespTest(void);
+
+void Test(void);
+
+void DisplayLed_3(void);
+void DisplayLed_4(void);
+
 #endif

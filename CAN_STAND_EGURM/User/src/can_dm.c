@@ -26,6 +26,7 @@ void DignosticDmSingle(DiagnosticMess* Dm, uint8_t* recieve_data)
 			DtcMessages(Dm, recieve_data[i]);
 		}
 	}
+	SendUartcanError(DmDtcErrors(Dm->DTCsActive[0].spn, Dm->DTCsActive[0].fmi));
 }
 
 //*******************************************************************//
@@ -68,6 +69,9 @@ void DignosticDmPack(DiagnosticMess* Dm, uint8_t* recieve_data)
 		}
 		++Dm->count_numb_bytes;
 		if(Dm->count_numb_bytes == Dm->tot_numb_bytes){
+			for(uint8_t i = 0; i < Dm->num_dtc; ++i){
+				SendUartcanError((i << 8) +	DmDtcErrors(Dm->DTCsActive[i].spn, Dm->DTCsActive[i].fmi));
+			}
 			Dm->count_numb_bytes = 0;
 			break;
 		}
@@ -107,4 +111,47 @@ void CleanDiagMessActiveDtc(DiagnosticMess* Dm)
 		Dm->DTCsActive[i].occur_count = 0xFF;
 		Dm->DTCsActive[i].spn_method = 0xFF;
 	}
+}
+
+//*******************************************************************//
+uint8_t DmDtcErrors(uint32_t spn, uint8_t fmi)
+{
+	uint8_t error = 0;
+	if(spn > 19000) spn -= 19000;
+	
+	if(spn == 1 && fmi == 2){
+		error = ERROR_PARAMETR_CHECKSUM;
+	} else if(spn == 1 && fmi == 12){
+		error = ERROR_CONTROL_AND_COMMUN_CONTROLLER;
+	} else if(spn == 2 && fmi == 2){
+		error = ERROR_SELF_TEST_CONTROLLER;
+	} else if(spn == 3 && fmi == 2){
+		error = ERROR_POWER_ELECTRONICS;
+	} else if(spn == 3 && fmi == 19){
+		error = ERROR_HEAD;
+	} else if(spn == 4 && fmi == 2){
+		error = ERROR_INPUT_POWER_MONITORING;
+	} else if(spn == 5 && fmi == 2){
+		error = ERROR_SENSOR_TORQUE;
+	} else if(spn == 3683 && fmi == 2){
+		error = ERROR_STEERING_ANGLE_SENS;
+	} else if(spn == 3683 && fmi == 13){
+		error = ERROR_STEERING_CALIBRATION;
+	} else if(spn == 6 && fmi == 2){
+		error = ERROR_MOTOR_ROTOR_POSITION;
+	} else if(spn == 7 && fmi == 6){
+		error = ERROR_EXCEEDING_CURRENT_IN_MOTOR;
+	} else if(spn == 7 && fmi == 5){
+		error = ERROR_BROKEN_MOTOR_WINDING;
+	} else if(spn == 7 && fmi == 20){
+		error = ERROR_SHORT_CIRCUIT_WINDING;
+	} else if(spn == 8 && fmi == 11){
+		error = ERROR_GENERAL_FAIL;
+	} else if(spn == 1624 && fmi == 9){
+		error = ERROR_NO_VEHICLE_SPEED_DATA;
+	} else if(spn == 190 && fmi == 9){
+		error = ERROR_NO_ENGINE_SPEED_DATA;
+	}
+	__ASM("NOP");
+	return error;
 }

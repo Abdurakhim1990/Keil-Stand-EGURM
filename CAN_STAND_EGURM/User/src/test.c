@@ -51,6 +51,30 @@ uint8_t can_recieve_test[8];
 uint8_t count_can_test = 0;
 
 
+uint8_t select_dm = 0;
+uint8_t uds_send_enable = 0;
+
+void TestSendUartCan(void);
+void CanRecieveTest();
+void UdsReqTest(void);
+void UdsRespTest(void);
+
+
+void Test(void)
+{
+	TestSendUartCan();
+	
+	UdsRespTest();
+	if(uds_send_enable){
+		UdsReqTest();
+	}
+	if(select_dm){
+		FuncSelectDM(select_dm);
+		CanRecieveTest();
+	}
+}
+
+
 void CanRecieveTest(void)
 {
 	if(count_can_test == 1){		// Single red = 0, amber = 0, spn = 0, fmi = 0, count = 0, spn method = 0
@@ -60,24 +84,24 @@ void CanRecieveTest(void)
 		ExecutionFunc(DignosticDmSingle, can_recieve_test);
 		
 		//******************************************************************//
-	} else if(count_can_test == 2){		// Single red = 0, amber = 1, spn = 0x03FACB, fmi = 0x04, count = 0x1B, spn method = 1
+	} else if(count_can_test == 2){		// Single red = 0, amber = 1, spn = 0x00658, fmi = 0x09, count = 0x1B, spn method = 1
 		can_recieve_test[0] = 0x04;
 		can_recieve_test[1] = 0xff;
-		can_recieve_test[2] = 0xCB;
-		can_recieve_test[3] = 0xFA;
-		can_recieve_test[4] = 0x64;
+		can_recieve_test[2] = 0x58;
+		can_recieve_test[3] = 0x06;
+		can_recieve_test[4] = 0x09;
 		can_recieve_test[5] = 0x9B;
 		can_recieve_test[6] = 0xff;
 		can_recieve_test[7] = 0xff;
 		ExecutionFunc(DignosticDmSingle, can_recieve_test);
 		
 		//******************************************************************//
-	} else if(count_can_test == 3){		// Single red = 1, amber = 0, spn = 0x063524, fmi = 0x0D, count = 0x0A, spn method = 0
+	} else if(count_can_test == 3){		// Single red = 1, amber = 0, spn = 0x000BE, fmi = 0x09, count = 0x0A, spn method = 0
 		can_recieve_test[0] = 0x10;
 		can_recieve_test[1] = 0xff;
-		can_recieve_test[2] = 0x24;
-		can_recieve_test[3] = 0x35;
-		can_recieve_test[4] = 0xCD;
+		can_recieve_test[2] = 0xBE;
+		can_recieve_test[3] = 0x00;
+		can_recieve_test[4] = 0x09;
 		can_recieve_test[5] = 0x0A;
 		can_recieve_test[6] = 0xff;
 		can_recieve_test[7] = 0xff;
@@ -99,22 +123,22 @@ void CanRecieveTest(void)
 		can_recieve_test[1] = 0x10;
 		can_recieve_test[2] = 0x00;
 		
-		can_recieve_test[3] = 0x67;		// Pack 1 spn = 0x05EF67, fmi = 0x1C, count = 0x1F, spn method = 1
-		can_recieve_test[4] = 0xEF;
-		can_recieve_test[5] = 0xBC;
+		can_recieve_test[3] = 0x39;		// Pack 1 spn = 0x04A39, fmi = 0x0C, count = 0x1F, spn method = 1
+		can_recieve_test[4] = 0x4A;
+		can_recieve_test[5] = 0x0C;
 		can_recieve_test[6] = 0x9F;
 		
-		can_recieve_test[7] = 0x54;
+		can_recieve_test[7] = 0x3A;
 		ExecutionFunc(DignosticDmPack, can_recieve_test);
-		can_recieve_test[0] = 0x02;		// Pack 2 spn = 0x050B54, fmi = 0x14, count = 0x67, spn method = 0
-		can_recieve_test[1] = 0x0B;
-		can_recieve_test[2] = 0xB4;
+		can_recieve_test[0] = 0x02;		// Pack 2 spn = 0x04A3A, fmi = 0x02, count = 0x67, spn method = 0
+		can_recieve_test[1] = 0x4A;
+		can_recieve_test[2] = 0x02;
 		can_recieve_test[3] = 0x67;
 		
-		can_recieve_test[4] = 0xFF;		// Pack 2 spn = 0x07FFFF, fmi = 0x1F, count = 0x7F, spn method = 1
-		can_recieve_test[5] = 0xFF;
-		can_recieve_test[6] = 0xFF;
-		can_recieve_test[7] = 0xFF;
+		can_recieve_test[4] = 0x3B;		// Pack 2 spn = 0x04A3B, fmi = 0x02, count = 0x7F, spn method = 1
+		can_recieve_test[5] = 0x4A;
+		can_recieve_test[6] = 0x02;
+		can_recieve_test[7] = 0x83;
 		ExecutionFunc(DignosticDmPack, can_recieve_test);
 		
 		//******************************************************************//
@@ -133,21 +157,21 @@ void CanRecieveTest(void)
 		can_recieve_test[1] = 0x04;
 		can_recieve_test[2] = 0x00;
 		
-		can_recieve_test[3] = 0xFF;		// Pack 1 spn = 0x07FFFF, fmi = 0x1F, count = 0x7F, spn method = 1
-		can_recieve_test[4] = 0xFF;
-		can_recieve_test[5] = 0xFF;
-		can_recieve_test[6] = 0xFF;
+		can_recieve_test[3] = 0x3B;		// Pack 1 spn = 0x04A3B, fmi = 0x02, count = 0x7F, spn method = 1
+		can_recieve_test[4] = 0x4A;
+		can_recieve_test[5] = 0x02;
+		can_recieve_test[6] = 0x86;
 		
-		can_recieve_test[7] = 0x55;
+		can_recieve_test[7] = 0x3D;
 		ExecutionFunc(DignosticDmPack, can_recieve_test);
-		can_recieve_test[0] = 0x02;		// Pack 2 spn = 0x051255, fmi = 0x07, count = 0x24, spn method = 1
-		can_recieve_test[1] = 0x12;
-		can_recieve_test[2] = 0x87;
+		can_recieve_test[0] = 0x02;		// Pack 2 spn = 0x04A3D, fmi = 0x02, count = 0x24, spn method = 1
+		can_recieve_test[1] = 0x4A;
+		can_recieve_test[2] = 0x02;
 		can_recieve_test[3] = 0xA4;
 		 
-		can_recieve_test[4] = 0xC6;		// Pack 2 spn = 0x078DC6, fmi = 0x1A, count = 0x69, spn method = 0
-		can_recieve_test[5] = 0x8D;
-		can_recieve_test[6] = 0xFA;
+		can_recieve_test[4] = 0x63;		// Pack 2 spn = 0x00E63, fmi = 0x0D, count = 0x69, spn method = 0
+		can_recieve_test[5] = 0x0E;
+		can_recieve_test[6] = 0x0D;
 		can_recieve_test[7] = 0x69;
 		ExecutionFunc(DignosticDmPack, can_recieve_test);
 		
@@ -167,41 +191,41 @@ void CanRecieveTest(void)
 		can_recieve_test[1] = 0x04;
 		can_recieve_test[2] = 0x00;
 		
-		can_recieve_test[3] = 0x67;		// Pack 1 spn = 0x05EF67, fmi = 0x1C, count = 0x1F, spn method = 1
-		can_recieve_test[4] = 0xEF;
-		can_recieve_test[5] = 0xBC;
+		can_recieve_test[3] = 0x3E;		// Pack 1 spn = 0x04A3E, fmi = 0x02, count = 0x1F, spn method = 1
+		can_recieve_test[4] = 0x4A;
+		can_recieve_test[5] = 0x02;
 		can_recieve_test[6] = 0x9F;
 		
-		can_recieve_test[7] = 0x55;
+		can_recieve_test[7] = 0x3F;
 		ExecutionFunc(DignosticDmPack, can_recieve_test);
-		can_recieve_test[0] = 0x02;		// Pack 2 spn = 0x041255, fmi = 0x07, count = 0x24, spn method = 1
-		can_recieve_test[1] = 0x12;
-		can_recieve_test[2] = 0x87;
+		can_recieve_test[0] = 0x02;		// Pack 2 spn = 0x04A3F, fmi = 0x14, count = 0x24, spn method = 1
+		can_recieve_test[1] = 0x4A;
+		can_recieve_test[2] = 0x14;
 		can_recieve_test[3] = 0xA4;
 		 
-		can_recieve_test[4] = 0xC6;		// Pack 2 spn = 0x078DC6, fmi = 0x1A, count = 0x69, spn method = 0
-		can_recieve_test[5] = 0x8D;
-		can_recieve_test[6] = 0xFA;
+		can_recieve_test[4] = 0x39;		// Pack 2 spn = 0x04A39, fmi = 0x0C, count = 0x69, spn method = 0
+		can_recieve_test[5] = 0x4A;
+		can_recieve_test[6] = 0x0C;
 		can_recieve_test[7] = 0x69;
 		ExecutionFunc(DignosticDmPack, can_recieve_test);
 		
-		can_recieve_test[0] = 0x03;		// Pack 3 spn = 0x058712, fmi = 0x04, count = 0x46, spn method = 1
-		can_recieve_test[1] = 0x12;
-		can_recieve_test[2] = 0x87;
-		can_recieve_test[3] = 0xA4;
+		can_recieve_test[0] = 0x03;		// Pack 3 spn = 0x04A3C, fmi = 0x02, count = 0x46, spn method = 1
+		can_recieve_test[1] = 0x3C;
+		can_recieve_test[2] = 0x4A;
+		can_recieve_test[3] = 0x02;
 		can_recieve_test[4] = 0xC6;
 		
-		can_recieve_test[5] = 0x8D;		// Pack 3 spn = 0x03FA8D, fmi = 0x09
-		can_recieve_test[6] = 0xFA;
-		can_recieve_test[7] = 0x69;
+		can_recieve_test[5] = 0x63;		// Pack 3 spn = 0x00E63, fmi = 0x02
+		can_recieve_test[6] = 0x0E;
+		can_recieve_test[7] = 0x02;
 		ExecutionFunc(DignosticDmPack, can_recieve_test);
 		
 		can_recieve_test[0] = 0x04;		// Pack 4 count = 0x12, spn method = 0
 		can_recieve_test[1] = 0x12;
 		
-		can_recieve_test[2] = 0x87;		// Pack 4 spn = 0x06A487, fmi = 0x06, count = 0x0D, spn method = 1
-		can_recieve_test[3] = 0xA4;
-		can_recieve_test[4] = 0xC6;
+		can_recieve_test[2] = 0x58;		// Pack 4 spn = 0x00658, fmi = 0x09, count = 0x0D, spn method = 1
+		can_recieve_test[3] = 0x06;
+		can_recieve_test[4] = 0x09;
 		can_recieve_test[5] = 0x8D;
 		
 		can_recieve_test[6] = 0xFF;
@@ -352,3 +376,72 @@ void UdsRespTest(void)
 		select_uds_resp = 0;
 	}
 }
+
+
+char test_write_ident[] = "Assalam 1111";
+char test_read_ident[] = "My Parametr";
+char test_write_firmware[] = "Firmware EGURM 2024";
+uint8_t mode_uart_can = 0;
+uint16_t test_speed_car = 0xFFFF;
+uint16_t test_speed_engine = 0xFFFF;
+
+void TestSendUartCan(void)
+{
+	char * test_send_canuart;
+	
+	if(mode_uart_can == 1){
+		test_send_canuart = test_write_ident;
+		volatile uint8_t len = sizeof(test_write_ident) - 1;
+		UartcanSend((uint8_t*)test_send_canuart, len, TYPE_WRITE_ID);
+		mode_uart_can = 0;
+	} else if(mode_uart_can == 2){
+		test_send_canuart = test_read_ident;
+		volatile uint8_t len = sizeof(test_read_ident) - 1;
+		UartcanSend((uint8_t*)test_send_canuart, len, TYPE_WRITE_ID);
+		mode_uart_can = 0;
+	} else if(mode_uart_can == 3){
+		test_send_canuart = test_write_firmware;
+		volatile uint8_t len = sizeof(test_write_firmware) - 1;
+		UartcanSend((uint8_t*)test_send_canuart, len, TYPE_WRITE_ID);
+		mode_uart_can = 0;
+	} else if(mode_uart_can == 4){
+		test_send_canuart = test_write_firmware;
+		volatile uint8_t len = 1;
+		UartcanSend((uint8_t*)test_send_canuart, len, TYPE_WRITE_ID);
+		mode_uart_can = 0;
+	} else if(mode_uart_can == 5){
+		SetEngineSpeed(test_speed_engine);
+		mode_uart_can = 0;
+	} else if(mode_uart_can == 6){
+		SetCarSpeed(test_speed_car);
+		mode_uart_can = 0;
+	} else if(mode_uart_can == 7){
+		SetZeroWheel(555);
+		mode_uart_can = 8;
+	} else if(mode_uart_can == 8){
+		SetLeftWheel(1111);
+		mode_uart_can = 9;
+	} else if(mode_uart_can == 9){
+		SetRightWheel(5656);
+		mode_uart_can = 10;
+	} else if(mode_uart_can == 10){
+		SetAngleWheel(3546);
+		mode_uart_can = 0;
+	} else if(mode_uart_can == 11){
+		test_send_canuart = test_write_ident;
+		volatile uint8_t len = sizeof(test_write_ident) - 1;
+		UartcanSend((uint8_t*)test_send_canuart, len, TYPE_WRITE_ID);
+		mode_uart_can = 12;
+	} else if(mode_uart_can == 12){
+		test_send_canuart = test_read_ident;
+		volatile uint8_t len = sizeof(test_read_ident) - 1;
+		UartcanSend((uint8_t*)test_send_canuart, len, TYPE_WRITE_ID);
+		mode_uart_can = 13;
+	} else if(mode_uart_can == 13){
+		test_send_canuart = test_write_firmware;
+		volatile uint8_t len = sizeof(test_write_firmware) - 1;
+		UartcanSend((uint8_t*)test_send_canuart, len, TYPE_WRITE_ID);
+		mode_uart_can = 0;
+	}
+}
+

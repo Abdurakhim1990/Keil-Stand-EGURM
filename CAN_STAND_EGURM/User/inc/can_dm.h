@@ -44,6 +44,7 @@ void DignosticDmBam(DiagnosticMess* Dm, uint8_t* recieve_data);
 void DignosticDmSingle(DiagnosticMess* Dm, uint8_t* recieve_data);
 void CleanDiagMessActiveDtc(DiagnosticMess* Dm);
 void DtcMessages(DiagnosticMess* Dm, uint8_t data);
+uint8_t DmDtcErrors(uint32_t spn, uint8_t fmi);
 
 /////////////////////////////
 void ExecutionFunc(void (*Func)(DiagnosticMess*, uint8_t*), uint8_t* buff);

@@ -16,4 +16,6 @@ void CanSasCsMessage(uint8_t* recieve_data)
 	
 	SasCsMessage.message_counter = (recieve_data[7] & 0x0F);
 	SasCsMessage.message_checksum = ((recieve_data[7] & 0xF0) >> 4);
+	
+	SendAngleEgurm(SasCsMessage.steering_wheel_angle);
 }

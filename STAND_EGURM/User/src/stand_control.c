@@ -27,7 +27,10 @@ void (*pSetStandParameters[])(int16_t val) = {
 	[PARAM_VOLT_SENS_MOM_4]				= SetEmptyParam,						// g
 	[PARAM_CURR_EGURM_mA]					= SetEmptyParam,						// g
 	[PARAM_CURR_INGITION]					= SetEmptyParam,						// g
-	[PARAM_STAND_ERROR]						= SetEmptyParam							// g
+	[PARAM_STAND_ERROR]						= SetEmptyParam,						// g
+	[PARM_STEERING_WHEEL_ZERO]		= SetZeroWheel,							// s/g
+	[PARM_STEERING_WHEEL_LEFT]		= SetLeftWheel,							// s/g
+	[PARM_STEERING_WHEEL_RIGHT]		= SetRightWheel,						// s/g
 };
 
 //*********************************************************//
@@ -51,7 +54,10 @@ int16_t (*pRetStandParameters[])(void) = {
 	[PARAM_VOLT_SENS_MOM_4]				= GetVoltageDM_4,					// g
 	[PARAM_CURR_EGURM_mA]					= RetEmptyParam,					// g
 	[PARAM_CURR_INGITION]					= GetCurrentInjition,			// g
-	[PARAM_STAND_ERROR]						= GetErrorStand						// g
+	[PARAM_STAND_ERROR]						= GetErrorStand,					// g
+	[PARM_STEERING_WHEEL_ZERO]		= GetZeroAngle,						// s/g
+	[PARM_STEERING_WHEEL_LEFT]		= GetLeftAngle,						// s/g
+	[PARM_STEERING_WHEEL_RIGHT]		= GetRightAngle,					// s/g
 };
 
 //*********************************************//

@@ -34,7 +34,7 @@ can_receive_message_struct* pGetReceiveMessage(void)
 void CanTransmitEngineSpeed(uint16_t engine_speed)
 {
 	can_trasnmit_message_struct transmit_message;
-	engine_speed = (engine_speed % 8031) * 8;
+	//engine_speed = (engine_speed % 8031) * 8;
 	
 	transmit_message.tx_efid = CAN_ID_EEC1;
 	transmit_message.tx_sfid = 0x00;
@@ -55,7 +55,7 @@ void CanTransmitEngineSpeed(uint16_t engine_speed)
 void CanTransmitTachographSpeed(uint16_t tachograph_speed)
 {
 	can_trasnmit_message_struct transmit_message;
-	tachograph_speed = (tachograph_speed % 251) * 256;
+	//tachograph_speed = (tachograph_speed % 251) * 256;
 	
 	transmit_message.tx_efid = CAN_ID_TCO1;
 	transmit_message.tx_sfid = 0x00;

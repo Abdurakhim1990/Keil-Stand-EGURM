@@ -20,6 +20,8 @@ void Period1ms(void)
 	UdsDelayMs();
 	PeriodTesterPresent();
 	StartRequiredTimeDelay(0);
+	SendEngineSpeedToCan();
+	SendCarSpeedToCan();
 }
 
 //********************************************//
