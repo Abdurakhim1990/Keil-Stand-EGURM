@@ -12,10 +12,11 @@
 #include "mufta_egurm.h"
 #include "voltage_revers.h"
 #include "ingition.h"
-#include "servo_mr_j2s_a.h"
+#include "servo_control.h"
 #include "uartcan.h"
 #include "stand_control.h"
 #include "stand_error.h"
+#include "switching_current.h"
 
 #include "test.h"
 

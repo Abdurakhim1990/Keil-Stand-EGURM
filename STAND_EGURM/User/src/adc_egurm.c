@@ -9,10 +9,11 @@ struct valAdcForParam
 	uint16_t current;
 	uint16_t temperature;
 	uint16_t cur_inj;
+	uint16_t cur_mA;
 	uint16_t dm[4];
 } valAdcParam;
 
-uint16_t adc_buffer[10];
+uint16_t adc_buffer[NUMBER_ADC_PARAMETR];
 
 uint16_t default_adc_moment_in = DEFAULT_ADC_MOMENT;
 uint16_t default_adc_moment_out = DEFAULT_ADC_MOMENT;
@@ -96,11 +97,11 @@ int16_t GetCurrent(void)
 //**************************************************************//
 void AverageValueAdcVoltAmper(void)
 {
-	static uint32_t aver_adc_buff[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	static uint32_t aver_adc_buff[NUMBER_ADC_PARAMETR] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 	static uint8_t count = 0;
 	
 	if(count < 100){
-		for(uint8_t i = 2; i < 10; ++i){
+		for(uint8_t i = 2; i < NUMBER_ADC_PARAMETR; ++i){
 			aver_adc_buff[i] += adc_buffer[i];
 		}
 		++count;
@@ -109,11 +110,12 @@ void AverageValueAdcVoltAmper(void)
 		valAdcParam.current = aver_adc_buff[CURRENT]/count;
 		valAdcParam.temperature = aver_adc_buff[TEMPERATURE]/count;
 		valAdcParam.cur_inj = aver_adc_buff[CUR_INJ]/count;
+		valAdcParam.cur_mA = aver_adc_buff[CUR_mA]/count;
 		for(size_t i = 0; i < 4; ++i){
 			valAdcParam.dm[i] = aver_adc_buff[DM_1 + i]/count;
 		}
 		
-		for(uint8_t i = 2; i < 10; ++i){
+		for(uint8_t i = 2; i < NUMBER_ADC_PARAMETR; ++i){
 			aver_adc_buff[i] = 0;
 		}
 		count = 0;
@@ -196,5 +198,21 @@ int16_t GetVoltageDM_4(void)
 //**************************************************************//
 int16_t GetCurrentInjition(void)
 {
-	return((valAdcParam.cur_inj - ADC_CURRENT_0A)*CURRENT_1_AMPER)/DELTA_ADC_1A_CURRENT;
+	uint32_t current = (valAdcParam.cur_inj * INJECTION_20_mA)/ADC_20_mA_INJ;
+	return current;
+}
+
+//**-- Получить ток потребления ЭГУРМ в миллиамперах --**//
+//**************************************************************//
+int16_t GetCurrentMilliAmpere(void)
+{
+	uint32_t current = 0xFFFF;
+	if(GetCurrent() < 2){
+		SelectMilliAmpere();
+		current = (valAdcParam.cur_mA * CURRENT_20_mA)/ADC_20_mA;
+	} else {
+		SelectAmpere();
+	}
+	
+	return current;
 }

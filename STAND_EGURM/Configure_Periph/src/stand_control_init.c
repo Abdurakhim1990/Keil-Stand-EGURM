@@ -22,7 +22,6 @@ void PeriodUsbReturnInit(void)
     timer_initpara.clockdivision     = TIMER_CKDIV_DIV1;
     timer_init(USB_RETURN_PARAM_TIMER, &timer_initpara);
 
-    
     /* enable the TIMER interrupt */
     //timer_interrupt_enable(USB_RETURN_PARAM_TIMER, TIMER_INT_UP);
 		

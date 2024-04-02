@@ -236,7 +236,12 @@ void CanRecieveTest(void)
 		
 	} else if(count_can_test == 8){
 		
+	} else if(count_can_test == 11){
+		SendRightWheel(500);
+	} else if(count_can_test == 11){
+		//SendEngineSpeedToCan(500);
 	}
+	
 	//count_can_test = 0;
 }
 const char uds_serial_number_test[] = "EGURM N17635 AO \"Koncern KEMZ\" KB-E 2024 Y";

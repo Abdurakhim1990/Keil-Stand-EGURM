@@ -1,10 +1,15 @@
 #include "test.h"
 
-
+uint16_t milli_amper = 0;
+uint16_t inj_curr = 0;
 
 void Test(void)
 {
 	TestSendUartCan();
+	
+	//IngitionOn();
+	//inj_curr = GetCurrentInjition();
+	//milli_amper = GetCurrentMilliAmpere();
 }
 
 
@@ -27,7 +32,7 @@ void TestSendUartCan(void)
 	} else if(mode_uart_can == 2){
 		test_send_canuart = test_read_ident;
 		volatile uint8_t len = sizeof(test_read_ident) - 1;
-		UartcanSend((uint8_t*)test_send_canuart, len, TYPE_WRITE_ID);
+		UartcanSend((uint8_t*)test_send_canuart, len, TYPE_READ_ID);
 		mode_uart_can = 0;
 	} else if(mode_uart_can == 3){
 		test_send_canuart = test_write_firmware;
@@ -41,10 +46,10 @@ void TestSendUartCan(void)
 		mode_uart_can = 0;
 	} else if(mode_uart_can == 5){
 		SetEngineSpeed(test_speed_engine);
-		mode_uart_can = 0;
+		//mode_uart_can = 0;
 	} else if(mode_uart_can == 6){
 		SetCarSpeed(test_speed_car);
-		mode_uart_can = 0;
+		//mode_uart_can = 0;
 	} else if(mode_uart_can == 7){
 		SetZeroWheel(555);
 		mode_uart_can = 8;

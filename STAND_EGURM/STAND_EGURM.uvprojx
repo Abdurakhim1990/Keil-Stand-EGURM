@@ -435,11 +435,6 @@
               <FilePath>.\User\src\ingition.c</FilePath>
             </File>
             <File>
-              <FileName>servo_mr_j2s_a.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\User\src\servo_mr_j2s_a.c</FilePath>
-            </File>
-            <File>
               <FileName>stand_control.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\User\src\stand_control.c</FilePath>
@@ -463,6 +458,16 @@
               <FileName>uartcan_tx.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\User\src\uartcan_tx.c</FilePath>
+            </File>
+            <File>
+              <FileName>switching_current.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\src\switching_current.c</FilePath>
+            </File>
+            <File>
+              <FileName>servo_control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\src\servo_control.c</FilePath>
             </File>
           </Files>
         </Group>

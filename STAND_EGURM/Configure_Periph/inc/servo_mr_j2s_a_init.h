@@ -1,7 +1,7 @@
 #ifndef SERVO_MR_J2S_A_INIT_H
 #define SERVO_MR_J2S_A_INIT_H
 
-#include "servo_mr_j2s_a.h"
+#include "servo_control.h"
 
 #define	SERVO_RCU_USART							RCU_USART1
 #define	SERVO_RCU_GPIO							RCU_GPIOA

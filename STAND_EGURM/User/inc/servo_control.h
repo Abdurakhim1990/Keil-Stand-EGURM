@@ -1,16 +1,53 @@
-#ifndef SERVO_MR_J2S_A_H
-#define SERVO_MR_J2S_A_H
+#ifndef SERVO_CONTROL
+#define SERVO_CONTROL
 
 #include "main.h"
 #include "servo_mr_j2s_a_init.h"
 
+//--------------------------------------------------------SERVO FUNCTIONS---------------------------------------------------
+#define SERVO_SET_TORQUE				0
+#define SERVO_POS_ON						1
+#define SERVO_JOG_ON						2
+#define SERVO_OFF								3
+#define SERVO_POS_CHK_RD_ON			4
+#define SERVO_JOG_CHK_RD_ON			5
+#define SERVO_NONE							6
+
+#define SERVO_FUNC_CNT			SERVO_NONE
+
+void SetServoTorque(int16_t torque_in_percents);
+void ServoSetTorque_m(void);
+
+void SetServoPosition(int16_t grad);
+void ServoPosModeOn_m(void);
+
+void SetServoSpeed(int16_t grad);
+void ServoJogModeOn_m(void);
+
+void ServoModeOff_m(void);
+
+void ServoCheckRdOn(void);
+
+
+//--------------------------------------------------------SERVO TOOLS---------------------------------------------------
+uint8_t* GetServoTxBuff(void);
+void ServoUsartDmaRxData(uint16_t response_size);
+void ServoUsartDmaSend(char* buffer, uint16_t len);
+void ServoTimerEnable(void);
+void ServoTimerDisable(void);
+void ServoSendReadCommand(uint16_t command, uint16_t data, uint16_t response_size, uint8_t servo_number);
+void ServoSendWriteCommand4(uint16_t write_command, uint16_t data_number, uint16_t data_to_write, uint8_t servo_number);
+void ServoSendWriteCommand8(uint16_t write_command, uint16_t data_number, uint32_t data_to_write, uint8_t servo_number);
+uint16_t GetServoDataLength(const char* data);
+uint8_t ServoHandleError(void);
+
+//--------------------------------------------------------SERVO COMMANDS-------------------------------------------------
 #define SOH 																	0x01
 #define STX 																	0x02
 #define ETX 																	0x03
 #define EOT 																	0x04
 
-
-//---------------------------------------------------------Команды считывания------------------------------------------------------------
+//---------------------------------------------------------Команды считывания--------------------------------------------
 #define READ_STATE														0x01		//	индикация состояния
 #define READ_PARAMS 													0x05		//	параметры
 #define READ_IO_SIGNALS												0x12		//	внешние входные/выходные сигналы
@@ -155,81 +192,9 @@
 #define OP_MODE_TORQUE												0x0004
 #define OP_MODE_TORQUE_POSITION								0x0005
 
-
-
 #define COMMAND_SIZE													10
 #define WRITE_COMMAND_RESPONSE_SIZE						6
 
 
-typedef enum {
-	jog,
-	positioning,
-	ready,
-	end_rotation
-} servo_state;
 
-typedef enum {
- is_ready,
- jog_mode,
- pos_mode,
- timer_mode,
- nothing_mode
-} servo_func_mode;
-
-typedef enum {
-	jog_off,
-	jog_direct_rotation,
-	jog_reverse_rotation,
-	jog_stop,
-} servo_jog_functions;
-
-#define JOG_OFF							1
-#define JOG_DIRECT_ROT			2
-#define JOG_REVERSE_ROT			3
-#define JOG_STOP						4
-
-typedef enum {
-	pos_on,
-	pos_off,
-	pos_break,
-} servo_pos_functions;
-
-#define POS_ON							0
-#define POS_OFF							1
-#define POS_BREAK						2
-
-uint8_t* GetServoTxBuff(void);
-void ServoUsartDmaRxData(uint16_t response_size);
-void ServoUsartDmaSend(char* buffer, uint16_t len);
-void ServoTimerEnable(void);
-void ServoTimerDisable(void);
-
-void ServoSendReadCommand(uint16_t command, uint16_t data, uint16_t response_size, uint8_t servo_number);
-void ServoSendWriteCommand4(uint16_t write_command, uint16_t data_number, uint16_t data_to_write, uint8_t servo_number);
-void ServoSendWriteCommand8(uint16_t write_command, uint16_t data_number, uint32_t data_to_write, uint8_t servo_number);
-
-void ServoEmgStop(void);
-
-void ServoSetFreq(uint16_t freq);
-void ServoSetAccelerationTime(uint32_t acceleration_time);
-void ServoSetPathLength(int32_t path);
-void ServoSetTorque(int16_t torque_in_percents);
-
-/* ----------- POS MODE ----------- */
-void ServoPosModeOnAndRotate(int16_t path_length); // пользовательская
-void ServoPosModeOn(void);
-void ServoPosModeStopRotation(void);
-void ServoPosModeOff(void);
-
-/* ----------- JOG MODE ----------- */
-void SetSpeedServoRotate(int16_t freq);	// пользовательская
-void ServoJogModeOff(void);
-void ServoJogModeDirectRotation(void);
-void ServoJogModeReversRotation(void);
-void ServoJogModeStopRotation(void);
-
-uint8_t ServoHandleError(void);
-uint16_t GetServoDataLength(const char* data);
-void ServoCheckRdOn(void);
-
-#endif /* SERVO_MR_J2S_A_H */
+#endif //	!SERVO_CONTROL

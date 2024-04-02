@@ -157,27 +157,21 @@ void ServoMotor(void)
 	switch (main_servo_mode) {
 		/*--------------------------------- SET TORQUE -----------------------------------*/
 		case 1:
-			ServoSetTorque(torque); 											// (1) set torque
+			SetServoTorque(torque); 									// (1) set torque
 			break;
 		/*------------------------------------ JOG ---------------------------------------*/
 		case 2:
-			SetSpeedServoRotate(speed_motor);					// (2) jog mode - on and direct rotation
+			SetServoSpeed(speed_motor);								// (2) jog mode - on and rotation
 			break;
 		case 3:
-			SetSpeedServoRotate(-speed_motor);				// (3) jog mode - on and reverse rotation
-			break;
-		case 4:
-			ServoJogModeStopRotation();										// (4) jog mode - stop rotation
+			SetServoSpeed(0);													// (3) jog mode - stop rotation
 			break;
 		/*-------------------------------- POSITIONING -----------------------------------*/
+		case 4:
+			SetServoPosition(pos_angle);									// (4) pos mode - on and direct rotation
+			break;
 		case 5:
-			ServoPosModeOnAndRotate(pos_angle);						// (5) pos mode - on and direct rotation
-			break;
-		case 6:
-			ServoPosModeOnAndRotate(-pos_angle);					// (6) pos mode - on and reverse rotation
-			break;
-		case 7:
-			ServoPosModeStopRotation();               		// (7) pos mode - stop rotation
+			SetServoPosition(0);													// (5) pos mode - set path
 			break;
 		default:
 			break;
@@ -200,4 +194,5 @@ void GeneralInitEgurm(void)
 	VoltageReversInit();
 	IngitionInit();
 	UsartcanInit();
+	SwitchingCurrentInit();
 }

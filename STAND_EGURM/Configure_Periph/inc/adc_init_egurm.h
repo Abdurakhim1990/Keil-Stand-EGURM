@@ -4,12 +4,14 @@
 #include "adc_egurm.h"
 
 #define ADC_EGURM_RCU_GPIO							RCU_GPIOC
-#define ADC_EGURM_DM__RCU_GPIO					RCU_GPIOA
+#define ADC_EGURM_DM_RCU_GPIO						RCU_GPIOA
+#define ADC_EGURM_mA_RCU_GPIO						RCU_GPIOB
 #define ADC_EGURM_RCU_ADC								RCU_ADC0
 #define ADC_EGURM_RCU_DMA								RCU_DMA0
 
 #define ADC_EGURM_GPIO									GPIOC
-#define ADC_EGURM_DM__GPIO							GPIOA
+#define ADC_EGURM_DM_GPIO								GPIOA
+#define ADC_EGURM_mA_GPIO								GPIOB
 
 #define ADC_EGURM_VCC_GPIO_PIN					GPIO_PIN_0		// GPIOC
 #define ADC_EGURM_CURR_GPIO_PIN					GPIO_PIN_1		// GPIOC
@@ -37,6 +39,9 @@
 #define ADC_EGURM_MOM_OUT_ADC_CHANNEL		ADC_CHANNEL_13
 #define ADC_EGURM_TEMPER_ADC_CHANNEL		ADC_CHANNEL_14
 #define ADC_EGURM_CUR_INJ_ADC_CHANNEL		ADC_CHANNEL_15
+#define ADC_EGURM_CUR_mA_ADC_CHANNEL		ADC_CHANNEL_8
+
+#define NUMBER_ADC_PARAMETR							11
 
 void AdcEgurnInit(void);
 void AdcRcuConfig(void);

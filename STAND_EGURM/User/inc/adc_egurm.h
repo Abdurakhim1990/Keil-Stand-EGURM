@@ -24,17 +24,24 @@
 #define ADC_DM_5_V									3050//3102
 #define DM_5_VOLTAGE								50
 
+#define ADC_20_mA										2466
+#define CURRENT_20_mA								2000
+
+#define ADC_20_mA_INJ								2466
+#define INJECTION_20_mA							2000
+
 enum adc_buff{
-	MOMENT_IN = 0,
-	MOMENT_OUT,
-	VOLTAGE,
-	CURRENT,
-	TEMPERATURE,
-	CUR_INJ,
-	DM_1,
-	DM_2,
-	DM_3,
-	DM_4,
+	MOMENT_IN			= 0,
+	MOMENT_OUT		= 1,
+	VOLTAGE				= 2,
+	CURRENT				= 3,
+	TEMPERATURE		= 4,
+	CUR_INJ				= 5,
+	CUR_mA				= 6,
+	DM_1					= 7,
+	DM_2					= 8,
+	DM_3					= 9,
+	DM_4					= 10,
 };
 
 
@@ -53,5 +60,6 @@ int16_t GetVoltageDM_2(void);
 int16_t GetVoltageDM_3(void);
 int16_t GetVoltageDM_4(void);
 int16_t GetCurrentInjition(void);
+int16_t GetCurrentMilliAmpere(void);
 
 #endif

@@ -32,30 +32,30 @@ enum _length_in_reports
 
 enum _usb_param
 {
-	PARAM_EMPTY									= 0,
-	PARAM_VOLT_EGURM						= 1,
-	PARAM_INGITION							= 2,
-	PARAM_ENGINE_SPEED					= 3,
-	PARAM_CAR_SPEED							= 4,
-	PARAM_TORQUE_IN							= 5,
-	PARAM_TORQUE_OUT						= 6,
-	PARAM_TEMPERAT							= 7,
-	PARAM_CURR_EGURM						= 8,
-	PARAM_STEERING_SPEED				= 9,
-	PARAM_SHAFT_ANGLE_IN				= 10,
-	PARAM_SHAFT_ANGLE_OUT				= 11,
-	PARAM_SHAFT_ANGLE_EGURM			= 12,
-	PARAM_VOLT_SENS_MOM_1				= 13,
-	PARAM_VOLT_SENS_MOM_2				= 14,
-	PARAM_VOLT_SENS_MOM_3				= 15,
-	PARAM_VOLT_SENS_MOM_4				= 16,
-	PARAM_CURR_EGURM_mA					= 17,
-	PARAM_CURR_INGITION					= 18,
-	PARAM_STAND_ERROR						= 19,
-	PARM_STEERING_WHEEL_ZERO		= 20,
-	PARM_STEERING_WHEEL_LEFT		= 21,
-	PARM_STEERING_WHEEL_RIGHT		= 22,
-	PARAM_TEST_TIME							= 38
+	PARAM_EMPTY									= 0,		// Пустая функция
+	PARAM_VOLT_EGURM						= 1,		// Установка/измерение напряжение питания ЭГУРМ
+	PARAM_INGITION							= 2,		// Включение/отключение зажигания
+	PARAM_ENGINE_SPEED					= 3,		// Установка оборотов двигателя
+	PARAM_CAR_SPEED							= 4,		// Установка скорости автомобиля
+	PARAM_TORQUE_IN							= 5,		// Установка/измерение входного момента
+	PARAM_TORQUE_OUT						= 6,		// Установка/измерение выходного момента
+	PARAM_TEMPERAT							= 7,		// Чтение температуры
+	PARAM_CURR_EGURM						= 8,		// Измерение тока потребления ЭГУРМ в Амперах
+	PARAM_STEERING_SPEED				= 9,		// Установка оборотов руля
+	PARAM_SHAFT_ANGLE_IN				= 10,		// Установка/измерение угла входного вала
+	PARAM_SHAFT_ANGLE_OUT				= 11,		// Измерение угла выходного вала
+	PARAM_SHAFT_ANGLE_EGURM			= 12,		// Измерение угла вала по датчику ЭГУРМ
+	PARAM_VOLT_SENS_MOM_1				= 13,		// Измерение момента датчика ВАЛИО 1
+	PARAM_VOLT_SENS_MOM_2				= 14,		// Измерение момента датчика ВАЛИО 2
+	PARAM_VOLT_SENS_MOM_3				= 15,		// Измерение момента датчика ВАЛИО 3
+	PARAM_VOLT_SENS_MOM_4				= 16,		// Измерение момента датчика ВАЛИО 4
+	PARAM_CURR_EGURM_mA					= 17,		// Измерение тока потребления ЭГУРМ в милли Амперах
+	PARAM_CURR_INGITION					= 18,		// Измерение тока потребления в цепи зажигания
+	PARAM_STAND_ERROR						= 19,		// Чтение ошибок
+	PARM_STEERING_WHEEL_ZERO		= 20,		// Установка нулевого положения руля
+	PARM_STEERING_WHEEL_LEFT		= 21,		// Установка левого положения руля
+	PARM_STEERING_WHEEL_RIGHT		= 22,		// Установка правого положения руля
+	PARAM_TEST_TIME							= 38,		// Номер последнего байта пакета USB(1 - идет передача, 0 - стоп передача)
 };
 
 
