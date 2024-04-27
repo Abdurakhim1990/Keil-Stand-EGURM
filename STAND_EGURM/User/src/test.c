@@ -79,3 +79,23 @@ void TestSendUartCan(void)
 		mode_uart_can = 0;
 	}
 }
+
+uint32_t timer_ms[3] = {0};
+status_timer status_buf[3] = {0};
+
+
+void ConfigTimerCounter(uint8_t num, status_timer st)
+{
+	status_buf[num] = st;
+	if(st == START_TIM){
+		timer_ms[num] = 0;
+	}
+}
+
+void CounterTimerUsb(void)
+{
+	for(uint8_t i = 0; i < sizeof(status_buf); ++i){
+		if(status_buf[i] == START_TIM)
+			++timer_ms[i];
+	}
+}

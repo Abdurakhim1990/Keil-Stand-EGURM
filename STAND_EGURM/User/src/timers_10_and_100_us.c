@@ -18,6 +18,8 @@ void Period100us(void)
 void Period1ms(void)
 {
 	Period1MsForAkip();
+	
+	CounterTimerUsb();
 }
 
 //********************************************//

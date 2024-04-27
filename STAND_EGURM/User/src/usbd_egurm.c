@@ -53,12 +53,19 @@ void usbSendResponse(void)
 	}
 }
 
+typedef struct {
+	uint16_t send_count;
+	uint16_t en_count;
+}UsbCounter;
+UsbCounter usb_count = {.send_count = 0, .en_count = 0};
 //*********************************************//
 void SendRetStandParameters(uint8_t* send_buff)
 {
 	send_buff[0] = REP_RET_PAR;
+	++usb_count.send_count;
 	if (USBD_CONFIGURED == usbd_custom_hid.cur_status) {
 		custom_hid_report_send (&usbd_custom_hid, (uint8_t*)send_buff, LEN_REP_RET_PAR);
+		++usb_count.en_count;
 	}
 }
 

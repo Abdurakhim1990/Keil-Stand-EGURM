@@ -37,6 +37,8 @@ OF SUCH DAMAGE.
 #include "usbd_lld_int.h"
 #include "usbd_lld_core.h"
 
+#include "test.h"
+
 /* local function prototypes ('static') */
 static void usbd_int_suspend (usb_dev *udev);
 
@@ -50,6 +52,7 @@ void usbd_int_hpst (usb_dev *udev)
 {
     __IO uint16_t int_status = 0U;
 
+	ConfigTimerCounter(0, START_TIM);
     /* wait till interrupts are not pending */
     while ((int_status = (uint16_t)USBD_INTF) & (uint16_t)INTF_STIF) {
         /* get endpoint number */
@@ -94,6 +97,7 @@ void usbd_int_hpst (usb_dev *udev)
             udev->ep_transc[ep_num][transc_num](udev, ep_num);
         }
     }
+		ConfigTimerCounter(0, STOP_TIM);
 }
 
 /*!
@@ -113,6 +117,8 @@ void usbd_isr (void)
     usb_dev *udev = usbd_core.dev;
 
     if (INTF_STIF & int_flag) {
+			
+			ConfigTimerCounter(1, START_TIM);
         /* wait till interrupts are not pending */
         while ((int_status = (uint16_t)USBD_INTF) & (uint16_t)INTF_STIF) {
             /* get endpoint number */
@@ -166,6 +172,7 @@ void usbd_isr (void)
                 }
             }
         }
+				ConfigTimerCounter(1, STOP_TIM);
     }
 
     if (INTF_WKUPIF & int_flag) {

@@ -186,10 +186,9 @@ void GeneralInitEgurm(void)
 	AdcEgurnInit();
 	UsartAkip1148aInit();
 	ServoInit();
-	ServoInit();
 	EncoderInInit();
 	MUFTA_PWMEgurmInit();
-	//UsbdEgurmInit();
+	UsbdEgurmInit();
 	PeriodUsbReturnInit();
 	VoltageReversInit();
 	IngitionInit();

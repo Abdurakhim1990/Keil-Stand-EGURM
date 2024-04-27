@@ -85,11 +85,6 @@ void SetStandParameters(void)
 		int16_t value = (buff_usb_set_param[i + 1] << 8) + buff_usb_set_param[i + 2];
 		pSetStandParameters[buff_usb_set_param[i]](value);
 	}
-	if(buff_usb_set_param[PARAM_TEST_TIME]){
-		timer_interrupt_enable(USB_RETURN_PARAM_TIMER, TIMER_INT_UP);
-	} else{
-		timer_interrupt_disable(USB_RETURN_PARAM_TIMER, TIMER_INT_UP);
-	}
 }
 
 //*********************************************//
@@ -130,5 +125,7 @@ void TIMER0_UP_TIMER9_IRQHandler(void)
     timer_interrupt_flag_clear(USB_RETURN_PARAM_TIMER, TIMER_INT_FLAG_UP);
 		
 		RetStandParameters();
+		
+		timer_interrupt_disable(USB_RETURN_PARAM_TIMER, TIMER_INT_UP);////
   }
 }

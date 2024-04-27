@@ -223,15 +223,6 @@ const uint8_t customhid_report_descriptor[DESC_LEN_REPORT] =
     0x09, 0x00,					/* USAGE (Custom Device)               */
     0xa1, 0x01,					/* COLLECTION (Application)            */
 
-    /* Set parameters */
-    0x85, REP_SET_PAR,					/* REPORT_ID (0x11)          */
-    0x09, 0x01,									/* USAGE (SET PARAMETERS)    */
-    0x15, 0x00,									/* LOGICAL_MINIMUM (0)       */
-    0x26, 0xff, 0x00,						/* LOGICAL_MAXIMUM (1)       */
-    0x75, 0x08,									/* REPORT_SIZE (8)           */
-    0x95, (LEN_REP_SET_PAR-2),	/* REPORT_COUNT (1)          */
-    0x91, 0x82,									/* OUTPUT (Data,Var,Abs,Vol) */
-
     /* Request parameters */
     0x85, REP_REQ_PAR,					/* REPORT_ID (0x12)          */
     0x09, 0x02,									/* USAGE (REQUEST PARAMETERS)*/
@@ -239,6 +230,15 @@ const uint8_t customhid_report_descriptor[DESC_LEN_REPORT] =
     0x26, 0xff, 0x00,						/* LOGICAL_MAXIMUM (1)       */
     0x75, 0x08,									/* REPORT_SIZE (8)           */
     0x95, (LEN_REP_REQ_PAR-2),	/* REPORT_COUNT (1)          */
+    0x91, 0x82,									/* OUTPUT (Data,Var,Abs,Vol) */
+
+    /* Set parameters */
+    0x85, REP_SET_PAR,					/* REPORT_ID (0x11)          */
+    0x09, 0x01,									/* USAGE (SET PARAMETERS)    */
+    0x15, 0x00,									/* LOGICAL_MINIMUM (0)       */
+    0x26, 0xff, 0x00,						/* LOGICAL_MAXIMUM (1)       */
+    0x75, 0x08,									/* REPORT_SIZE (8)           */
+    0x95, (LEN_REP_SET_PAR-2),	/* REPORT_COUNT (1)          */
     0x91, 0x82,									/* OUTPUT (Data,Var,Abs,Vol) */
 
     /* Write firmware */
@@ -510,7 +510,12 @@ static void custom_hid_data_out (usb_dev *udev, uint8_t ep_num)
 				SetStandParameters();
 				break;
 			case REP_REQ_PAR:
-				
+				if(reciv_buffer[1]){
+					RetStandParameters();
+//					timer_interrupt_enable(USB_RETURN_PARAM_TIMER, TIMER_INT_UP);
+				} else{
+					timer_interrupt_disable(USB_RETURN_PARAM_TIMER, TIMER_INT_UP);
+				}
 				break;
 			case REP_WRT_FIRM:
 				

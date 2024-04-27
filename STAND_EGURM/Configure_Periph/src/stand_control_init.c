@@ -18,7 +18,7 @@ void PeriodUsbReturnInit(void)
     timer_initpara.prescaler         = 16799;
     timer_initpara.alignedmode       = TIMER_COUNTER_EDGE;
     timer_initpara.counterdirection  = TIMER_COUNTER_UP;
-    timer_initpara.period            = 5000;//20;
+    timer_initpara.period            = /*5000;//*/800;
     timer_initpara.clockdivision     = TIMER_CKDIV_DIV1;
     timer_init(USB_RETURN_PARAM_TIMER, &timer_initpara);
 

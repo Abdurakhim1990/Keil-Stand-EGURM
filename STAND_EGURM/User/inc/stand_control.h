@@ -21,13 +21,13 @@ enum _length_out_reports
 {
 	LEN_REP_SET_PAR				= 40,
 	LEN_REP_REQ_PAR				= 20,
-	LEN_REP_WRT_FIRM			= 40
+	LEN_REP_WRT_FIRM			= 80
 };
 
 enum _length_in_reports
 {
 	LEN_REP_RET_PAR				= 60,
-	LEN_REP_RD_FIRM				= 40
+	LEN_REP_RD_FIRM				= 80
 };
 
 enum _usb_param
