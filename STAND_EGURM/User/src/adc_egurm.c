@@ -1,6 +1,7 @@
 #include "adc_egurm.h"
 #include "t_sense_table.h"
 
+
 struct valAdcForParam
 {
 	uint16_t moment_in;
@@ -10,13 +11,10 @@ struct valAdcForParam
 	uint16_t temperature;
 	uint16_t cur_inj;
 	uint16_t cur_mA;
-	uint16_t dm[4];
 } valAdcParam;
 
 uint16_t adc_buffer[NUMBER_ADC_PARAMETR];
 
-uint16_t default_adc_moment_in = DEFAULT_ADC_MOMENT;
-uint16_t default_adc_moment_out = DEFAULT_ADC_MOMENT;
 
 //**-- Взять адрес буффера ADC --**//
 //**************************************************************//
@@ -25,26 +23,12 @@ uint16_t* pGetAdcValue(void)
 	return (uint16_t*) adc_buffer;
 }
 
-//**-- Установка значения ADC при моментах М = 0 --**//
-//**************************************************************//
-void SetDefaultSenseMoment(void)
-{
-	if((valAdcParam.moment_in > DEFAULT_ADC_MOMENT - DELTA_ADC_MOMENT)
-		& (valAdcParam.moment_in < DEFAULT_ADC_MOMENT + DELTA_ADC_MOMENT)){
-			default_adc_moment_in = valAdcParam.moment_in;
-	}
-	if((valAdcParam.moment_out > DEFAULT_ADC_MOMENT - DELTA_ADC_MOMENT)
-		& (valAdcParam.moment_out < DEFAULT_ADC_MOMENT + DELTA_ADC_MOMENT)){
-			default_adc_moment_out = valAdcParam.moment_out;
-	}
-}
-
 //**-- Получить входной момент --**//
 //**************************************************************//
 int16_t GetMomentIn(void)
 {
-	int16_t delta_moment = (default_adc_moment_in > valAdcParam.moment_in ? 
-		(default_adc_moment_in - valAdcParam.moment_in) : (valAdcParam.moment_in - default_adc_moment_in));
+	int16_t delta_moment = (DEFAULT_ADC_MOMENT_IN > valAdcParam.moment_in ? 
+		(DEFAULT_ADC_MOMENT_IN - valAdcParam.moment_in) : (valAdcParam.moment_in - DEFAULT_ADC_MOMENT_IN));
 	return((delta_moment)*TORQUE_N_M_IN)/VALUE_ADC_10V_MOMENT;
 }
 
@@ -52,8 +36,8 @@ int16_t GetMomentIn(void)
 //**************************************************************//
 int16_t GetMomentOut(void)
 {
-	int16_t delta_moment = (default_adc_moment_out > valAdcParam.moment_out ? 
-		(default_adc_moment_out - valAdcParam.moment_out) : (valAdcParam.moment_out - default_adc_moment_out));
+	int16_t delta_moment = (DEFAULT_ADC_MOMENT_OUT > valAdcParam.moment_out ? 
+		(DEFAULT_ADC_MOMENT_OUT - valAdcParam.moment_out) : (valAdcParam.moment_out - DEFAULT_ADC_MOMENT_OUT));
 	return((delta_moment)*TORQUE_N_M_OUT)/VALUE_ADC_10V_MOMENT;
 }
 
@@ -97,7 +81,7 @@ int16_t GetCurrent(void)
 //**************************************************************//
 void AverageValueAdcVoltAmper(void)
 {
-	static uint32_t aver_adc_buff[NUMBER_ADC_PARAMETR] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	static uint32_t aver_adc_buff[NUMBER_ADC_PARAMETR] = {0, 0, 0, 0, 0, 0, 0};
 	static uint8_t count = 0;
 	
 	if(count < 100){
@@ -111,9 +95,6 @@ void AverageValueAdcVoltAmper(void)
 		valAdcParam.temperature = aver_adc_buff[TEMPERATURE]/count;
 		valAdcParam.cur_inj = aver_adc_buff[CUR_INJ]/count;
 		valAdcParam.cur_mA = aver_adc_buff[CUR_mA]/count;
-		for(size_t i = 0; i < 4; ++i){
-			valAdcParam.dm[i] = aver_adc_buff[DM_1 + i]/count;
-		}
 		
 		for(uint8_t i = 2; i < NUMBER_ADC_PARAMETR; ++i){
 			aver_adc_buff[i] = 0;
@@ -162,38 +143,6 @@ int16_t GetTemperature(void)
 	return temper;
 }
 
-//**-- Получить напряжение датчика момента ДПР 1 --**//
-//**************************************************************//
-int16_t GetVoltageDM_1(void)
-{
-	int32_t volt = (valAdcParam.dm[0] * DM_5_VOLTAGE) / ADC_DM_5_V;
-	return (int16_t)volt;
-}
-
-//**-- Получить напряжение датчика момента ДПР 2 --**//
-//**************************************************************//
-int16_t GetVoltageDM_2(void)
-{
-	int32_t volt = (valAdcParam.dm[1] * DM_5_VOLTAGE) / ADC_DM_5_V;
-	return (int16_t)volt;
-}
-
-//**-- Получить напряжение датчика момента ДПР 3 --**//
-//**************************************************************//
-int16_t GetVoltageDM_3(void)
-{
-	int32_t volt = (valAdcParam.dm[2] * DM_5_VOLTAGE) / ADC_DM_5_V;
-	return (int16_t)volt;
-}
-
-//**-- Получить напряжение датчика момента ДПР 4 --**//
-//**************************************************************//
-int16_t GetVoltageDM_4(void)
-{
-	int32_t volt = (valAdcParam.dm[3] * DM_5_VOLTAGE) / ADC_DM_5_V;
-	return (int16_t)volt;
-}
-
 //**-- Получить ток потребления по цепи зажигания ЭГУРМ --**//
 //**************************************************************//
 int16_t GetCurrentInjition(void)
@@ -213,6 +162,5 @@ int16_t GetCurrentMilliAmpere(void)
 	} else {
 		SelectAmpere();
 	}
-	
 	return current;
 }

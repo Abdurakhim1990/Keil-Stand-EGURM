@@ -14,7 +14,7 @@
 #define	AKIP_GPIO_PIN_TX						GPIO_PIN_10
 #define	AKIP_GPIO_PIN_RX						GPIO_PIN_11
 			
-#define	AKIP_BAUD_RATE							19200U
+#define	AKIP_BAUD_RATE							115200//19200U
 #define	AKIP_DMA										DMA0
 #define	AKIP_DMA_CH_TX							DMA_CH1
 #define	AKIP_DMA_CH_RX							DMA_CH2

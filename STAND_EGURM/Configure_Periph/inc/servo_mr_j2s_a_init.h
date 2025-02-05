@@ -29,6 +29,7 @@
 
 #define	SERVO_RCU_TIMER							RCU_TIMER8
 #define SERVO_TIMER									TIMER8
+#define SERVO_TIMER_IRQHandler			TIMER0_BRK_TIMER8_IRQHandler
 
 typedef enum {
 	BAUDRATE_9600 = 9600,
@@ -46,5 +47,7 @@ void ServoInit(void);
 void ServoUsartInit(void);
 void ServoUsartDmaTxInit(char* txbuffer, uint16_t len);
 void ServoUsartDmaRxInit(char* rxbuffer, uint16_t len);
+
+void InitServoTimer(void);
 
 #endif /* SERVO_MR_J2S_A_INIT_H */

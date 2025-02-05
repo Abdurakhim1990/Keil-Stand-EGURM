@@ -90,7 +90,7 @@ void InitMuftaTimer(void)
 	timer_init(MUFTA_TIMER, &timer_init_struct);
 
 	/* enable the TIMER interrupt */
-	//timer_interrupt_enable(MUFTA_TIMER, TIMER_INT_UP);
+	timer_interrupt_enable(MUFTA_TIMER, TIMER_INT_UP);
 	/* enable a TIMER */
 	timer_enable(MUFTA_TIMER);
 	

@@ -64,7 +64,7 @@ void ServoUsartDmaTxInit(char* txbuffer, uint16_t len)
 	dma_init(SERVO_DMA, SERVO_DMA_CH_TX, &dma_init_struct);
 	
 	/* configure DMA mode */
-	dma_interrupt_enable(SERVO_DMA, SERVO_DMA_CH_TX, DMA_INT_FTF);
+	//dma_interrupt_enable(SERVO_DMA, SERVO_DMA_CH_TX, DMA_INT_FTF);
 	dma_circulation_disable(SERVO_DMA, SERVO_DMA_CH_TX);
 	dma_memory_to_memory_disable(SERVO_DMA, SERVO_DMA_CH_TX);
 }
@@ -120,9 +120,9 @@ void InitServoTimer(void)
     /* SERVO_TIMER configuration */
     timer_init_struct.prescaler					= 16799;
 		timer_init_struct.alignedmode				= TIMER_COUNTER_EDGE;
-		timer_init_struct.counterdirection			= TIMER_COUNTER_UP;
-		timer_init_struct.period					= 1999;
-		timer_init_struct.clockdivision				= TIMER_CKDIV_DIV1;
+		timer_init_struct.counterdirection	= TIMER_COUNTER_UP;
+		timer_init_struct.period						= 2000;
+		timer_init_struct.clockdivision			= TIMER_CKDIV_DIV1;
 		timer_init(SERVO_TIMER, &timer_init_struct);
 
     /* enable the TIMER interrupt */

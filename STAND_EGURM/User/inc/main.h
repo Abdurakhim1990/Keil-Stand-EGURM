@@ -1,6 +1,9 @@
 #ifndef	MAIN_H
 #define	MAIN_H
 
+
+//#define DEBUG
+
 #include "gd32e50x.h"                   // Device header
 #include "systick.h"
 #include "usbd_egurm.h"
@@ -17,9 +20,13 @@
 #include "stand_control.h"
 #include "stand_error.h"
 #include "switching_current.h"
+#include "led.h"
+#include "sense_valeo.h"
 
 #include "test.h"
-
+#ifdef DEBUG
+#include "debug.h"
+#endif
 void GeneralInitEgurm(void);
 
 #endif

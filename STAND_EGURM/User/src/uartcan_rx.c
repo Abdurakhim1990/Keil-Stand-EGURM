@@ -38,7 +38,7 @@ void UartcanDmaRxData(void)
 		uartcan_rx_par.data = data_rx;
 		
 		number_byte = UARTCAN_DMA_RX_SIZE - uartcan_transf_num;
-		for(uint16_t i = 0; i < number_byte; ++i){
+		for(uint16_t i = 0; i < number_byte & i < 300; ++i){
 			if(uartcan_rx_par.charac == CHARAC_TYPE){
 				uartcan_rx_par.can_type = uartcan_rx_buffer[i];
 				uartcan_rx_par.count_data = 0;

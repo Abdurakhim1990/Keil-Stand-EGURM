@@ -134,9 +134,9 @@ void SetVoltageAkip(void)
 		AkipSend();
 	} else{
 		if(set_voltage < GetVoltage()){
-			--set_delta_volt;
+			//--set_delta_volt;
 		} else if(set_voltage > GetVoltage()){
-			++set_delta_volt;
+			//++set_delta_volt;
 		}
 		uint8_t int_volt = (set_voltage + set_delta_volt)/10;
 		uint8_t mantis_volt = (set_voltage + set_delta_volt)%10;

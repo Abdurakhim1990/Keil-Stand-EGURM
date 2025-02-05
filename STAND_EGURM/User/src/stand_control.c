@@ -83,7 +83,8 @@ void SetStandParameters(void)
 {
 	for(uint8_t i = 1; (i + 3) < LEN_REP_SET_PAR; i += 3){
 		int16_t value = (buff_usb_set_param[i + 1] << 8) + buff_usb_set_param[i + 2];
-		pSetStandParameters[buff_usb_set_param[i]](value);
+		if(buff_usb_set_param[i] < PARAM_NUMBER_END)
+			pSetStandParameters[buff_usb_set_param[i]](value);
 	}
 }
 
@@ -106,26 +107,15 @@ void RetStandParameters(void)
 	
 	for(size_t i = 1; i < LEN_REP_REQ_PAR-1; ++i){
 		value = pRetStandParameters[buff_usb_req_param[i]]();
-		
+		if(buff_usb_req_param[i] != PARAM_EMPTY){
+			AddTestUSB(buff_usb_req_param[i], value);
+		}
 		if(buff_usb_req_param[i] == PARAM_EMPTY && StatusErrorStand()){
-			buff_usb_req_param[i] = PARAM_STAND_ERROR;
+			//buff_usb_req_param[i] = PARAM_STAND_ERROR;
 		}
 		buff_usb_tx_ret_param[(i - 1) * 3 + 1] = buff_usb_req_param[i];
 		buff_usb_tx_ret_param[(i - 1) * 3 + 2] = (uint8_t)(value >> 8);
 		buff_usb_tx_ret_param[(i - 1) * 3 + 3] = (uint8_t)(value & 0xFF);
 	}
 	SendRetStandParameters(buff_usb_tx_ret_param);
-}
-
-//*********************************************//
-void TIMER0_UP_TIMER9_IRQHandler(void)
-{
-	if(SET == timer_interrupt_flag_get(USB_RETURN_PARAM_TIMER, TIMER_INT_FLAG_UP)){
-    /* clear channel 0 interrupt bit */
-    timer_interrupt_flag_clear(USB_RETURN_PARAM_TIMER, TIMER_INT_FLAG_UP);
-		
-		RetStandParameters();
-		
-		timer_interrupt_disable(USB_RETURN_PARAM_TIMER, TIMER_INT_UP);////
-  }
 }

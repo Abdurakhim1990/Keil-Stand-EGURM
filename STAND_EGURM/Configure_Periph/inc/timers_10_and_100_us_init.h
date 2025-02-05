@@ -5,6 +5,5 @@
 
 void InitTimerTo10us(void);
 void InitTimerTo100us(void);
-void InitServoTimer(void);
 
 #endif

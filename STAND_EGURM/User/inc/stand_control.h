@@ -55,7 +55,7 @@ enum _usb_param
 	PARM_STEERING_WHEEL_ZERO		= 20,		// Установка нулевого положения руля
 	PARM_STEERING_WHEEL_LEFT		= 21,		// Установка левого положения руля
 	PARM_STEERING_WHEEL_RIGHT		= 22,		// Установка правого положения руля
-	PARAM_TEST_TIME							= 38,		// Номер последнего байта пакета USB(1 - идет передача, 0 - стоп передача)
+	PARAM_NUMBER_END						= 23,		// Последний параметр
 };
 
 
@@ -66,5 +66,7 @@ void SetStandParameters(void);
 void SetEmptyParam(int16_t val);
 int16_t RetEmptyParam(void);
 void RetStandParameters(void);
+
+void ClearTestUSB(void);
 
 #endif

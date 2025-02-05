@@ -57,16 +57,6 @@ void SetCarSpeed(int16_t speed)
 	UartcanSend(data, UARTCAN_PARAMETR_SIZE, TYPE_PARAMETR);
 }
 
-//***********************---UARTCAN RS232_Tx---**********************//
-void UARTCAN_DMA_Channel_IRQHandler_Tx(void)
-{
-	if(RESET != dma_interrupt_flag_get(UARTCAN_DMA, UARTCAN_DMA_CH_TX, DMA_INT_FLAG_FTF)){
-		dma_interrupt_flag_clear(UARTCAN_DMA, UARTCAN_DMA_CH_TX, DMA_INT_FLAG_G);
-		
-		TestSendUartCan();
-	}
-}
-
 //*******************************************************************//
 void SetZeroWheel(int16_t param)
 {
@@ -107,4 +97,14 @@ void SetAngleWheel(int16_t speed)
 	data[1] = (uint8_t)(speed >> 8);
 	data[2] = (uint8_t)speed;
 	UartcanSend(data, UARTCAN_PARAMETR_SIZE, TYPE_PARAMETR);
+}
+
+//***********************---UARTCAN RS232_Tx---**********************//
+void UARTCAN_DMA_Channel_IRQHandler_Tx(void)
+{
+	if(RESET != dma_interrupt_flag_get(UARTCAN_DMA, UARTCAN_DMA_CH_TX, DMA_INT_FLAG_FTF)){
+		dma_interrupt_flag_clear(UARTCAN_DMA, UARTCAN_DMA_CH_TX, DMA_INT_FLAG_G);
+		
+		TestSendUartCan();
+	}
 }

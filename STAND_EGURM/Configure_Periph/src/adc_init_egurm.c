@@ -10,9 +10,6 @@ void AdcEgurnInit(void)
     AdcDmaConfig();
     /* ADC configuration */
     AdcConfig();
-		
-	delay_1ms(1);
-	SetDefaultSenseMoment();
 }
 
 
@@ -27,7 +24,6 @@ void AdcRcuConfig(void)
 {
 	/* enable GPIO clock */
 	rcu_periph_clock_enable(ADC_EGURM_RCU_GPIO);
-	rcu_periph_clock_enable(ADC_EGURM_DM_RCU_GPIO);
 	rcu_periph_clock_enable(ADC_EGURM_mA_RCU_GPIO);
 	/* enable ADC clock */
 	rcu_periph_clock_enable(ADC_EGURM_RCU_ADC);
@@ -54,11 +50,6 @@ void AdcGpioConfig(void)
 	gpio_init(ADC_EGURM_GPIO, GPIO_MODE_AIN, GPIO_OSPEED_MAX, ADC_EGURM_TEMPER_GPIO_PIN);
 	gpio_init(ADC_EGURM_GPIO, GPIO_MODE_AIN, GPIO_OSPEED_MAX, ADC_EGURM_CUR_ING_GPIO_PIN);
 	gpio_init(ADC_EGURM_mA_GPIO, GPIO_MODE_AIN, GPIO_OSPEED_MAX, ADC_EGURM_CUR_mA_GPIO_PIN);
-	
-	gpio_init(ADC_EGURM_DM_GPIO, GPIO_MODE_AIN, GPIO_OSPEED_MAX, ADC_EGURM_DM_1_GPIO_PIN);
-	gpio_init(ADC_EGURM_DM_GPIO, GPIO_MODE_AIN, GPIO_OSPEED_MAX, ADC_EGURM_DM_2_GPIO_PIN);
-	gpio_init(ADC_EGURM_DM_GPIO, GPIO_MODE_AIN, GPIO_OSPEED_MAX, ADC_EGURM_DM_3_GPIO_PIN);
-	gpio_init(ADC_EGURM_DM_GPIO, GPIO_MODE_AIN, GPIO_OSPEED_MAX, ADC_EGURM_DM_4_GPIO_PIN);
 }
 
 //******************************************************//
@@ -121,12 +112,6 @@ void AdcConfig(void)
 	adc_regular_channel_config(ADC_EGURM_ADC, 4, ADC_EGURM_TEMPER_ADC_CHANNEL, ADC_SAMPLETIME_7POINT5);
 	adc_regular_channel_config(ADC_EGURM_ADC, 5, ADC_EGURM_CUR_INJ_ADC_CHANNEL, ADC_SAMPLETIME_7POINT5);
 	adc_regular_channel_config(ADC_EGURM_ADC, 6, ADC_EGURM_CUR_mA_ADC_CHANNEL, ADC_SAMPLETIME_7POINT5);
-
-	adc_regular_channel_config(ADC_EGURM_ADC, 7, ADC_EGURM_DM_1_ADC_CHANNEL, ADC_SAMPLETIME_7POINT5);
-	adc_regular_channel_config(ADC_EGURM_ADC, 8, ADC_EGURM_DM_2_ADC_CHANNEL, ADC_SAMPLETIME_7POINT5);
-	adc_regular_channel_config(ADC_EGURM_ADC, 9, ADC_EGURM_DM_3_ADC_CHANNEL, ADC_SAMPLETIME_7POINT5);
-	adc_regular_channel_config(ADC_EGURM_ADC, 10, ADC_EGURM_DM_4_ADC_CHANNEL, ADC_SAMPLETIME_7POINT5);
-
 
 	/* ADC trigger config */
 	adc_external_trigger_source_config(ADC_EGURM_ADC, ADC_REGULAR_CHANNEL, ADC0_1_2_EXTTRIG_REGULAR_NONE);

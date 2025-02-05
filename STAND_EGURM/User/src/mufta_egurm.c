@@ -1,19 +1,26 @@
 #include "mufta_egurm.h"
 
 int16_t set_moment_out = 0;
-uint16_t set_pwm_mufta = 0;
-int8_t step_pwm = 1;
+int16_t set_pwm_mufta = 0;
+int8_t step_pwm = 0;
+int16_t out_moment = 0;
+int16_t in_moment = 0;
 
 void SetPwmMufta(void)
 {
-	if(set_moment_out > GetMomentOut()){
-		set_pwm_mufta += step_pwm;
-	} else if(set_moment_out < GetMomentOut()){
-		step_pwm = 1;
-		set_pwm_mufta -= step_pwm;
-	}
-	
-	timer_channel_output_pulse_value_config(MUFTA_TIMER, MUFTA_PWM_TIMER_CH, set_pwm_mufta);
+	in_moment = GetMomentIn();
+	out_moment = GetMomentOut();
+	set_pwm_mufta = set_moment_out;
+	//if(set_moment_out == 0){
+	//	set_pwm_mufta = 0;
+	//} else if(set_moment_out > out_moment){
+	//	set_pwm_mufta += step_pwm;
+	//	set_pwm_mufta = set_pwm_mufta > MUFTA_PWM_PERIOD ? MUFTA_PWM_PERIOD : set_pwm_mufta;
+	//} else if(set_moment_out < out_moment){
+	//	set_pwm_mufta -= step_pwm;
+	//	set_pwm_mufta = set_pwm_mufta < 0 ? 0 : set_pwm_mufta;
+	//}
+	timer_channel_output_pulse_value_config(MUFTA_PWM_TIMER, MUFTA_PWM_TIMER_CH, set_pwm_mufta);
 }
 //******************************************************//
 void SetMomentOut(int16_t val_moment)
@@ -22,16 +29,13 @@ void SetMomentOut(int16_t val_moment)
 	
 	if(set_moment_out == 0){
 		set_pwm_mufta = 0;
-		timer_interrupt_disable(MUFTA_TIMER, TIMER_INT_UP);
 		timer_channel_output_pulse_value_config(MUFTA_TIMER, MUFTA_PWM_TIMER_CH, set_pwm_mufta);
 	} else if(set_moment_out == 1000){
 		set_pwm_mufta = MUFTA_PWM_PERIOD;
-		timer_interrupt_disable(MUFTA_TIMER, TIMER_INT_UP);
 		timer_channel_output_pulse_value_config(MUFTA_TIMER, MUFTA_PWM_TIMER_CH, set_pwm_mufta);
 	} else{
-		step_pwm = 10;
+		//step_pwm = 10;
 		SetPwmMufta();
-		timer_interrupt_enable(MUFTA_TIMER, TIMER_INT_UP);
 	}
 }
 

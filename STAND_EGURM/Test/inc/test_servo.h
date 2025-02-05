@@ -10,11 +10,14 @@ typedef enum
 }status_timer;
 
 
-void Test(void);
+void MotorTest(void);
 void TestSendUartCan(void);
 
 
 void ConfigTimerCounter(uint8_t num, status_timer st);
 void CounterTimerUsb(void);
+void ServoMotor(void);
+void GetClockFreq(void);
+void MainTestServo(void);
 
 #endif

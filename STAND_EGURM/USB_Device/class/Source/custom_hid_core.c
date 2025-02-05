@@ -124,7 +124,7 @@ usb_hid_desc_config_set custom_hid_config_desc =
         .bEndpointAddress     = CUSTOMHID_IN_EP,
         .bmAttributes         = USB_EP_ATTR_INT,
         .wMaxPacketSize       = CUSTOMHID_IN_PACKET,
-        .bInterval            = 0x20U
+        .bInterval            = 1	//0x20U
     },
 
     .hid_epout = 
@@ -137,7 +137,7 @@ usb_hid_desc_config_set custom_hid_config_desc =
         .bEndpointAddress     = CUSTOMHID_OUT_EP,
         .bmAttributes         = USB_EP_ATTR_INT,
         .wMaxPacketSize       = CUSTOMHID_OUT_PACKET,
-        .bInterval            = 0x20U
+        .bInterval            = 1	//0x20U
     }
 };
 
@@ -511,10 +511,11 @@ static void custom_hid_data_out (usb_dev *udev, uint8_t ep_num)
 				break;
 			case REP_REQ_PAR:
 				if(reciv_buffer[1]){
+					for(uint8_t i = 0; i < LEN_REP_REQ_PAR; i++){
+						if(reciv_buffer[i] >= PARAM_NUMBER_END)
+							reciv_buffer[i] = 0;
+					}
 					RetStandParameters();
-//					timer_interrupt_enable(USB_RETURN_PARAM_TIMER, TIMER_INT_UP);
-				} else{
-					timer_interrupt_disable(USB_RETURN_PARAM_TIMER, TIMER_INT_UP);
 				}
 				break;
 			case REP_WRT_FIRM:
